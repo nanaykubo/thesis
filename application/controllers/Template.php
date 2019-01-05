@@ -30,7 +30,7 @@ class Template extends CI_Controller {
 
 	public function login()
 	{
-		$this->load->view('template/try');		
+		$this->load->view('template/login');		
 	}
 
 	public function records()
@@ -44,8 +44,9 @@ class Template extends CI_Controller {
 	}
 
 	public function addpatient()
-	{
-		$this->load->view('template/addpatient');		
+	{	
+		$data['brand'] = 'Add Patient';
+		$this->load->view('template/addpatient', $data);		
 	}
 
 	public function family()

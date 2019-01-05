@@ -240,7 +240,18 @@
           <div class="card">
           <div class="card-body">
             <h1>KAREN D BASCO</h1>
-         <p class="card-text"><a href="#" class="badge badge-info">Patient Information</a> </p>
+         <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group" role="group" aria-label="First group">
+    <p class="card-text"><a href="#" class="badge badge-info">Patient Information</a> </p>
+  </div>
+  <div class="input-group ">
+    <button class="btn btn-icon btn-3 btn-secondary" data-toggle="modal" data-target="#exampleModalLong" type="button">
+      <span class="btn-inner--icon"><i class="fas fa-file-medical fa-lg text-default"></i></i></span>
+      
+      <span class="btn-inner--text">Add New Record</span>
+        </button>
+  </div>
+</div>
         </div>
         </div>
 
@@ -251,88 +262,41 @@
     </div>
       
     <!-- Page content -->
-      
-      <div class="container mt--7">
-      <!-- Table -->
-      <div class="row">
+
+    <div class="container mt--7">
+       <div class="row">
         <div class="col">
           <div class="card shadow">
-            <div class="card-header border-2">
-              <ul class="nav nav-tabs">
+            <div class="card-header border-0">
+               <!-- header -->
+
+            </div>
+            <!-- body -->
+
+             <div class="col-12">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" href="#">Active</a>
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Records</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link disabled" href="#">Disabled</a>
-  </li>
+
 </ul>
-            </div>
-            <div class="table-responsive">
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Middle Name</th>
-                    <th scope="col">Date of Birth</th>
-                    <th scope="col">Sex</th>
-                    <th scope="col">Address</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                  <td>1</td>
-                  <td>Basco</td>
-                  <td>Karen</td>
-                  <td>D</td>
-                  <td>June 23 1996</td>
-                  <td>Female</td>
-                  <td>San Andres, Manila, NCR Fifth District, NCR</td>
-                  <td>
-                  <a href="#" data-toggle="modal" data-target="#exampleModalLong" class="fas fa-edit fa-lg"></a>
-                  <a href="#" class="fas fa-times text-red fa-lg"></a>    
-                  </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="card-footer py-4">
-              <nav aria-label="...">
-                <ul class="pagination justify-content-end mb-0">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">
-                      <i class="fas fa-angle-left"></i>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      <i class="fas fa-angle-right"></i>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+</div>
+        </div>
           </div>
         </div>
       </div>
+    </div>
+
 
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
