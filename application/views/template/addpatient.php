@@ -16,6 +16,7 @@
   <link href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
   <!-- Argon CSS -->
   <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 </head>
 
 <body>
@@ -50,72 +51,45 @@
         <div class="col">
           <div class="card shadow">
             <div class="card-header border-0">
-              <h3 class="mb-0">Patients</h3>
-            </div>
-            <div class="table-responsive">
-              <table class="table table-hover align-items-center ">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col">ID</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Middle Name</th>
-                    <th scope="col">Date of Birth</th>
-                    <th scope="col">Sex</th>
-                    <th scope="col">Address</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                  <td>
-                  <a href="records" class="fas fa-folder-open text-orange fa-2x"></a></td>
-                  <td>1</td>
-                  <td>Basco</td>
-                  <td>Karen</td>
-                  <td>D</td>
-                  <td>June 23 1996</td>
-                  <td>Female</td>
-                  <td>San Andres, Manila, NCR Fifth District, NCR</td>
-                  <td>
-
-                  <a href="#" data-toggle="modal" data-target="#exampleModalLong" class="fas fa-edit fa-2x"></a>  
-                  <a href="#" class="fas fa-times text-red fa-2x"></a>    
-                  </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="card-footer py-4">
-              <nav aria-label="...">
-                <ul class="pagination justify-content-end mb-0">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">
-                      <i class="fas fa-angle-left"></i>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      <i class="fas fa-angle-right"></i>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
+              <h1 class="mb-0">Patients</h1>
+              <br/>
+            <table class="table align-items-center table-flush" id="myTable">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Middle Name</th>
+      <th scope="col">Date of Birth</th>
+      <th scope="col">Sex</th>
+      <th scope="col">Address</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+<td>1</td>
+<td>Basco</td>
+<td>Karen</td>
+<td>D.</td>
+<td>June 23 1996</td>
+<td>Female</td>
+<td>San Andres, Manila, NCR Fifth District, NCR</td>
+<td class="text-right">
+    <div class="dropdown">
+      <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-ellipsis-v"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+        <a class="dropdown-item" href="records"><i class="fas fa-folder-open"></i>View Records</a>
+        <a class="dropdown-item" href="#"><i class="fas fa-edit"></i>Edit</a>
+        <a class="dropdown-item" href="#"><i class="fas fa-trash-alt"></i>Delete</a>
       </div>
+    </div>
+  </td>
+</tr>
+  </tbody>
+</table>
 
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -329,8 +303,6 @@
   </div>
 </div>
 
-
-
   <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
   (function() {
@@ -354,12 +326,20 @@
 
   <!-- Argon Scripts -->
   <!-- Core -->
-  <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Optional JS -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBd3PjUqq81lIOfBPYXrQGWwK5T4ystZjA"></script>
-  <!-- Argon JS -->
-  <script src="../assets/js/argon.js?v=1.0.0"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready( function () {
+    $('#myTable').DataTable(
+      {
+    columnDefs: [
+        { targets: [4,5, 6, 7], orderable: false},
+    ]
+});
+} );
+    </script>
 </body>
 
 </html>

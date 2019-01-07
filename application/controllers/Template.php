@@ -44,7 +44,7 @@ class Template extends CI_Controller {
 	}
 
 	public function addpatient()
-	{	
+	{
 		$data['brand'] = 'Add Patient';
 		$this->load->view('template/addpatient', $data);		
 	}

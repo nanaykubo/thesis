@@ -366,6 +366,7 @@
             </div>
           </div>
         </div>
+        
         <div class="col-xl-4">
           <div class="card shadow">
             <div class="card-header bg-transparent">

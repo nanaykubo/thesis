@@ -114,28 +114,6 @@
             </a>
           </li>
         </ul>
-        
-         <hr class="my-3">
-        
-        <h6 class="navbar-heading text-muted">Documentation</h6>
-        
-        <ul class="navbar-nav mb-md-3">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="ni ni-spaceship"></i> User Guide
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fas fa-info-circle"></i> About Us
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fas fa-phone"></i> Contact Support
-            </a>
-          </li>
-        </ul> 
       </div>
     </div>
   </nav>
