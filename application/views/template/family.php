@@ -112,7 +112,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="index">
+            <a class="nav-link" href="logged">
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
@@ -173,11 +173,7 @@
         <!-- Form -->
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
           <div class="form-group mb-0">
-            <div class="input-group input-group-alternative">
               <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-search"></i></span>
-              </div>
-              <input class="form-control" placeholder="Search" type="text">
             </div>
           </div>
         </form>
@@ -254,6 +250,7 @@
     <tr>
       <th scope="col">Family No</th>
       <th scope="col">Family Name</th>
+      <th scope="col">Family Address</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -261,13 +258,14 @@
     <tr>
 <td>1</td>
 <td>Basco</td>
+<td> </td>
 <td class="text-right">
     <div class="dropdown">
       <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-ellipsis-v"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-        <a class="dropdown-item" href="records"><i class="fas fa-users"></i>View Members</a>
+        <a class="dropdown-item" href="records"><i class="fas fa-users"></i>View Family Members</a>
         <a class="dropdown-item" href="#"><i class="fas fa-edit"></i>Edit</a>
         <a class="dropdown-item" href="#"><i class="fas fa-trash-alt"></i>Delete</a>
       </div>
@@ -288,7 +286,7 @@
     $('#myTable').DataTable(
       {
     columnDefs: [
-        { targets: [1,2], orderable: false},
+        { targets: [1,2,3], orderable: false},
     ]
 });
 } );

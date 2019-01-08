@@ -36,31 +36,51 @@
         <img src="../assets/img/brand/logo.jpg" width="300" height="180">
       </center>
 
+
+  <form action="<?php echo base_url('Template/login_validation') ?>" method="post" class=form-horizontal align="center">
+     <?php 
+      if($this-> session-> flashdata('error_msg'))
+      {
+      ?>
+        <div class="alert alert-danger">
+      <?php echo $this->session->flashdata('error_msg');?>
+      </div>
+      <?php
+      } 
+  ?>  
       <div class="login-form">
        
-        <label class="sr-only" for="inlineFormInputGroupUsername2">Username</label>
-  <div class="input-group mb-2 mr-sm-2">
-    <div class="input-group-prepend">
-      <div class="input-group-text">@</div>
+      <label class="sr-only" for="inlineFormInputGroupUsername2">Username</label>
+     <div class="input-group mb-2 mr-sm-2">
+     <div class="input-group-prepend">
+      <div class="input-group-text"><i class="fas fa-user-md fa-lg"></i></div>
     </div>
-    <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Username">
+    <input type="text" class="form-control" name="txtUsername" id="inlineFormInputGroupUsername2" placeholder="Username">
+  </div>
+
+  <label class="sr-only" for="inlineFormInputGroup2">Password</label>
+     <div class="input-group mb-2 mr-sm-2">
+     <div class="input-group-prepend">
+      <div class="input-group-text"><i class="fas fa-key fa-lg"></i></div>
+    </div>
+    <input type="password" name="txtPassword" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Password">
   </div>
 
 
-          <div class="input-group mb-2 mr-sm-2">
-          <input type="submit" class="form-control">
+          <div class="input-group mb-3">
+          <input type="submit" name="login" class="form-control">
         </div>
+</div>
+</form>
+        <br/>
+        <div align="center">
+            <a href="#" >Register Account</a> || <a href="#" >Forgot Password?</a>
       </div>
+    </div>
 
     </div>
   </div>
 
-</div>
-
-<div class="bottom">
-<a href="#" class="login-register">Register Account</a>
-||
-<a href="#" class="login-forgot-pass">Forgot Password?</a>
 </div>
 
 </body>

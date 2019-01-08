@@ -89,7 +89,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="index">
+            <a class="nav-link" href="logged">
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
