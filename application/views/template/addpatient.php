@@ -1,5 +1,4 @@
-<?php echo var_dump($data)?>
-<!DOCTYPE html>
+<DOCTYPE html>
 <html>
 
 <head>
@@ -57,7 +56,7 @@
             <table class="table align-items-center table-flush" id="myTable">
   <thead class="thead-light">
     <tr>
-      <th scope="col">ID</th>
+      <th scope="col">I</th>
       <th scope="col">Last Name</th>
       <th scope="col">First Name</th>
       <th scope="col">Middle Name</th>
@@ -331,16 +330,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready( function () {
-    $('#myTable').DataTable(
-      {
-    columnDefs: [
-        { targets: [4,5, 6, 7], orderable: false},
-    ]
-});
-} );
-    </script>
+
+<!-- jQuery library -->
+<script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
+
+<!-- DataTables JS library -->
+<script type="text/javascript" src="<?php echo base_url('assets/DataTables/datatables.min.js'); ?>"></script>
 </body>
 
 </html>

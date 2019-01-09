@@ -30,6 +30,11 @@ class Template extends CI_Controller {
 		$this->load->view('template/login');	
 	}
 
+	function index()
+	{
+		$this->load->view('template/try');	
+	}
+
 	function login_validation()
 	{
 		if($this->input->post('login')){
@@ -85,8 +90,27 @@ class Template extends CI_Controller {
 
 	public function addpatient()
 	{
-		$data['brand'] = 'Add Patient';
-		$this->load->view('template/addpatient', $data);		
+		$this->load-> view('template/addpatient');
+	}
+
+	public function getEventDatatable()
+	{
+	$getdata = $this->m->ajax();
+	$data = array();
+	foreach ($getdata as $value)
+	{
+		$row = array();
+		$row[] = $value->code;
+		$row[] = $value->HCID;
+		$row[] = $value->Name;
+		$data[] = $row;
+	}
+
+	$output = array(
+		"data" => $data,
+	);
+
+	echo json_encode($output);
 	}
 
 	public function family()

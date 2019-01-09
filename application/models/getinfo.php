@@ -20,21 +20,32 @@ class getinfo extends CI_Model
 			return false;
 		}
 	}
-	
-	public function get()
+
+	public function getHCID($username,$password)
 	{
-		$query = $this -> db -> get('tabletest');
-		if ($query -> num_rows() > 0)
-		{
-			return $query -> result();
-		}
-		else
-		{
-			return false;
-		}
+		$this->db->select('HCID');
+		$this->db->where('username',$username);
+		$this->db->where('password',$password);
+		$query = $this->db->get('users');
+		return $query->result();
 	}
 
-	public function getServices()
+
+	public function getHCInfo($HCID)
+	{
+		$this->db->where('HCID',$HCID);
+		$query = $this->db->get('tabletest');
+		return $query->result();
+	}
+
+	public function ajax()
+	{
+		$this->db->select("*");
+		$query = $this->db->get('family');
+		return $query->result();
+	}
+
+		public function getServices()
 	{
 		$query = $this -> db -> get('services');
 		if ($query -> num_rows() > 0)
@@ -46,16 +57,7 @@ class getinfo extends CI_Model
 			return false;
 		}
 	}
-
-	public function getHCID($username,$password)
-	{
-		$this->db->select('HCID');
-		$this->db->where('username',$username);
-		$this->db->where('password',$password);
-		$query = $this->db->get('users');
-		return $query->result();
-	}
-
+	
 	public function getFilteredInfo($HCID,$searchValue)
 	{
 		$this->db->where('HCID',$HCID);
@@ -78,13 +80,6 @@ class getinfo extends CI_Model
 	{
 		$this->db->select('*');
 		$query = $this->db->get('records');
-		return $query->result();
-	}
-
-	public function getHCInfo($HCID)
-	{
-		$this->db->where('HCID',$HCID);
-		$query = $this->db->get('tabletest');
 		return $query->result();
 	}
 
