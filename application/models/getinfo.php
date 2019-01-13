@@ -21,15 +21,14 @@ class getinfo extends CI_Model
 		}
 	}
 
-	public function getHCID($username,$password)
+	public function getUser($username,$password)
 	{
-		$this->db->select('HCID');
+		$this->db->select('*');
 		$this->db->where('username',$username);
 		$this->db->where('password',$password);
 		$query = $this->db->get('users');
 		return $query->result();
 	}
-
 
 	public function getHCInfo($HCID)
 	{
@@ -38,10 +37,18 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
-	public function ajax()
+	public function getHCName($HCID)
+	{
+		$this->db->select('*');
+		$this->db->where('HCID',$HCID);
+		$query = $this->db->get('healthcenters');
+		return $query->result();
+	}
+
+	public function ajax($HCID)
 	{
 		$this->db->select("*");
-		$query = $this->db->get('family');
+		$query = $this->db->get('tabletest');
 		return $query->result();
 	}
 
@@ -83,14 +90,6 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
-	public function getHCName($HCID)
-	{
-		$this->db->select('*');
-		$this->db->where('HCID',$HCID);
-		$query = $this->db->get('healthcenters');
-		return $query->result();
-	}
-
 	public function getInfoById($username,$password)
 	{
 		$query = $this->db->get('tabletest');
@@ -112,27 +111,64 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getUsername($username)
+ 	{
+ 	 $this->db->where('ID' , $username);
+  	$query = $this->db->get('tabletest');
+
+  	if($query->num_rows()>0){
+  	 return true;
+  	}
+  	else {
+  	 return false;
+  	}
+ 	}
+
 	public function getID($id)
 	{
-		$this->db->select("Brgy");
-		$this->db->where('ID', $id);
-		$query = $this->db->get('tabletest');
+		$this->db->select("BRGYID");
+		$this->db->where('HCID', $id);
+		$query = $this->db->get('brgy');
 		return $query->result();
 	}
 
 	public function addNewRecords()
-	{		
+	{	
+		$_POST['inputS'] = strtoupper($_POST['inputS']);
+		$_POST['inputType'] = strtoupper($_POST['inputType']);
+		$_POST['inputAge'] = strtoupper($_POST['inputAge']);
+		$_POST['inputSe'] = strtoupper($_POST['inputSe']);
+		$_POST['inputLN'] = strtoupper($_POST['inputLN']);
+		$_POST['inputFN'] = strtoupper($_POST['inputFN']);
+		$_POST['inputMN'] = strtoupper($_POST['inputMN']);
+		$_POST['inputBrgy'] = strtoupper($_POST['inputBrgy']);
+		$_POST['inputSt'] = strtoupper($_POST['inputSt']);
+		$_POST['inputC'] = strtoupper($_POST['inputC']);
+		$_POST['inputCS'] = strtoupper($_POST['inputCS']);
+		$_POST['inputR'] = strtoupper($_POST['inputR']);
+
 	 $records = array(
-			'ID'=>$this->input->post('ID'),
-			'HCID'=>$this->input->post('txt_HCID'),	
-			'DATE'=>$this->input->post('DATE'),
-			'RETURNDATE'=>$this->input->post('ReturnDate'),
-			'RecordType'=>$this->input->post('Service'),
-			'PRESCRIPTION'=>$this->input->post('Prescription'),
-			'RESULT'=>$this->input->post('Result'),
+			'ID'=>$this->input->post('inputID'),
+			'HCID'=>$this->input->post('txtHCID'),	
+			'Status'=>$this->input->post('inputS'),
+			'Type'=>$this->input->post('inputType'),
+			'Age'=>$this->input->post('inputAge'),
+			'Sex'=>$this->input->post('inputSe'),	
+			'LN'=>$this->input->post('inputLN'),	
+			'FN'=>$this->input->post('inputFN'),
+			'MN'=>$this->input->post('inputMN'),	
+			'Brgy'=>$this->input->post('inputBrgy'),
+			'BirthDate'=>$this->input->post('inputBD'),
+			'St'=>$this->input->post('inputSt'),
+			'City'=>$this->input->post('inputC'),
+			'CivilStatus'=>$this->input->post('inputCS'),
+			'FamilyCode'=>$this->input->post('inputFam'),
+			'Philhealth'=>$this->input->post('inputPN'),
+			'Remarks'=>$this->input->post('inputR')
+			
 	);
 
-	$this->db->insert('precords', $records);
+	$this->db->insert('tabletest', $records);
 	
 	if($this->db->affected_rows() > 0)
 	{
@@ -216,6 +252,7 @@ class getinfo extends CI_Model
 			'HCID'=>$this->input->post('txt_HCID'),
 			'Type'=>$this->input->post('txt_hide'),
 			'Status'=>$this->input->post('Status'),
+			'Brgy'=>$this->input->post('BRGY'),
 			'LN'=>$this->input->post('txt_LN'),
 			'FN'=>$this->input->post('txt_FN'),
 			'MN'=>$this->input->post('txt_MN'),
@@ -274,7 +311,7 @@ class getinfo extends CI_Model
 
 	public function getFamilyCode($id)
 	{
-		$this->db->select("Code");
+		$this->db->select("*");
 		$this->db->where('HCID', $id);
 		$query = $this->db->get('family');
 		return $query->result();

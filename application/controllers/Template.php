@@ -58,7 +58,7 @@ class Template extends CI_Controller {
 	public function logged()
 	{	
 		if($this->session->userdata('logged_in')){
-			$get= $this->m->getHCID(
+			$get= $this->m->getUser(
 				$this->session->userdata('username')
 			   ,$this->session->userdata('password')
 			);
@@ -90,19 +90,70 @@ class Template extends CI_Controller {
 
 	public function addpatient()
 	{
-		$this->load-> view('template/addpatient');
+		if($this->session->userdata('logged_in')){
+			$get= $this->m->getUser(
+				$this->session->userdata('username')
+			   ,$this->session->userdata('password')
+			);
+
+			$myvars = $get[0]->HCID;
+
+			$hname['hname'] = $this->m->getHCName($myvars);
+			$brgylist['brgylist'] = $this->m->getID($myvars);
+			$familylist['famlist'] = $this->m->getFamilyCode($myvars);
+			$userlist['userlist'] = $get;
+
+			$data['data'] = array($hname,$brgylist,$familylist,$userlist);
+
+			$this->load-> view('template/addpatient',$data);
+		}	
 	}
 
-	public function getEventDatatable()
+	public function submitNewRecords()
 	{
-	$getdata = $this->m->ajax();
+		$result = $this->m->addNewRecords();
+		redirect(base_url('template/addpatient'));
+	}
+
+	public function checkUsername()
+ 	{
+  	if($this->m->getUsername($_POST['username']))
+  	{
+  	 echo '<label class="text-danger"><span><i class="fa fa-times" aria-hidden="true">
+   </i> This ID is already registered</span></label>';
+  	}
+ 	 else 
+ 	 {
+  	 echo '<label class="text-success"><span><i class="fa fa-check" aria-hidden="true"></i> ID is available</span></label>';
+ 	 }
+ 	}
+
+	public function getEventDatatable($HCID)
+	{
+	$getdata = $this->m->ajax($HCID);
 	$data = array();
 	foreach ($getdata as $value)
 	{
 		$row = array();
-		$row[] = $value->code;
-		$row[] = $value->HCID;
-		$row[] = $value->Name;
+		$row[] = $value->ID;
+		$row[] = $value->LN;
+		$row[] = $value->FN;
+		$row[] = $value->MN;
+		$row[] = $value->BirthDate;
+		$row[] = $value->Sex;
+		$row[] = array(
+                    $value->Brgy,
+                    $value->St,
+                    $value->City               
+               );
+		$row[] = "<a class='btn btn-sm btn-icon-only text-light' href='#'' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+        <i class='fas fa-ellipsis-v'></i>
+      </a>
+      <div class='dropdown-menu dropdown-menu-right dropdown-menu-arrow'>
+        <a class='dropdown-item' href='records'><i class='fas fa-folder-open'></i>View Records</a>
+        <a class='dropdown-item' href='#''><i class='fas fa-edit'></i>Edit</a>
+        <a class='dropdown-item' href='#''><i class='fas fa-trash-alt'></i>Delete</a>
+      </div>";
 		$data[] = $row;
 	}
 

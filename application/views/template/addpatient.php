@@ -56,7 +56,7 @@
             <table class="table align-items-center table-flush" id="myTable">
   <thead class="thead-light">
     <tr>
-      <th scope="col">I</th>
+      <th scope="col">ID</th>
       <th scope="col">Last Name</th>
       <th scope="col">First Name</th>
       <th scope="col">Middle Name</th>
@@ -68,25 +68,7 @@
   </thead>
   <tbody>
     <tr>
-<td>1</td>
-<td>Basco</td>
-<td>Karen</td>
-<td>D.</td>
-<td>June 23 1996</td>
-<td>Female</td>
-<td>San Andres, Manila, NCR Fifth District, NCR</td>
-<td class="text-right">
-    <div class="dropdown">
-      <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-ellipsis-v"></i>
-      </a>
-      <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-        <a class="dropdown-item" href="records"><i class="fas fa-folder-open"></i>View Records</a>
-        <a class="dropdown-item" href="#"><i class="fas fa-edit"></i>Edit</a>
-        <a class="dropdown-item" href="#"><i class="fas fa-trash-alt"></i>Delete</a>
-      </div>
-    </div>
-  </td>
+
 </tr>
   </tbody>
 </table>
@@ -110,16 +92,18 @@
     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Contact Information</a>
   </div>
         </nav>
-<form class="needs-validation" novalidate>
+<form class="needs-validation" action="<?php echo base_url('template/submitNewRecords') ?>" method="post" novalidate> 
 <div class="tab-content " id="nav-tabContent">
   <!-- patient tab -->
+   <input type="hidden" name="txtHCID" id="txtHCID" value="<?php echo $data['0']['hname'][0]->HCID?>"/>
   <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
       <br/>
 
       <!-- body -->  <div class="form-row">
     <div class="col-md-12">
     <label for="inputAddress">ID *</label>
-    <input type="text" required class="form-control" id="inputAddress" placeholder="Enter your ID">
+    <input type="text" required class="form-control" name="inputID" id="inputID" placeholder="Enter your ID (chars are not allowed)"  onkeypress='validate(event)'>
+    <span id="username_result"></span>
     <div class="invalid-feedback">
           Please enter an ID
         </div>
@@ -127,25 +111,34 @@
   </div>
     <div class="col-md-4 mb-3">
       <label for="validationCustom01">First Name *</label>
-      <input type="text" class="form-control" id="validationCustom02" placeholder="First Name"required>
+      <input type="text" class="form-control" name="inputFN" id="inputFN" style="text-transform: uppercase;" placeholder="First Name" required>
       <div class="invalid-feedback">
           Please enter your First Name
         </div>
     </div>
      <div class="col-md-4 mb-3">
       <label for="validationCustom02">Middle name</label>
-      <input type="text" class="form-control" id="validationCustom02" placeholder="Middle name">
+      <input type="text" class="form-control" name="inputMN" style="text-transform: uppercase;" id="inputMN" placeholder="Middle name">
     </div>
      <div class="col-md-4 mb-3">
       <label for="validationCustom01">Last Name *</label>
-      <input type="text" class="form-control" id="validationCustom01" placeholder="Last Name" required>
+      <input type="text" class="form-control" style="text-transform: uppercase;" name="inputLN" id="inputLN" required>
       <div class="invalid-feedback">
           Please enter your Last Name
         </div>
     </div>
     <div class="col-md-4 mb-3">
+    <label for="validationCustom01">Status *</label>
+    <select class="custom-select" style="text-transform: uppercase;" id="inputS" name="inputS"required>
+      <option value="">Select...</option>
+      <option>Active</option>
+      <option>Not Active</option>
+    </select>
+    <div class="invalid-feedback">Example invalid custom select feedback</div>
+  </div>
+    <div class="col-md-4 mb-3">
     <label for="validationCustom01">Sex *</label>
-    <select class="custom-select" required>
+    <select class="custom-select" style="text-transform: uppercase;" id="inputSe" name="inputSe" required>
       <option value="">Select...</option>
       <option>Male</option>
       <option>Female</option>
@@ -153,23 +146,38 @@
     <div class="invalid-feedback">Example invalid custom select feedback</div>
   </div>
   <div class="col-md-4 mb-3">
+    <label for="validationCustom01">Religion *</label>
+    <select class="custom-select" style="text-transform: uppercase;" required>
+      <option value="">Select...</option>
+      <option>Catholic</option>
+      <option>Christian</option>
+      <option>Born Again</option>
+    </select>
+    <div class="invalid-feedback">Please Select one of the following options</div>
+  </div>
+    <div class="col-md-4 mb-3">
     <label for="validationCustom01">Birth Date *</label>
-    <input type="date" class="form-control" id="validationCustom01" placeholder="Last Name" required>
+    <input type="date" class="form-control" style="text-transform: uppercase;" name="inputBD" id="inputBD" required>
     <div class="invalid-feedback">Please enter your Birth Date</div>
   </div>
-  <div class="col-md-4 mb-3">
-    <label for="validationCustom01">Religion *</label>
-    <select class="custom-select" required>
-      <option value="">Select...</option>
-      <option>Catholic</option>
-      <option>Christian</option>
-      <option>Born Again</option>
-    </select>
-    <div class="invalid-feedback">Please Select one of the following options</div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom01">Type *</label>
+      <input type="text" class="form-control" style="text-transform: uppercase;" name="inputType" id="inputType" placeholder="Enter a Birthdate" required readonly>
+      <div class="invalid-feedback">
+          Enter a Birth Date
+        </div>
+                </div>
+        <div class="col-md-4 mb-3">
+      <label for="validationCustom01">Age *</label>
+      <input type="text" class="form-control" style="text-transform: uppercase;" name="inputAge" id="inputAge" placeholder="Enter a Birthdate" required readonly>
+      <div class="invalid-feedback">
+          Enter a Birth Date
+        </div>
   </div>
+  
   <div class="col-md-4 mb-3">
     <label for="validationCustom01">Nationality *</label>
-    <select class="custom-select" required>
+    <select class="custom-select" style="text-transform: uppercase;" name="inputN" id="inputN" required>
       <option value="">Select...</option>
       <option>Catholic</option>
       <option>Christian</option>
@@ -177,19 +185,10 @@
     </select>
     <div class="invalid-feedback">Please Select one of the following options</div>
   </div>
+
   <div class="col-md-4 mb-3">
     <label for="validationCustom01">Civil Status *</label>
-    <select class="custom-select" required>
-      <option value="">Select...</option>
-      <option>Catholic</option>
-      <option>Christian</option>
-      <option>Born Again</option>
-    </select>
-    <div class="invalid-feedback">Please Select one of the following options</div>
-  </div>
-  <div class="col-md-4 mb-3">
-    <label for="validationCustom01">BloodType *</label>
-    <select class="custom-select" required>
+    <select class="custom-select" style="text-transform: uppercase;" name="inputCS" id="inputCS" required>
       <option value="">Select...</option>
       <option>Catholic</option>
       <option>Christian</option>
@@ -199,11 +198,22 @@
   </div>
   <div class="col-md-4 mb-3">
       <label for="validationCustom01">Philhealth No *</label>
-      <input type="text" class="form-control" id="validationCustom02" placeholder="First Name"required>
+      <input type="text" class="form-control" style="text-transform: uppercase;" name="inputPN" id="inputPN" placeholder="Philhealth No"required>
       <div class="invalid-feedback">
           Please enter your Philhealth No
         </div>
 </div>
+
+<div class="col-md-4 mb-3">
+    <label for="validationCustom01">Family Number *</label>
+    <select class="custom-select" style="text-transform: uppercase;" name="inputFam" id="inputFam" required>
+      <option value="">Select ...</option>
+      <?php foreach ($data[2]['famlist'] as $test) { ?>
+        <option><?php echo $test->code; ?>
+        <?php }?></option>
+    </select>
+    <div class="invalid-feedback">Please Select one of the following options</div>
+    </div>
     </div>
 
   </div>
@@ -212,31 +222,26 @@
   <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 <br/>
   <div class="form-row">
-    <div class="col-md-12">
-    <label for="inputAddress">Permanent Address *</label>     <small id="passwordHelpBlock" class="form-text text-muted"> (House/Bldg. No., Street, Subdivision)</small>
-    <br/>
-    <input type="text" required class="form-control" id="inputAddress" placeholder="(House/Bldg. No., Street, Subdivision" required>
+    <div class="col-md-12 mb-3">
+    <label for="inputAddress">Permanent Address *</label>     
+    <input type="text" required class="form-control" style="text-transform: uppercase;" id="inputAdd" name="inputAdd" placeholder="(House/Bldg. No., Street, Subdivision" required>
     <div class="invalid-feedback">
           Please your House/Bldg, No. , Street, Subdivision
         </div>
-  </div>
-
+      </div>
       <div class="col-md-4 mb-3">
-        <br/>
-    <label for="validationCustom01">Region *</label>
-    <select class="custom-select" required>
-      <option value="">Select Region...</option>
-      <option>Taguig</option>
-      <option>Makati</option>
-      <option>Manila</option>
+    <label for="validationCustom01">Brgy *</label>
+    <select class="custom-select" style="text-transform: uppercase;" id="inputBrgy" name="inputBrgy" required>
+      <option value="">Select Brgy...</option>
+      <?php foreach ($data[1]['brgylist'] as $test) { ?>
+        <option><?php echo $test->BRGYID; ?>
+        <?php }?></option>
     </select>
     <div class="invalid-feedback">Please Select one of the following options</div>
   </div>
-  <br/>
   <div class="col-md-4 mb-3">
-        <br/>
-    <label for="validationCustom01">Province *</label>
-    <select class="custom-select" required>
+    <label for="validationCustom01">St *</label>
+    <select class="custom-select" style="text-transform: uppercase;" id="inputSt" name="inputSt" required>
       <option value="">Select Province...</option>
       <option>Taguig</option>
       <option>Makati</option>
@@ -245,9 +250,8 @@
     <div class="invalid-feedback">Please Select one of the following options</div>
   </div>
     <div class="col-md-4 mb-3">
-        <br/>
     <label for="validationCustom01">City/Municipality *</label>
-    <select class="custom-select" required>
+    <select class="custom-select" style="text-transform: uppercase;" id="inputC" name="inputC" required>
       <option value="">Select City/Municipality...</option>
       <option>Taguig</option>
       <option>Makati</option>
@@ -257,7 +261,7 @@
   </div>
         <div class="col-md-4 mb-3">
       <label for="validationCustom01">Zip Code *</label>
-      <input type="text" class="form-control" id="validationCustom01" placeholder="Zip Code" required>
+      <input type="text" class="form-control" style="text-transform: uppercase;" id="inputZ" name="inputZ" placeholder="Zip Code" required>
       <div class="invalid-feedback">
           Please enter ZipCode
         </div>
@@ -265,28 +269,27 @@
 
     <div class="col-md-4">
       <label for="validationCustom01">Mobile *</label>
-      <input type="text" class="form-control" id="validationCustom01" placeholder="Mobile" required>
+      <input type="text" class="form-control" style="text-transform: uppercase;" id="inputM" name="inputM" placeholder="Mobile" required>
       <div class="invalid-feedback">
           Please enter Mobile
         </div>
     </div>
 
-    <div class="col-md-4">
-      <label for="validationCustom01">Landline </label>
-      <input type="text" class="form-control" id="validationCustom01" placeholder="Landline" required>
-      <div class="invalid-feedback">
-          Please enter Landline
-        </div>
-    </div>
+     <div class="col-md-4 mb-3">
+      <label for="validationCustom01">Assisted By :  *</label>
+      <input type="text" class="form-control" name="inputAssist" id="inputAssist" 
+      value="<?php echo strtoupper($data[3]['userlist'][0]->FN) ?> <?php echo strtoupper($data[3]['userlist'][0]->LN) ?>" readonly>
+       </div>
 
     <div class="col-md-12">
-    <label for="inputAddress">Email *</label>   
-    <br/>
-    <input type="text" class="form-control" placeholder="Email" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
-    <div class="invalid-feedback">
-          Please enter your email
-        </div>
+      <label for="validationCustom01">Remarks *</label>
+    <textarea class="form-control" style="text-transform: uppercase;" id="inputR" name="inputR" rows="4"></textarea>
+    </div>
+
+    <div class="form-group">
+    
   </div>
+
       <!-- body -->
 
   </div>
@@ -326,7 +329,8 @@
 
   <!-- Argon Scripts -->
   <!-- Core -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -334,8 +338,89 @@
 <!-- jQuery library -->
 <script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
 
-<!-- DataTables JS library -->
-<script type="text/javascript" src="<?php echo base_url('assets/DataTables/datatables.min.js'); ?>"></script>
+<script>
+  $(document).ready(function() {
+    $('#myTable').DataTable({
+      "ajax": '<?php echo base_url('template/getEventDatatable/'.$data['0']['hname'][0]->HCID); ?>',
+      "type": 'POST'
+      ,
+      "pageLength": 10,
+      //Set column definition initialisation properties.
+            "columnDefs": [
+                {
+                    "targets": [1,2,3,4,5,6,7], //first, fourth & seventh column
+                    "orderable": false //set not orderable
+                }
+            ]
+    });
+  });
+
+  function validate(evt) {
+  var theEvent = evt || window.event;
+
+  // Handle paste
+  if (theEvent.type === 'paste') {
+      key = event.clipboardData.getData('text/plain');
+  } else {
+  // Handle key press
+      var key = theEvent.keyCode || theEvent.which;
+      key = String.fromCharCode(key);
+  }
+  var regex = /[0-9]|\./;
+  if( !regex.test(key) ) {
+    alert ("No Characters Allowed")
+    theEvent.returnValue = false;
+    if(theEvent.preventDefault) theEvent.preventDefault();
+  }
+};
+
+ $("#inputBD").change(function() 
+  {    
+    $val= $(this).val();
+    var today = new Date();
+    var birthDate = new Date($val);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    if(age > 59)
+    {
+        document.getElementById("inputType").value = "SENIOR";
+        document.getElementById("inputAge").value = age;
+        document.getElementById("inputPN").disabled = false;
+    }
+    else if (age > 19)
+    {
+      document.getElementById("inputType").value = "ADULT";
+      document.getElementById("inputAge").value = age;
+      document.getElementById("inputPN").disabled = false; 
+    }
+     else if (age > 12)
+    {
+      document.getElementById("inputType").value = "ADOLESCENCE";
+      document.getElementById("inputAge").value = age;
+      document.getElementById("inputPN").disabled = true; 
+     
+    }
+     else
+    {
+     document.getElementById("inputType").value = "CHILD";
+     document.getElementById("inputAge").value = age;
+     document.getElementById("inputPN").disabled = true; 
+    }
+  });
+
+$('#inputID').change(function(){
+   var username = $('#inputID').val();
+   if(username != ''){
+    $.ajax({
+     url: "<?php echo base_url(); ?>template/checkUsername",
+     method: "POST",
+     data: {username:username},
+     success: function(data){
+      $('#username_result').html(data);
+     }
+    });
+   }
+  });
+</script>
 </body>
 
 </html>
