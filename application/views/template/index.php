@@ -223,13 +223,13 @@
         // Create our data table.
         var data = google.visualization.arrayToDataTable([
           ['Brgy', 'No of Families'],
-          ['809' , 65],
-          ['809' , 100],
-          ['810', 5],
-          ['811', 9],
-          ['812', 23],
-          ['814', 98],
-          ['815', 92]
+          ['blue' , 65],
+          ['red' , 100],
+          ['orange', 5],
+          ['green', 9],
+          ['violet', 23],
+          ['lightblue', 98],
+          ['pink', 92]
         ]);
 
         // Create a dashboard.

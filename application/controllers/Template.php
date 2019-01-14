@@ -23,7 +23,7 @@ class Template extends CI_Controller {
 	{
 		parent :: __construct();
 		$this -> load -> model('getinfo','m');
-	}
+	}	
 
 	function login()
 	{
@@ -66,7 +66,7 @@ class Template extends CI_Controller {
 			$myvars = $get[0]->HCID;
 
 			
-			$this->load-> view('template/dashboard');
+			$this->load->view('template/dashboard');
 		}	
 	}
 
