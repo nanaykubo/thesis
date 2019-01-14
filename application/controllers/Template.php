@@ -32,7 +32,7 @@ class Template extends CI_Controller {
 
 	function index()
 	{
-		$this->load->view('template/index');	
+		$this->load->view('template/try');	
 	}
 
 	function login_validation()
@@ -64,15 +64,28 @@ class Template extends CI_Controller {
 			);
 
 			$myvars = $get[0]->HCID;
-
 			
-			$this->load-> view('template/dashboard');
+			$totalpatients= $this->m->getTotalPatients($myvars);
+			$totalfamily= $this->m->getTotalFamily($myvars);
+			$hname['hname'] = $this->m->getHCName($myvars);
+
+			$data['data'] = array($hname,$totalpatients,$totalfamily);
+
+			$this->load-> view('template/dashboard',$data);
 		}	
 	}
 
-	public function getpie()
+	public function test($HCID)
 	{
-			$charts=$this->m->getChart();
+		$totalpatients = $this->m->getTotalPatients($HCID);
+		$totalfamily = $this->m->getTotalFamily($HCID);
+		$data['data'] = array($totalpatients,$totalfamily);
+		print_r($data);
+	}
+
+	public function getpie($HCID)
+	{
+			$charts=$this->m->getPieChart($HCID);
 
 			$responce->cols[] = array( 
 			"id" => "", 
@@ -82,7 +95,7 @@ class Template extends CI_Controller {
 			); 
 			$responce->cols[] = array( 
 			"id" => "", 
-			"label" => "total", 
+			"label" => "No of Families", 
 			"pattern" => "", 
 			"type" => "number" 
 			); 

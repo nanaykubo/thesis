@@ -52,6 +52,33 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getPieChart($HCID)
+	{
+		$this->db->select('brgy.BRGYID, brgy.HCID,COUNT(tabletest.Brgy) as total')
+		->from('brgy');
+		$this->db->join('tabletest', 'brgy.BRGYID = tabletest.Brgy','left')
+         ->group_by('brgy.BRGYID');	
+        $this->db->having('brgy.HCID=',$HCID);
+        $query = $this->db->get();
+		return $query->result();
+	}
+
+	public function getTotalPatients($HCID)
+	{
+		$this->db->select('COUNT(ID)');
+		$this->db->where('HCID',$HCID);
+		$query = $this->db->get('tabletest');
+		return $query->result();
+	}
+
+	public function getTotalFamily($HCID)
+	{
+		$this->db->select('COUNT(code)');
+		$this->db->where('HCID',$HCID);
+		$query = $this->db->get('family');
+		return $query->result();
+	}
+
 		public function getServices()
 	{
 		$query = $this -> db -> get('services');
@@ -64,6 +91,7 @@ class getinfo extends CI_Model
 			return false;
 		}
 	}
+
 	
 	public function getFilteredInfo($HCID,$searchValue)
 	{
@@ -87,16 +115,6 @@ class getinfo extends CI_Model
 	{
 		$this->db->select('*');
 		$query = $this->db->get('records');
-		return $query->result();
-	}
-
-	public function getChart()
-	{
-		$this->db->select('brgy.BRGYID, COUNT(tabletest.Brgy) as total')
-		->from('brgy');
-		$this->db->join('tabletest', 'brgy.BRGYID = tabletest.Brgy','left')
-         ->group_by('brgy.BRGYID');
-         $query = $this->db->get();
 		return $query->result();
 	}
 

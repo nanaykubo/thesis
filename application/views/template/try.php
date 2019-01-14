@@ -15,65 +15,66 @@
 
   <body>
     <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <html>
+  <head>
+    <!--Load the AJAX API-->
+     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript">
 
+      // Load the Visualization API and the controls package.
       google.charts.load('current', {'packages':['corechart', 'controls']});
 
-google.charts.setOnLoadCallback(drawDashboard);
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawDashboard);
 
-function drawDashboard() {
-    var jsonData = $.ajax({
+      // Callback that creates and populates a data table,
+      // instantiates a dashboard, a range slider and a pie chart,
+      // passes in the data and draws it.
+      function drawDashboard() {
+        var jsonData = $.ajax({
           url: "<?php echo base_url('template/getpie/') ?>",
           dataType: "json",
           async: false
           }).responseText;
-    
-    var data = new google.visualization.DataTable(jsonData);                
-    var view = new google.visualization.DataView(data);                     
-    view.setColumns([{
-      calc: function (data, row) {
-        return new Date(data.getValue(row, 0))
-      },
-      type: 'date',
-      label: 'Data'
-    }, 1, 2, 3, 4]);
 
+        // Create our data table.
+        var data = new google.visualization.DataTable(jsonData);
 
-    var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard_div'));   
+        // Create a dashboard.
+        var dashboard = new google.visualization.Dashboard(
+            document.getElementById('dashboard_div'));
 
-    var dataRangeSlider = new google.visualization.ControlWrapper({     
-        'controlType': 'DateRangeFilter',
-        'containerId': 'filter_div',
-        'options': {
-            'filterColumnLabel': 'Data'
-       }
-    });
+        // Create a range slider, passing some options
+        var donutRangeSlider = new google.visualization.ControlWrapper({
+          'controlType': 'NumberRangeFilter',
+          'containerId': 'filter_div',
+          'options': {
+            'filterColumnLabel': 'total'
+          }
+        });
 
+        // Create a pie chart, passing some options
+        var pieChart = new google.visualization.ChartWrapper({
+          'chartType': 'PieChart',
+          'containerId': 'chart_div',
+          'options': {
+            'width': 800,
+            'height': 300,
+            'pieSliceText': 'value',
+            'legend': 'right'
+          }
+        });
 
-    google.visualization.events.addListener(dataRangeSlider, 'ready', function () {
-        var state = dataRangeSlider.getState();
-        console.log(state.lowValue, state.highValue);
-      });
+        // Establish dependencies, declaring that 'filter' drives 'pieChart',
+        // so that the pie chart will only display entries that are let through
+        // given the chosen slider range.
+        dashboard.bind(donutRangeSlider, pieChart);
 
-
-    var lineChart = new google.visualization.ChartWrapper({
-        'chartType': 'LineChart',
-        'containerId': 'chart_div',
-        'options': {
-            'title': 'Numero registrazioni per operatore',              'width':1200,
-            'height':900,
-            chartArea:{left:80,top:50,width:"70%",height:"80%"}
-        }
-
-    });
-
-
-    dashboard.bind(dataRangeSlider, lineChart);
-    dashboard.draw(data);
-
-}
-</script>
+        // Draw the dashboard.
+        dashboard.draw(data);
+      }
+    </script>
   </head>
 
   <body>
@@ -85,5 +86,5 @@ function drawDashboard() {
     </div>
   </body>
 </html>
-  </body>
+</body>
 </html>
