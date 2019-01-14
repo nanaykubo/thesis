@@ -14,43 +14,76 @@
   </head>
 
   <body>
-    <h1>Hello, world!</h1>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
 
-     <div class="container mt--2">
-      <!-- Table -->
-      <div class="row">
-        <div class="col">
-          <div class="card shadow">
-            <div class="card-header border-0">
-              <h3 class="mb-0">Patients</h3>
-            <table class="table" id="myTable">
-  <thead>
-    <tr>
-      <th scope="col">code</th>
-      <th scope="col">HCID</th>
-      <th scope="col">Name</th>
-    </tr>
-  </thead>
-  <tbody>
-   
-  </tbody>
-</table>
+      google.charts.load('current', {'packages':['corechart', 'controls']});
+
+google.charts.setOnLoadCallback(drawDashboard);
+
+function drawDashboard() {
+    var jsonData = $.ajax({
+          url: "<?php echo base_url('template/getpie/') ?>",
+          dataType: "json",
+          async: false
+          }).responseText;
+    
+    var data = new google.visualization.DataTable(jsonData);                
+    var view = new google.visualization.DataView(data);                     
+    view.setColumns([{
+      calc: function (data, row) {
+        return new Date(data.getValue(row, 0))
+      },
+      type: 'date',
+      label: 'Data'
+    }, 1, 2, 3, 4]);
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-      <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-  
-    <script>
-  $(document).ready(function() {
-    $('#myTable').DataTable({
-      "ajax": '<?php echo base_url('template/getEventDatatable'); ?>',
-      "type": 'POST'
+    var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard_div'));   
+
+    var dataRangeSlider = new google.visualization.ControlWrapper({     
+        'controlType': 'DateRangeFilter',
+        'containerId': 'filter_div',
+        'options': {
+            'filterColumnLabel': 'Data'
+       }
     });
-  });
+
+
+    google.visualization.events.addListener(dataRangeSlider, 'ready', function () {
+        var state = dataRangeSlider.getState();
+        console.log(state.lowValue, state.highValue);
+      });
+
+
+    var lineChart = new google.visualization.ChartWrapper({
+        'chartType': 'LineChart',
+        'containerId': 'chart_div',
+        'options': {
+            'title': 'Numero registrazioni per operatore',              'width':1200,
+            'height':900,
+            chartArea:{left:80,top:50,width:"70%",height:"80%"}
+        }
+
+    });
+
+
+    dashboard.bind(dataRangeSlider, lineChart);
+    dashboard.draw(data);
+
+}
 </script>
+  </head>
+
+  <body>
+    <!--Div that will hold the dashboard-->
+    <div id="dashboard_div">
+      <!--Divs that will hold each control and chart-->
+      <div id="filter_div"></div>
+      <div id="chart_div"></div>
+    </div>
+  </body>
+</html>
   </body>
 </html>

@@ -90,6 +90,16 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getChart()
+	{
+		$this->db->select('brgy.BRGYID, COUNT(tabletest.Brgy) as total')
+		->from('brgy');
+		$this->db->join('tabletest', 'brgy.BRGYID = tabletest.Brgy','left')
+         ->group_by('brgy.BRGYID');
+         $query = $this->db->get();
+		return $query->result();
+	}
+
 	public function getInfoById($username,$password)
 	{
 		$query = $this->db->get('tabletest');
@@ -164,6 +174,8 @@ class getinfo extends CI_Model
 			'CivilStatus'=>$this->input->post('inputCS'),
 			'FamilyCode'=>$this->input->post('inputFam'),
 			'Philhealth'=>$this->input->post('inputPN'),
+			'dateinsert'=>$this->input->post('inputinsert'),
+			'Assist'=>$this->input->post('inputassist'),
 			'Remarks'=>$this->input->post('inputR')
 			
 	);

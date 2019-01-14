@@ -32,7 +32,7 @@ class Template extends CI_Controller {
 
 	function index()
 	{
-		$this->load->view('template/try');	
+		$this->load->view('template/index');	
 	}
 
 	function login_validation()
@@ -65,13 +65,45 @@ class Template extends CI_Controller {
 
 			$myvars = $get[0]->HCID;
 
-			$hname['hname'] = $this->m->getHCName($myvars);
-			$fdata['finfo'] = $this->m->getHCInfo($myvars);
-
-			$data['data'] = array($hname,$fdata);
-			$this->load-> view('template/dashboard',$data);
+			
+			$this->load-> view('template/dashboard');
 		}	
 	}
+
+	public function getpie()
+	{
+			$charts=$this->m->getChart();
+
+			$responce->cols[] = array( 
+			"id" => "", 
+			"label" => "BRGYID", 
+			"pattern" => "", 
+			"type" => "string" 
+			); 
+			$responce->cols[] = array( 
+			"id" => "", 
+			"label" => "total", 
+			"pattern" => "", 
+			"type" => "number" 
+			); 
+
+			foreach($charts as $cd) 
+			{ 
+			$responce->rows[]["c"] = array( 
+			array( 
+			    "v" => "$cd->BRGYID", 
+			    "f" => null 
+			) , 
+			array( 
+			    "v" => (int)$cd->total, 
+			    "f" => null 	
+			) 
+			); 
+			} 
+
+			echo json_encode($responce); 
+	} 
+
 
 	public function tables()
 	{
@@ -128,6 +160,11 @@ class Template extends CI_Controller {
  	 }
  	}
 
+ 	public function edit()
+	{
+		redirect(base_url('template/dashboard'));
+	}
+
 	public function getEventDatatable($HCID)
 	{
 	$getdata = $this->m->ajax($HCID);
@@ -136,9 +173,9 @@ class Template extends CI_Controller {
 	{
 		$row = array();
 		$row[] = $value->ID;
+		$row[] = $value->Status;
 		$row[] = $value->LN;
 		$row[] = $value->FN;
-		$row[] = $value->MN;
 		$row[] = $value->BirthDate;
 		$row[] = $value->Sex;
 		$row[] = array(
@@ -151,7 +188,7 @@ class Template extends CI_Controller {
       </a>
       <div class='dropdown-menu dropdown-menu-right dropdown-menu-arrow'>
         <a class='dropdown-item' href='records'><i class='fas fa-folder-open'></i>View Records</a>
-        <a class='dropdown-item' href='#''><i class='fas fa-edit'></i>Edit</a>
+        <a class='dropdown-item' data-toggle='modal' data-target='#edit' href='#'><i class='fas fa-edit'></i>Edit</a>
         <a class='dropdown-item' href='#''><i class='fas fa-trash-alt'></i>Delete</a>
       </div>";
 		$data[] = $row;

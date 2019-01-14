@@ -14,8 +14,8 @@
   <!-- Icons -->
   <link href="../assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
   <link href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <!-- Argon CSS -->
   <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
+  <!-- Argon CSS -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 </head>
 
@@ -56,10 +56,10 @@
             <table class="table align-items-center table-flush" id="myTable">
   <thead class="thead-light">
     <tr>
-      <th scope="col">ID</th>
+      <th width ="10%" scope="col">ID</th>
+      <th scope="col">Status</th>
       <th scope="col">Last Name</th>
       <th scope="col">First Name</th>
-      <th scope="col">Middle Name</th>
       <th scope="col">Date of Birth</th>
       <th scope="col">Sex</th>
       <th scope="col">Address</th>
@@ -68,8 +68,8 @@
   </thead>
   <tbody>
     <tr>
-
-</tr>
+      
+  </tr>
   </tbody>
 </table>
 
@@ -96,6 +96,8 @@
 <div class="tab-content " id="nav-tabContent">
   <!-- patient tab -->
    <input type="hidden" name="txtHCID" id="txtHCID" value="<?php echo $data['0']['hname'][0]->HCID?>"/>
+   <input type="hidden" name="inputassist" id="inputassist" value="<?php echo $data[3]['userlist'][0]->code?>"/>
+   <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
   <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
       <br/>
 
@@ -268,7 +270,7 @@
     </div>
 
     <div class="col-md-4">
-      <label for="validationCustom01">Mobile *</label>
+      <label for="validationCustom01">Mobile/Landline *</label>
       <input type="text" class="form-control" style="text-transform: uppercase;" id="inputM" name="inputM" placeholder="Mobile" required>
       <div class="invalid-feedback">
           Please enter Mobile
