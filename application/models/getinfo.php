@@ -65,30 +65,56 @@ class getinfo extends CI_Model
 
 	public function getTotalPatients($HCID)
 	{
-		$this->db->select('COUNT(ID)');
+		$this->db->select('COUNT(ID) as count');
+		$this->db->from('tabletest');
 		$this->db->where('HCID',$HCID);
-		$query = $this->db->get('tabletest');
-		return $query->result();
+		$query = $this->db->get();
+		if ($query->num_rows() > 0 )
+		{
+		$row = $query->row();
+		return $row->count;
+		}
+		return 0;
 	}
 
 	public function getTotalFamily($HCID)
 	{
-		$this->db->select('COUNT(code)');
+		$this->db->select('COUNT(code) as family');
+		$this->db->from('family');
 		$this->db->where('HCID',$HCID);
-		$query = $this->db->get('family');
-		return $query->result();
+		$query = $this->db->get();
+		if ($query->num_rows() > 0 )
+		{
+		$row = $query->row();
+		return $row->family;
+		}
+		return 0;
 	}
 
-		public function getServices()
+	public function getUserActivity($code)
+	{
+		$this->db->select('COUNT(code) as family');
+		$this->db->from('family');
+		$this->db->where('HCID',$HCID);
+		$query = $this->db->get();
+		if ($query->num_rows() > 0 )
+		{
+		$row = $query->row();
+		return $row->family;
+		}
+		return 0;
+	}
+
+	public function getServices()
 	{
 		$query = $this -> db -> get('services');
 		if ($query -> num_rows() > 0)
 		{
-			return $query -> result();
+		return $query -> result();
 		}
 		else
 		{
-			return false;
+		return false;
 		}
 	}
 

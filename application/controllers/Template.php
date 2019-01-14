@@ -64,12 +64,12 @@ class Template extends CI_Controller {
 			);
 
 			$myvars = $get[0]->HCID;
-			
+
 			$totalpatients= $this->m->getTotalPatients($myvars);
 			$totalfamily= $this->m->getTotalFamily($myvars);
-			$hname['hname'] = $this->m->getHCName($myvars);
+			$userlist['userlist'] = $get;
 
-			$data['data'] = array($hname,$totalpatients,$totalfamily);
+			$data['data'] = array($userlist,$totalpatients,$totalfamily);
 
 			$this->load-> view('template/dashboard',$data);
 		}	
@@ -77,10 +77,8 @@ class Template extends CI_Controller {
 
 	public function test($HCID)
 	{
-		$totalpatients = $this->m->getTotalPatients($HCID);
-		$totalfamily = $this->m->getTotalFamily($HCID);
-		$data['data'] = array($totalpatients,$totalfamily);
-		print_r($data);
+		$totalpatients = $this->m->getTotalFamily($HCID);
+		print_r($totalpatients);
 	}
 
 	public function getpie($HCID)
