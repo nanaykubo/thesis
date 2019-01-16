@@ -246,7 +246,7 @@
               </div>
             </div>
             <div class="col-xl-4 col-lg-6">
-              <div class="card style="width: 400rem;">
+              <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
@@ -295,7 +295,7 @@
     <!-- Page content -->
     <div class="container-fluid mt--7">
       <div class="row">
-             <div class="col-xl-8 mb-5 mb-xl-0">
+             <div class="col-xl-7 mb-5 mb-xl-0">
           <div class="card shadow">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
@@ -328,7 +328,7 @@
 
         var options = {
           title: '',
-          width: 600,
+          width: 500,
           legend: { position: 'none' },
           chart: { title: '' },
           bars: 'horizontal', // Required for Material Bar Charts.
@@ -346,14 +346,14 @@
     </script>
   </head>
   <body>
-    <div id="top_x_div" style="width: 10px; height: 400px;"></div>
+    <div id="top_x_div" style="width: 10px; height: 412px;"></div>
   </body>
           </div>
         </div>
       </div>
 
-      <div class="col-xl-4">
-        <div class="card" style="height: 33.6rem;">
+      <div class="col-xl-5">
+        <div class="card" style="height: 34.4rem;">
           <div class="card shadow">
             <div class="card-header border-0">
               <div class="row align-items-center">
@@ -369,46 +369,11 @@
             <thead class="thead-light text-center">
             <tr>
             <th scope="col">Activity</th>
-            <th scope="col">Date Performed</th>
+            <th scope="col">Date</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-            <td>Added Chua</td>
-            <td>09-09-10</td>
-            </tr>
-            <tr>
-            <td>Added Chua</td>
-            <td>09-09-10</td>
-            </tr>
-            <tr>
-            <td>Added Chua</td>
-            <td>09-09-10</td>
-            </tr>
-            <tr>
-            <td>Added Chua</td>
-            <td>09-09-10</td>
-            </tr>
-            <tr>
-            <td>Added Chua</td>
-            <td>09-09-10</td>
-            </tr>
-            <tr>
-            <td>Added Chua</td>
-            <td>09-09-10</td>
-            </tr>
-            <tr>
-            <td>Added Chua</td>
-            <td>09-09-10</td>
-            </tr>
-            <tr>
-            <td>Added Chua</td>
-            <td>09-09-10</td>
-            </tr>
-            <tr>
-            <td>Added Chua</td>
-            <td>09-09-10</td>
-            </tr>
+
             </tbody>
             </table>
             </div>
@@ -508,7 +473,7 @@
           'containerId': 'chart_div',
           'options': {
             'is3D': true,
-            'width': 480,
+            'width': 470,
             'height': 350,
             'legend': 'right',
             'sliceVisibilityThreshold': 0
@@ -565,26 +530,25 @@
   <script src="../assets/js/argon.js?v=1.0.0"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script>
   $(document).ready(function() {
     $('#myTable').DataTable({
-      "ajax": '',
+      "ajax": '<?php echo base_url('template/getLogs/'.$data[0]['userlist'][0]->code); ?>',
       "type": 'POST',
       "searching":false,
       "info":false,
       "bLengthChange": false,
-      "bFilter": false,
-      "pageLength": 8,
-      //Set column definition initialisation properties.
+      "pageLength": 11,
+       order: [[1, 'desc']],
+    //Set column definition initialisation properties.
             "columnDefs": [
-                {
-                    "targets": [],
-                    "orderable": false 
-                }
-            ]
+                { "width": "40%", "targets": [1]},
+                { "width": "60%", "targets": [0], "orderable":false },
+                {"className": "dt-center", "targets": "_all"}
+                        ]
     });
   });
   </script>

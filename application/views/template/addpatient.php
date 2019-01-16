@@ -149,7 +149,7 @@
   </div>
   <div class="col-md-4 mb-3">
     <label for="validationCustom01">Religion *</label>
-    <select class="custom-select" style="text-transform: uppercase;" required>
+    <select class="custom-select" style="text-transform: uppercase;" id="inputRe" name="inputRe" required>
       <option value="">Select...</option>
       <option>Catholic</option>
       <option>Christian</option>
@@ -341,20 +341,77 @@
 <script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
 
 <script>
-  $(document).ready(function() {
-    $('#myTable').DataTable({
-      "ajax": '<?php echo base_url('template/getEventDatatable/'.$data['0']['hname'][0]->HCID); ?>',
-      "type": 'POST'
-      ,
-      "pageLength": 10,
+    $(document).ready(function() {
+    var table= $('#myTable').DataTable({
+      "ajax": '<?php echo base_url('template/getEventDatatable/'.$data[3]['userlist'][0]->HCID); ?>',
+      "type": 'POST',
       //Set column definition initialisation properties.
             "columnDefs": [
+                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Edit</button><button id="deleteBtn" class="dropdown-item"><i class="fas fa-trash-alt"></i>Delete</button></div></div>'},
                 {
-                    "targets": [1,2,3,4,5,6,7], //first, fourth & seventh column
-                    "orderable": false //set not orderable
-                }
+      "targets": [1,2,3,4,5,6,7 ],
+      "orderable": false}
             ]
     });
+
+    $('#myTable tbody').on( 'click', 'button', function (e) {
+            var data = table.row($(this).parents('tr') ).data();
+            var action=this.id;
+            var ID = data[0];
+            if (action=='deleteBtn')
+            {
+
+            }
+            if (action=='editBtn')
+            {
+              $.ajax({
+                  url: '<?php echo base_url('template/edit/'); ?>',  
+                  type: 'POST',
+                  data: {'ID': ID},
+                  success: function (result) 
+                  {
+                  var parsed= JSON.parse(result);
+                  $.each(parsed,function(index,value)
+                  {
+                    $(".modal-body #inputID").val(value[0]);
+                    $(".modal-body #inputFN").val(value[1]);
+                    $(".modal-body #inputMN").val(value[2]);
+                    $(".modal-body #inputLN").val(value[3]);
+                    $(".modal-body #inputS").val(value[4]);
+                    $(".modal-body #inputSe").val(value[5]);
+                    $(".modal-body #inputRe").val(value[6]);
+                    $(".modal-body #inputBD").val(value[7]);
+                    $(".modal-body #inputType").val(value[8]);
+                    $(".modal-body #inputAge").val(value[9]);
+                    $(".modal-body #inputN").val(value[10]);
+                    $(".modal-body #inputCS").val(value[11]);
+                    $(".modal-body #inputPN").val(value[12]);
+                    $(".modal-body #inputFam").val(value[13]);
+                    $(".modal-body #inputAddress").val(value[14]);
+                    $(".modal-body #inputBrgy").val(value[15]);
+                    $(".modal-body #inputSt").val(value[16]);
+                    $(".modal-body #inputC").val(value[17]);
+                    $(".modal-body #inputZ").val(value[18]);
+                    $(".modal-body #inputM").val(value[19]);
+                    $(".modal-body #inputR").val(value[20]);
+                    $(".modal-body #txtHCID").val(value[21]);
+                    var val = $("#inputType").val();
+                    if(val=='CHILD' || val== 'ADOLESCENCE')
+                    {
+                      $("#inputPN").prop("disabled",true);
+                    }
+                    else
+                    {
+                      $("#inputPN").prop("disabled",false);
+                    }
+                    $("#exampleModalLong").modal('show')
+                    
+                  });
+                  } 
+                  });
+            }
+
+            });
   });
 
   function validate(evt) {

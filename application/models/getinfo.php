@@ -52,6 +52,14 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getLogs($code)
+	{
+		$this->db->select("activity,date");
+		$this->db->where('code',$code);
+		$query = $this->db->get('logs');
+		return $query->result();
+	}
+
 	public function getPieChart($HCID)
 	{
 		$this->db->select('brgy.BRGYID, brgy.HCID,COUNT(tabletest.Brgy) as total')
