@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
@@ -19,31 +20,39 @@
   <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
   <!-- Argon CSS -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
     <title>Hello, world!</title>
   </head>
 
   <body>
     
-  <form action="<?php echo base_url('template/testsubmit/') ?>" method="post">
-    <div class="form-row">
-    <div class="col">
-      <input type="input" id="input1" name="input1" class="form-control" placeholder="Activity">
-    </div>
-    <div class="col">
-      <input type="date" id="input2" name="input2" class="form-control" placeholder="date">
-    </div>
-  </div>
-  <input type="submit">
-  </form>
-
-</body>
-</html>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <button class="btn1">clickme1</button> <br/>
+<button class="btn2">clickme2</button>
+<br/><br/>
+<select id="dynamicChange">
+   <option value="1">changevalue1</option>
+   <option value="2">changevalue2</option>
+</select>
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $(".btn1").click(function () {
+       //this is change select value 1
+        $('#dynamicChange').val('1').trigger('change');
+    });
+     $(".btn2").click(function () {
+         //
+         //this is change select value 1
+         $('#dynamicChange').val('2').trigger('change');
+    });
+  
+});
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+</body>
+</html>

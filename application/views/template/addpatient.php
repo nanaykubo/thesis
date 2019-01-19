@@ -17,6 +17,7 @@
   <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
   <!-- Argon CSS -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 
 <body>
@@ -133,7 +134,7 @@
     <div class="col-md-4 mb-3">
     <label for="validationCustom01">Status *</label>
     <select class="custom-select" style="text-transform: uppercase;" id="inputS" name="inputS"required>
-      <option value="">Select...</option>
+      <option value="0">Select...</option>
       <option>Active</option>
       <option>Not Active</option>
     </select>
@@ -333,7 +334,6 @@
   <!-- Argon Scripts -->
   <!-- Core -->
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -378,20 +378,20 @@
                     $(".modal-body #inputFN").val(value[1]);
                     $(".modal-body #inputMN").val(value[2]);
                     $(".modal-body #inputLN").val(value[3]);
-                    $(".modal-body #inputS").val(value[4]);
-                    $(".modal-body #inputSe").val(value[5]);
-                    $(".modal-body #inputRe").val(value[6]);
+                    $(".modal-body #inputS option:selected").text(value[4]);
+                    $(".modal-body #inputSe option:selected").text(value[5]);
+                    $(".modal-body #inputRe option:selected").text(value[6]);
                     $(".modal-body #inputBD").val(value[7]);
                     $(".modal-body #inputType").val(value[8]);
                     $(".modal-body #inputAge").val(value[9]);
-                    $(".modal-body #inputN").val(value[10]);
-                    $(".modal-body #inputCS").val(value[11]);
+                    $(".modal-body #inputN option:selected").text(value[10]);
+                    $(".modal-body #inputCS option:selected").text(value[11]);
                     $(".modal-body #inputPN").val(value[12]);
                     $(".modal-body #inputFam").val(value[13]);
                     $(".modal-body #inputAddress").val(value[14]);
                     $(".modal-body #inputBrgy").val(value[15]);
-                    $(".modal-body #inputSt").val(value[16]);
-                    $(".modal-body #inputC").val(value[17]);
+                    $(".modal-body #inputST option:selected").text(value[16]);
+                    $(".modal-body #inputC option:selected").text(value[17]);
                     $(".modal-body #inputZ").val(value[18]);
                     $(".modal-body #inputM").val(value[19]);
                     $(".modal-body #inputR").val(value[20]);
