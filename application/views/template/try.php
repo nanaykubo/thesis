@@ -24,85 +24,23 @@
 
   <body>
     
-  <table id="example" class="display" style="width:100%">
-        <thead>
-            <tr>
-      <th width ="10%" scope="col">ID</th>
-      <th scope="col">Status</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Date of Birth</th>
-      <th scope="col">Sex</th>
-      <th scope="col">Address</th>
-      <th scope="col"></th>
-            </tr>
-            <tbody>
-              
-            </tbody>
-        </thead>
-        
-    </table>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+  <form action="<?php echo base_url('template/testsubmit/') ?>" method="post">
+    <div class="form-row">
+    <div class="col">
+      <input type="input" id="input1" name="input1" class="form-control" placeholder="Activity">
+    </div>
+    <div class="col">
+      <input type="date" id="input2" name="input2" class="form-control" placeholder="date">
     </div>
   </div>
-</div>
-
+  <input type="submit">
+  </form>
 
 </body>
 </html>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
-<script>
-  $(document).ready(function() {
-    var table= $('#example').DataTable({
-      "ajax": '<?php echo base_url('template/getEventDatatable/'."1"); ?>',
-      "type": 'POST',
-      //Set column definition initialisation properties.
-            "columnDefs": [
-                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-dark" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Edit</button><button id="deleteBtn" class="dropdown-item"><i class="fas fa-trash-alt"></i>Delete</button></div></div>'}
-            ]
-    });
-
-    $('#example tbody').on( 'click', 'button', function () {
-            var data = table.row( $(this).parents('tr') ).data();
-            var action=this.id;
-            if (action=='deleteBtn')
-            {
-                  $.ajax({
-                  url: '<?php echo base_url('template/edit/'.'12323'); ?>',  
-                  type: 'POST',
-                  success: function(result) 
-                  {
-                    alert(result)
-                  } 
-                  });
-            }
-            if (action=='editBtn')
-            {
-              alert('edit ' +  data[0]);
-            }
-
-            });
-  });
-
-</script>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

@@ -151,6 +151,12 @@ class Template extends CI_Controller {
 		}	
 	}
 
+	public function testsubmit()
+	{
+		$result = $this->m->testsubmit();
+		redirect(base_url('template/test'));
+	}
+
 	public function submitNewRecords()
 	{
 		$result = $this->m->addNewRecords();

@@ -365,6 +365,7 @@
                 </div>
               </div>
             </div>
+            <div class="table-responsive">
             <table class="table" id="myTable">
             <thead class="thead-light text-center">
             <tr>
@@ -376,6 +377,7 @@
 
             </tbody>
             </table>
+          </div>
             </div>
           </div>
         </div>

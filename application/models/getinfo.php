@@ -209,7 +209,7 @@ class getinfo extends CI_Model
 		$_POST['inputCS'] = strtoupper($_POST['inputCS']);
 		$_POST['inputR'] = strtoupper($_POST['inputR']);
 
-	 $records = array(
+	 		$records = array(
 			'ID'=>$this->input->post('inputID'),
 			'HCID'=>$this->input->post('txtHCID'),	
 			'Status'=>$this->input->post('inputS'),
@@ -221,18 +221,25 @@ class getinfo extends CI_Model
 			'MN'=>$this->input->post('inputMN'),	
 			'Brgy'=>$this->input->post('inputBrgy'),
 			'BirthDate'=>$this->input->post('inputBD'),
-			'St'=>$this->input->post('inputSt'),
+			'St'=>$this->input->post(''),
 			'City'=>$this->input->post('inputC'),
 			'CivilStatus'=>$this->input->post('inputCS'),
-			'FamilyCode'=>$this->input->post('inputFam'),
+			'FamilyCode'=>$this->input->post(''),
 			'Philhealth'=>$this->input->post('inputPN'),
 			'dateinsert'=>$this->input->post('inputinsert'),
 			'Assist'=>$this->input->post('inputassist'),
-			'Remarks'=>$this->input->post('inputR')
-			
+			'Remarks'=>$this->input->post('inputR')		
 	);
 
-	$this->db->insert('tabletest', $records);
+	$_POST['inputnote'] = "ADDED PATIENT " .$_POST['inputLN'] ." " .$_POST['inputFN'];
+	
+	 $logs = array(
+			'code'=>$this->input->post('inputassist'),
+			'activity'=>$this->input->post('inputnote'),
+			'date'=>$this->input->post('inputinsert')
+			);
+
+	$this->db->insert('logs', $logs);
 	
 	if($this->db->affected_rows() > 0)
 	{
@@ -262,12 +269,36 @@ class getinfo extends CI_Model
 
 	else
 	{
+		return false;	
+	}
+	}
+
+	public function testsubmit()
+	{
+		$_POST['inputS'] = "1001";		
+		$_POST['input1'] = "Added patient " .$_POST['input2'] ." ".$_POST['input2'];
+	 	$logs = array(
+			'code'=>$this->input->post('inputS'),
+			'activity'=>$this->input->post('input1'),
+			'date'=>$this->input->post('input2')
+			);
+
+	$this->db->insert('logs', $logs);
+
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
 		return false;
 	}
 	}
 
 	public function submit()
 	{
+		
 		$tabletest = array(
 			'ID'=>$this->input->post('ID'),
 			'HCID'=>$this->input->post('txt_HCID'),
@@ -286,13 +317,7 @@ class getinfo extends CI_Model
 			'Remarks'=>$this->input->post('Remarks')
 			);
 
-		$familydesc = array(
-			'ID'=>$this->input->post('ID'),
-			'code'=>$this->input->post('brand'),
-			'LN'=>$this->input->post('txt_LN'),
-			'FN'=>$this->input->post('txt_FN'),
-			'RELATION'=>$this->input->post('txtFamilyRelation')
-			);
+		
 
 	$this->db->insert('tabletest', $tabletest);
 	$this->db->insert('fdesc', $familydesc);
