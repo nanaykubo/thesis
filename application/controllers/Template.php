@@ -163,6 +163,12 @@ class Template extends CI_Controller {
 		redirect(base_url('template/addpatient'));
 	}
 
+	public function updateNewRecords()
+	{
+		$result = $this->m->update();
+		redirect(base_url('template/addpatient'));
+	}
+
 	public function checkUsername()
  	{
   	if($this->m->getUsername($_POST['username']))

@@ -219,12 +219,14 @@ class getinfo extends CI_Model
 			'LN'=>$this->input->post('inputLN'),	
 			'FN'=>$this->input->post('inputFN'),
 			'MN'=>$this->input->post('inputMN'),	
+			'Nationality'=>$this->input->post('inputN'),
 			'Brgy'=>$this->input->post('inputBrgy'),
 			'BirthDate'=>$this->input->post('inputBD'),
-			'St'=>$this->input->post(''),
+			'St'=>$this->input->post('inputSt'),
 			'City'=>$this->input->post('inputC'),
+			'Address'=>$this->input->post('inputAdd'),
 			'CivilStatus'=>$this->input->post('inputCS'),
-			'FamilyCode'=>$this->input->post(''),
+			'FamilyCode'=>$this->input->post('inputFam'),
 			'Philhealth'=>$this->input->post('inputPN'),
 			'dateinsert'=>$this->input->post('inputinsert'),
 			'Assist'=>$this->input->post('inputassist'),
@@ -253,6 +255,70 @@ class getinfo extends CI_Model
 	
 	}
 
+	
+	public function update()
+	{
+		$_POST['inputS'] = strtoupper($_POST['inputS']);
+		$_POST['inputType'] = strtoupper($_POST['inputType']);
+		$_POST['inputAge'] = strtoupper($_POST['inputAge']);
+		$_POST['inputSe'] = strtoupper($_POST['inputSe']);
+		$_POST['inputLN'] = strtoupper($_POST['inputLN']);
+		$_POST['inputFN'] = strtoupper($_POST['inputFN']);
+		$_POST['inputMN'] = strtoupper($_POST['inputMN']);
+		$_POST['inputBrgy'] = strtoupper($_POST['inputBrgy']);
+		$_POST['inputSt'] = strtoupper($_POST['inputSt']);
+		$_POST['inputC'] = strtoupper($_POST['inputC']);
+		$_POST['inputCS'] = strtoupper($_POST['inputCS']);
+		$_POST['inputR'] = strtoupper($_POST['inputR']);
+
+		$id = $this->input->post('inputID');
+
+		$field = array(
+			'HCID'=>$this->input->post('txtHCID'),	
+			'Status'=>$this->input->post('inputS'),
+			'Type'=>$this->input->post('inputType'),
+			'Age'=>$this->input->post('inputAge'),
+			'Sex'=>$this->input->post('inputSe'),	
+			'LN'=>$this->input->post('inputLN'),	
+			'FN'=>$this->input->post('inputFN'),
+			'MN'=>$this->input->post('inputMN'),	
+			'Nationality'=>$this->input->post('inputN'),
+			'Brgy'=>$this->input->post('inputBrgy'),
+			'BirthDate'=>$this->input->post('inputBD'),
+			'St'=>$this->input->post('inputSt'),
+			'City'=>$this->input->post('inputC'),
+			'Address'=>$this->input->post('inputAdd'),
+			'CivilStatus'=>$this->input->post('inputCS'),
+			'FamilyCode'=>$this->input->post('inputFam'),
+			'Philhealth'=>$this->input->post('inputPN'),
+			'dateinsert'=>$this->input->post('inputinsert'),
+			'Assist'=>$this->input->post('inputassist'),
+			'Remarks'=>$this->input->post('inputR')	
+		);
+
+	$_POST['inputnote'] = "EDIT PATIENT " .$_POST['inputLN'] ." " .$_POST['inputFN'];
+		
+	 $logs = array(
+		'code'=>$this->input->post('inputassist'),
+		'activity'=>$this->input->post('inputnote'),
+		'date'=>$this->input->post('inputinsert')
+		);
+
+	$this->db->where('ID',$id);
+	$this->db->update('tabletest', $field);
+	$this->db->insert('logs', $logs);
+
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+	}
+
 	public function addNewFamilyRecords($id)
 	{
 		$records = array(
@@ -273,107 +339,27 @@ class getinfo extends CI_Model
 	}
 	}
 
+
 	public function testsubmit()
 	{
-		$_POST['inputS'] = "1001";		
-		$_POST['input1'] = "Added patient " .$_POST['input2'] ." ".$_POST['input2'];
-	 	$logs = array(
-			'code'=>$this->input->post('inputS'),
-			'activity'=>$this->input->post('input1'),
-			'date'=>$this->input->post('input2')
-			);
+	$_POST['inputS'] = "1001";		
+	$_POST['input1'] = "Added patient " .$_POST['input2'] ." ".$_POST['input2'];
+	$logs = array(
+	'code'=>$this->input->post('inputS'),
+	'activity'=>$this->input->post('input1'),
+	'date'=>$this->input->post('input2')
+	);
 
 	$this->db->insert('logs', $logs);
 
 	if($this->db->affected_rows() > 0)
 	{
-		return true;
+	return true;
 	}
 
 	else
 	{
-		return false;
-	}
-	}
-
-	public function submit()
-	{
-		
-		$tabletest = array(
-			'ID'=>$this->input->post('ID'),
-			'HCID'=>$this->input->post('txt_HCID'),
-			'Type'=>$this->input->post('hide'),
-			'Status'=>$this->input->post('Status'),
-			'LN'=>$this->input->post('txt_LN'),
-			'FN'=>$this->input->post('txt_FN'),
-			'MN'=>$this->input->post('txt_MN'),
-			'Brgy'=>$this->input->post('BRGY'),
-			'St'=>$this->input->post('ST'),
-			'City'=>$this->input->post('CITY'),
-			'BirthDate'=>$this->input->post('BDAY'),
-			'CivilStatus'=>$this->input->post('cs'),
-			'FamilyCode'=>$this->input->post('brand'),
-			'Philhealth'=>$this->input->post('Philhealth'),
-			'Remarks'=>$this->input->post('Remarks')
-			);
-
-		
-
-	$this->db->insert('tabletest', $tabletest);
-	$this->db->insert('fdesc', $familydesc);
-	
-	if($this->db->affected_rows() > 0)
-	{
-		return true;
-	}
-
-	else
-	{
-		return false;
-	}
-	}
-
-	public function update()
-	{
-		$id = $this->input->post('fc_ID');
-
-		$field = array(
-			'HCID'=>$this->input->post('txt_HCID'),
-			'Type'=>$this->input->post('txt_hide'),
-			'Status'=>$this->input->post('Status'),
-			'Brgy'=>$this->input->post('BRGY'),
-			'LN'=>$this->input->post('txt_LN'),
-			'FN'=>$this->input->post('txt_FN'),
-			'MN'=>$this->input->post('txt_MN'),
-			'Brgy'=>$this->input->post('BRGY'),
-			'St'=>$this->input->post('ST'),
-			'City'=>$this->input->post('CITY'),
-			'BirthDate'=>$this->input->post('BDAY'),
-			'CivilStatus'=>$this->input->post('cs'),
-			'FamilyCode'=>$this->input->post('brand')
-			);
-
-		$familydesc = array(
-			'ID'=>$this->input->post('ID'),
-			'code'=>$this->input->post('brand'),
-			'LN'=>$this->input->post('txt_LN'),
-			'FN'=>$this->input->post('txt_FN'),
-			'RELATION'=>$this->input->post('txtFamilyRelation')
-			);
-
-	$this->db->where('ID',$id);
-	$this->db->update('tabletest', $field);
-	$this->db->where('ID',$id);
-	$this->db->update('fdesc', $familydesc);
-
-	if($this->db->affected_rows() > 0)
-	{
-		return true;
-	}
-
-	else
-	{
-		return false;
+	return false;
 	}
 	}
 

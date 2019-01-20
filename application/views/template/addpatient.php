@@ -93,7 +93,7 @@
     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Contact Information</a>
   </div>
         </nav>
-<form class="needs-validation" action="<?php echo base_url('template/submitNewRecords') ?>" method="post" novalidate> 
+<form class="needs-validation" id="testform" action="<?php echo base_url('template/submitNewRecords') ?>" method="post" novalidate> 
 <div class="tab-content " id="nav-tabContent">
   <!-- patient tab -->
    <input type="hidden" name="txtHCID" id="txtHCID" value="<?php echo $data['0']['hname'][0]->HCID?>"/>
@@ -388,9 +388,9 @@
                     $(".modal-body #inputCS option:selected").text(value[11]);
                     $(".modal-body #inputPN").val(value[12]);
                     $(".modal-body #inputFam").val(value[13]);
-                    $(".modal-body #inputAddress").val(value[14]);
+                    $(".modal-body #inputAdd").val(value[14]);
                     $(".modal-body #inputBrgy").val(value[15]);
-                    $(".modal-body #inputST option:selected").text(value[16]);
+                    $(".modal-body #inputSt option:selected").text(value[16]);
                     $(".modal-body #inputC option:selected").text(value[17]);
                     $(".modal-body #inputZ").val(value[18]);
                     $(".modal-body #inputM").val(value[19]);
@@ -406,7 +406,7 @@
                       $("#inputPN").prop("disabled",false);
                     }
                     $("#exampleModalLong").modal('show')
-                    
+                    $("#testform").attr("action",'<?php echo base_url('template/updateNewRecords') ?>');
                   });
                   } 
                   });
