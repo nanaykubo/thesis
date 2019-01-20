@@ -237,9 +237,9 @@ class Template extends CI_Controller {
 	echo json_encode($output);
 	}
 
-	public function getEventDatatable($HCID)
+	public function getEventDatatable($code)
 	{
-	$getdata = $this->m->ajax($HCID);
+	$getdata = $this->m->ajax($code);
 	$data = array();
 	foreach ($getdata as $value)
 	{

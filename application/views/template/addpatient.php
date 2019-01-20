@@ -18,6 +18,13 @@
   <!-- Argon CSS -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<!-- jQuery library -->
+<script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
 </head>
 
 <body>
@@ -134,28 +141,25 @@
     <div class="col-md-4 mb-3">
     <label for="validationCustom01">Status *</label>
     <select class="custom-select" style="text-transform: uppercase;" id="inputS" name="inputS"required>
-      <option value="0">Select...</option>
-      <option>Active</option>
-      <option>Not Active</option>
+      <option>ACTIVE</option>
+      <option>NOT ACTIVE</option>
     </select>
     <div class="invalid-feedback">Example invalid custom select feedback</div>
   </div>
     <div class="col-md-4 mb-3">
     <label for="validationCustom01">Sex *</label>
     <select class="custom-select" style="text-transform: uppercase;" id="inputSe" name="inputSe" required>
-      <option value="">Select...</option>
-      <option>Male</option>
-      <option>Female</option>
+      <option value="MALE">Male</option>
+      <option value="FEMALE">Female</option>
     </select>
     <div class="invalid-feedback">Example invalid custom select feedback</div>
   </div>
   <div class="col-md-4 mb-3">
     <label for="validationCustom01">Religion *</label>
     <select class="custom-select" style="text-transform: uppercase;" id="inputRe" name="inputRe" required>
-      <option value="">Select...</option>
-      <option>Catholic</option>
-      <option>Christian</option>
-      <option>Born Again</option>
+      <option value="CATHOLIC">Catholic</option>
+      <option value="CHRISTIAN">Christian</option>
+      <option value="BORN AGAIN">Born Again</option>
     </select>
     <div class="invalid-feedback">Please Select one of the following options</div>
   </div>
@@ -182,10 +186,9 @@
   <div class="col-md-4 mb-3">
     <label for="validationCustom01">Nationality *</label>
     <select class="custom-select" style="text-transform: uppercase;" name="inputN" id="inputN" required>
-      <option value="">Select...</option>
-      <option>Catholic</option>
-      <option>Christian</option>
-      <option>Born Again</option>
+        <option value="FILIPINO">Filipino</option>
+        <option value="MARRIED">Taiwanese</option>
+        <option value="ALGERIAN">Algerian</option>
     </select>
     <div class="invalid-feedback">Please Select one of the following options</div>
   </div>
@@ -193,10 +196,9 @@
   <div class="col-md-4 mb-3">
     <label for="validationCustom01">Civil Status *</label>
     <select class="custom-select" style="text-transform: uppercase;" name="inputCS" id="inputCS" required>
-      <option value="">Select...</option>
-      <option>Catholic</option>
-      <option>Christian</option>
-      <option>Born Again</option>
+      <option value="SINGLE">SINGLE</option>
+      <option value="MARRIED">MARRIED</option>
+      <option value="WIDOW">WIDOW</option>
     </select>
     <div class="invalid-feedback">Please Select one of the following options</div>
   </div>
@@ -211,7 +213,6 @@
 <div class="col-md-4 mb-3">
     <label for="validationCustom01">Family Number *</label>
     <select class="custom-select" style="text-transform: uppercase;" name="inputFam" id="inputFam" required>
-      <option value="">Select ...</option>
       <?php foreach ($data[2]['famlist'] as $test) { ?>
         <option><?php echo $test->code; ?>
         <?php }?></option>
@@ -246,20 +247,18 @@
   <div class="col-md-4 mb-3">
     <label for="validationCustom01">St *</label>
     <select class="custom-select" style="text-transform: uppercase;" id="inputSt" name="inputSt" required>
-      <option value="">Select Province...</option>
-      <option>Taguig</option>
-      <option>Makati</option>
-      <option>Manila</option>
+          <option value="TAGUIG">Taguig</option>
+          <option value="MAKATI">Makati</option>
+          <option value="MANILA">Manila</option>
     </select>
     <div class="invalid-feedback">Please Select one of the following options</div>
   </div>
     <div class="col-md-4 mb-3">
     <label for="validationCustom01">City/Municipality *</label>
     <select class="custom-select" style="text-transform: uppercase;" id="inputC" name="inputC" required>
-      <option value="">Select City/Municipality...</option>
-      <option>Taguig</option>
-      <option>Makati</option>
-      <option>Manila</option>
+          <option value="TAGUIG">Taguig</option>
+          <option value="MAKATI">Makati</option>
+          <option value="MANILA">Manila</option>
     </select>
     <div class="invalid-feedback">Please Select one of the following options</div>
   </div>
@@ -333,18 +332,11 @@
 
   <!-- Argon Scripts -->
   <!-- Core -->
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-
-<!-- jQuery library -->
-<script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
 
 <script>
     $(document).ready(function() {
     var table= $('#myTable').DataTable({
-      "ajax": '<?php echo base_url('template/getEventDatatable/'.$data[3]['userlist'][0]->HCID); ?>',
+      "ajax": '<?php echo base_url('template/getEventDatatable/'.$data[3]['userlist'][0]->code); ?>',
       "type": 'POST',
       //Set column definition initialisation properties.
             "columnDefs": [
@@ -374,29 +366,33 @@
                   var parsed= JSON.parse(result);
                   $.each(parsed,function(index,value)
                   {
+                    alert(value[11])
                     $(".modal-body #inputID").val(value[0]);
                     $(".modal-body #inputFN").val(value[1]);
                     $(".modal-body #inputMN").val(value[2]);
                     $(".modal-body #inputLN").val(value[3]);
-                    $(".modal-body #inputS option:selected").text(value[4]);
-                    $(".modal-body #inputSe option:selected").text(value[5]);
-                    $(".modal-body #inputRe option:selected").text(value[6]);
+                    $(".modal-body #inputS").val(value[4]).change();
+                    $(".modal-body #inputSe").val(value[5]).change();
+                    $(".modal-body #inputRe").val(value[6]).change();
                     $(".modal-body #inputBD").val(value[7]);
                     $(".modal-body #inputType").val(value[8]);
                     $(".modal-body #inputAge").val(value[9]);
-                    $(".modal-body #inputN option:selected").text(value[10]);
-                    $(".modal-body #inputCS option:selected").text(value[11]);
+                    $(".modal-body #inputN").val(value[10]).change();
+                    $(".modal-body #inputCS").val(value[11]).change();
                     $(".modal-body #inputPN").val(value[12]);
                     $(".modal-body #inputFam").val(value[13]);
                     $(".modal-body #inputAdd").val(value[14]);
                     $(".modal-body #inputBrgy").val(value[15]);
-                    $(".modal-body #inputSt option:selected").text(value[16]);
-                    $(".modal-body #inputC option:selected").text(value[17]);
+                    $(".modal-body #inputSt").val(value[16]).change();
+                    $(".modal-body #inputC").val(value[17]).change();
                     $(".modal-body #inputZ").val(value[18]);
                     $(".modal-body #inputM").val(value[19]);
                     $(".modal-body #inputR").val(value[20]);
                     $(".modal-body #txtHCID").val(value[21]);
+                    
+
                     var val = $("#inputType").val();
+
                     if(val=='CHILD' || val== 'ADOLESCENCE')
                     {
                       $("#inputPN").prop("disabled",true);

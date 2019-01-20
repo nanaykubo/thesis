@@ -26,6 +26,7 @@ class getinfo extends CI_Model
 		$this->db->select('*');
 		$this->db->where('username',$username);
 		$this->db->where('password',$password);
+
 		$query = $this->db->get('users');
 		return $query->result();
 	}
@@ -45,9 +46,10 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
-	public function ajax($HCID)
-	{
+	public function ajax($code)
+	{																
 		$this->db->select("*");
+		$this->db->where('Assist',$code);
 		$query = $this->db->get('tabletest');
 		return $query->result();
 	}
@@ -241,6 +243,7 @@ class getinfo extends CI_Model
 			'date'=>$this->input->post('inputinsert')
 			);
 
+	$this->db->insert('tabletest', $records);
 	$this->db->insert('logs', $logs);
 	
 	if($this->db->affected_rows() > 0)
@@ -277,23 +280,26 @@ class getinfo extends CI_Model
 			'HCID'=>$this->input->post('txtHCID'),	
 			'Status'=>$this->input->post('inputS'),
 			'Type'=>$this->input->post('inputType'),
-			'Age'=>$this->input->post('inputAge'),
-			'Sex'=>$this->input->post('inputSe'),	
 			'LN'=>$this->input->post('inputLN'),	
 			'FN'=>$this->input->post('inputFN'),
 			'MN'=>$this->input->post('inputMN'),	
-			'Nationality'=>$this->input->post('inputN'),
 			'Brgy'=>$this->input->post('inputBrgy'),
 			'BirthDate'=>$this->input->post('inputBD'),
 			'St'=>$this->input->post('inputSt'),
 			'City'=>$this->input->post('inputC'),
-			'Address'=>$this->input->post('inputAdd'),
 			'CivilStatus'=>$this->input->post('inputCS'),
 			'FamilyCode'=>$this->input->post('inputFam'),
 			'Philhealth'=>$this->input->post('inputPN'),
-			'dateinsert'=>$this->input->post('inputinsert'),
+			'Remarks'=>$this->input->post('inputR'),
+			'Sex'=>$this->input->post('inputSe'),
+			'Age'=>$this->input->post('inputAge'),	
 			'Assist'=>$this->input->post('inputassist'),
-			'Remarks'=>$this->input->post('inputR')	
+			'dateinsert'=>$this->input->post('inputinsert'),
+			'Nationality'=>$this->input->post('inputN'),
+			'Religion'=>$this->input->post('inputRe'),
+			'Address'=>$this->input->post('inputAdd'),
+			'Zipcode'=>$this->input->post('inputZ'),
+			'Landline'=>$this->input->post('inputM')
 		);
 
 	$_POST['inputnote'] = "EDIT PATIENT " .$_POST['inputLN'] ." " .$_POST['inputFN'];

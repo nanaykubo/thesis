@@ -30,15 +30,14 @@
 
 <body>
     
-<form action="https://www.google.com/" id="testform">
-<input type="submit" id="1" value="CLICK ME">
-</form>
+   <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
 
+   </div>
+   
 <script>
 $(document).ready(function()
 {
-$("#testform").attr("action","https://www.youtube.com/");
-alert($("#testform").attr("action"))
+$('#inputN').val("Christian").change()
 });
 </script>
 
