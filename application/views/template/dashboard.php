@@ -16,6 +16,7 @@
   <link href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
   <!-- Argon CSS -->
   <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 </head>
 
 <body>
@@ -182,7 +183,7 @@
                   <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+                  <span class="mb-0 text-sm  font-weight-bold"><?php echo strtoupper($data[0]['userlist'][0]->FN) ?> <?php echo strtoupper($data[0]['userlist'][0]->LN) ?></span>
                 </div>
               </div>
             </a>
@@ -250,7 +251,7 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Patients</h5>
-                      <span class="h2 font-weight-bold mb-0">350,897</span>
+                      <span class="h2 font-weight-bold mb-0"><?php echo$data[1]?></span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
@@ -271,7 +272,7 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Families</h5>
-                      <span class="h2 font-weight-bold mb-0">924</span>
+                      <span class="h2 font-weight-bold mb-0"><?php echo$data[2]?></span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -294,7 +295,7 @@
     <!-- Page content -->
     <div class="container-fluid mt--7">
       <div class="row">
-             <div class="col-xl-12 mb-5 mb-xl-0">
+             <div class="col-xl-7 mb-5 mb-xl-0">
           <div class="card shadow">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
@@ -327,7 +328,7 @@
 
         var options = {
           title: '',
-          width: 900,
+          width: 500,
           legend: { position: 'none' },
           chart: { title: '' },
           bars: 'horizontal', // Required for Material Bar Charts.
@@ -336,7 +337,7 @@
               0: { side: 'top', label: 'Cases'} // Top x-axis.
             }
           },
-          bar: { groupWidth: "40%" }
+          bar: { groupWidth: "420%" }
         };
 
         var chart = new google.charts.Bar(document.getElementById('top_x_div'));
@@ -345,12 +346,42 @@
     </script>
   </head>
   <body>
-    <div id="top_x_div" style="width: 680px; height: 400px;"></div>
+    <div id="top_x_div" style="width: 10px; height: 412px;"></div>
   </body>
           </div>
         </div>
       </div>
 
+      <div class="col-xl-5">
+        <div class="card" style="height: 34.4rem;">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">User Activity</h3>
+                </div>
+                <div class="col text-right">
+                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+            <table class="table" id="myTable">
+            <thead class="thead-light text-center">
+            <tr>
+            <th scope="col">Activity</th>
+            <th scope="col">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+            </table>
+          </div>
+            </div>
+          </div>
+        </div>
+        </div>
 
       <div class="row mt-5">
         <div class="col-xl-6 mb-5 mb-xl-0">
@@ -402,46 +433,80 @@
                <!--Load the AJAX API-->
     <head>
     <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript">
-    
-    // Load the Visualization API and the piechart package.
-    google.charts.load('current', {'packages':['corechart']});
-      
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.charts.setOnLoadCallback(drawChart);
-      
-    function drawChart() {
-      var jsonData = $.ajax({
-          url: "<?php echo base_url('template/getpie/') ?>",
+
+      // Load the Visualization API and the controls package.
+      google.charts.load('current', {'packages':['corechart', 'controls']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawDashboard);
+
+      // Callback that creates and populates a data table,
+      // instantiates a dashboard, a range slider and a pie chart,
+      // passes in the data and draws it.
+      function drawDashboard() {
+        var jsonData = $.ajax({
+          url: "<?php echo base_url('template/getpie/'.$data[0]['userlist'][0]->HCID) ?>",
           dataType: "json",
           async: false
           }).responseText;
-        
-      // Create our data table out of JSON data loaded from server.
-      var data = new google.visualization.DataTable(jsonData);
 
-      var options = {'width':450,
-                     'height':385,
-                    'sliceVisibilityThreshold' :0};
+        // Create our data table.
+        var data = new google.visualization.DataTable(jsonData);
 
-      // Instantiate and draw our chart, passing in some options.
-      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-    }
+        // Create a dashboard.
+        var dashboard = new google.visualization.Dashboard(
+            document.getElementById('dashboard_div'));
 
+        // Create a range slider, passing some options
+        var donutRangeSlider = new google.visualization.ControlWrapper({
+          'controlType': 'NumberRangeFilter',
+          'containerId': 'filter_div',
+          'options': {
+            'filterColumnLabel': 'No of Families'
+          }
+        });
+
+        // Create a pie chart, passing some options
+        var pieChart = new google.visualization.ChartWrapper({
+          'chartType': 'PieChart',
+          'containerId': 'chart_div',
+          'options': {
+            'is3D': true,
+            'width': 470,
+            'height': 350,
+            'legend': 'right',
+            'sliceVisibilityThreshold': 0
+          }
+        });
+
+        // Establish dependencies, declaring that 'filter' drives 'pieChart',
+        // so that the pie chart will only display entries that are let through
+        // given the chosen slider range.
+        dashboard.bind(donutRangeSlider, pieChart);
+
+        // Draw the dashboard.
+        dashboard.draw(data);
+      }
     </script>
   </head>
 
   <body>
-    <!--Div that will hold the pie chart-->
-    <div id="chart_div"></div>
+    <!--Div that will hold the dashboard-->
+    <div id="dashboard_div">
+      <!--Divs that will hold each control and chart-->
+      <div id="filter_div"></div>
+      <div id="chart_div"></div>
+    </div>
   </body>
-            </div>
-          </div>
-        </div>
-
+</html>
+</body>
+</html>
+</div>
+</div>
+</div>
       <footer class="footer">
         <div class="row align-items-center justify-content-xl-between">
           <div class="col-xl-6">
@@ -465,6 +530,30 @@
   <script src="../assets/vendor/chart.js/dist/Chart.extension.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.0.0"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script>
+  $(document).ready(function() {
+    $('#myTable').DataTable({
+      "ajax": '<?php echo base_url('template/getLogs/'.$data[0]['userlist'][0]->code); ?>',
+      "type": 'POST',
+      "searching":false,
+      "info":false,
+      "bLengthChange": false,
+      "pageLength": 11,
+       order: [[1, 'desc']],
+    //Set column definition initialisation properties.
+            "columnDefs": [
+                { "width": "40%", "targets": [1]},
+                { "width": "60%", "targets": [0], "orderable":false },
+                {"className": "dt-center", "targets": "_all"}
+                        ]
+    });
+  });
+  </script>
 </body>
 
 </html>

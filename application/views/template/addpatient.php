@@ -17,6 +17,7 @@
   <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
   <!-- Argon CSS -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 
 <body>
@@ -92,12 +93,13 @@
     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Contact Information</a>
   </div>
         </nav>
-<form class="needs-validation" action="<?php echo base_url('template/submitNewRecords') ?>" method="post" novalidate> 
+<form class="needs-validation" id="testform" action="<?php echo base_url('template/submitNewRecords') ?>" method="post" novalidate> 
 <div class="tab-content " id="nav-tabContent">
   <!-- patient tab -->
    <input type="hidden" name="txtHCID" id="txtHCID" value="<?php echo $data['0']['hname'][0]->HCID?>"/>
    <input type="hidden" name="inputassist" id="inputassist" value="<?php echo $data[3]['userlist'][0]->code?>"/>
    <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
+   <input type="hidden" name="inputnote" id="inputnote"/>
   <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
       <br/>
 
@@ -132,7 +134,7 @@
     <div class="col-md-4 mb-3">
     <label for="validationCustom01">Status *</label>
     <select class="custom-select" style="text-transform: uppercase;" id="inputS" name="inputS"required>
-      <option value="">Select...</option>
+      <option value="0">Select...</option>
       <option>Active</option>
       <option>Not Active</option>
     </select>
@@ -142,14 +144,14 @@
     <label for="validationCustom01">Sex *</label>
     <select class="custom-select" style="text-transform: uppercase;" id="inputSe" name="inputSe" required>
       <option value="">Select...</option>
-      <option>Male</option>
-      <option>Female</option>
+      <option value="MALE">Male</option>
+      <option value="FEMALE">Female</option>
     </select>
     <div class="invalid-feedback">Example invalid custom select feedback</div>
   </div>
   <div class="col-md-4 mb-3">
     <label for="validationCustom01">Religion *</label>
-    <select class="custom-select" style="text-transform: uppercase;" required>
+    <select class="custom-select" style="text-transform: uppercase;" id="inputRe" name="inputRe" required>
       <option value="">Select...</option>
       <option>Catholic</option>
       <option>Christian</option>
@@ -332,7 +334,6 @@
   <!-- Argon Scripts -->
   <!-- Core -->
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -341,20 +342,77 @@
 <script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
 
 <script>
-  $(document).ready(function() {
-    $('#myTable').DataTable({
-      "ajax": '<?php echo base_url('template/getEventDatatable/'.$data['0']['hname'][0]->HCID); ?>',
-      "type": 'POST'
-      ,
-      "pageLength": 10,
+    $(document).ready(function() {
+    var table= $('#myTable').DataTable({
+      "ajax": '<?php echo base_url('template/getEventDatatable/'.$data[3]['userlist'][0]->HCID); ?>',
+      "type": 'POST',
       //Set column definition initialisation properties.
             "columnDefs": [
+                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Edit</button><button id="deleteBtn" class="dropdown-item"><i class="fas fa-trash-alt"></i>Delete</button></div></div>'},
                 {
-                    "targets": [1,2,3,4,5,6,7], //first, fourth & seventh column
-                    "orderable": false //set not orderable
-                }
+      "targets": [1,2,3,4,5,6,7 ],
+      "orderable": false}
             ]
     });
+
+    $('#myTable tbody').on( 'click', 'button', function (e) {
+            var data = table.row($(this).parents('tr') ).data();
+            var action=this.id;
+            var ID = data[0];
+            if (action=='deleteBtn')
+            {
+
+            }
+            if (action=='editBtn')
+            {
+              $.ajax({
+                  url: '<?php echo base_url('template/edit/'); ?>',  
+                  type: 'POST',
+                  data: {'ID': ID},
+                  success: function (result) 
+                  {
+                  var parsed= JSON.parse(result);
+                  $.each(parsed,function(index,value)
+                  {
+                    $(".modal-body #inputID").val(value[0]);
+                    $(".modal-body #inputFN").val(value[1]);
+                    $(".modal-body #inputMN").val(value[2]);
+                    $(".modal-body #inputLN").val(value[3]);
+                    $(".modal-body #inputS option:selected").text(value[4]);
+                    $(".modal-body #inputSe").val(value[5]).change();
+                    $(".modal-body #inputRe option:selected").text(value[6]);
+                    $(".modal-body #inputBD").val(value[7]);
+                    $(".modal-body #inputType").val(value[8]);
+                    $(".modal-body #inputAge").val(value[9]);
+                    $(".modal-body #inputN option:selected").text(value[10]);
+                    $(".modal-body #inputCS option:selected").text(value[11]);
+                    $(".modal-body #inputPN").val(value[12]);
+                    $(".modal-body #inputFam").val(value[13]);
+                    $(".modal-body #inputAdd").val(value[14]);
+                    $(".modal-body #inputBrgy").val(value[15]);
+                    $(".modal-body #inputSt option:selected").text(value[16]);
+                    $(".modal-body #inputC option:selected").text(value[17]);
+                    $(".modal-body #inputZ").val(value[18]);
+                    $(".modal-body #inputM").val(value[19]);
+                    $(".modal-body #inputR").val(value[20]);
+                    $(".modal-body #txtHCID").val(value[21]);
+                    var val = $("#inputType").val();
+                    if(val=='CHILD' || val== 'ADOLESCENCE')
+                    {
+                      $("#inputPN").prop("disabled",true);
+                    }
+                    else
+                    {
+                      $("#inputPN").prop("disabled",false);
+                    }
+                    $("#exampleModalLong").modal('show')
+                    $("#testform").attr("action",'<?php echo base_url('template/updateNewRecords') ?>');
+                  });
+                  } 
+                  });
+            }
+
+            });
   });
 
   function validate(evt) {

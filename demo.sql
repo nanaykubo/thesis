@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 08, 2019 at 02:08 PM
+-- Generation Time: Jan 20, 2019 at 09:28 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -82,7 +82,8 @@ CREATE TABLE `family` (
 INSERT INTO `family` (`code`, `HCID`, `Name`) VALUES
 (1, 1, 'GARCIA'),
 (2, 1, 'datu'),
-(3, 1, '');
+(3, 1, ''),
+(4, 1, '2');
 
 -- --------------------------------------------------------
 
@@ -126,6 +127,34 @@ CREATE TABLE `healthcenters` (
 INSERT INTO `healthcenters` (`HCID`, `Name`, `Location`, `BRGYID`) VALUES
 (1, 'VALENTINA HEALTH CENTER', '1563 E. Valentina St. Paco Mla. Manila, Philippine', 1),
 (2, 'M. ICASIANO HEALTH CENTER', 'Pedro Gil St, Santa Ana, Manila, Metro Manila', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `logs`
+--
+
+CREATE TABLE `logs` (
+  `auto` int(11) NOT NULL,
+  `code` int(20) NOT NULL,
+  `activity` text NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `logs`
+--
+
+INSERT INTO `logs` (`auto`, `code`, `activity`, `date`) VALUES
+(36, 1001, 'ADDED PATIENT ASD ASD', '2019-01-20'),
+(37, 1001, 'EDIT PATIENT ASD ASD', '2019-01-20'),
+(38, 1001, 'EDIT PATIENT ASDDASD ASDASD', '2019-01-20'),
+(39, 1001, 'EDIT PATIENT ASDDASD ASDASD', '2019-01-20'),
+(40, 1001, 'EDIT PATIENT ASDDASD ASDASD', '2019-01-20'),
+(41, 1001, 'EDIT PATIENT ASDDASD ASDASD', '2019-01-20'),
+(42, 1001, 'EDIT PATIENT ASDDASD ASDASD', '2019-01-20'),
+(43, 1001, 'EDIT PATIENT ASDDASD ASDASD', '2019-01-20'),
+(44, 1001, 'EDIT PATIENT ASDDASD ASDASD', '2019-01-20');
 
 -- --------------------------------------------------------
 
@@ -220,17 +249,29 @@ CREATE TABLE `tabletest` (
   `BirthDate` date NOT NULL,
   `CivilStatus` varchar(50) NOT NULL,
   `FamilyCode` int(50) NOT NULL,
-  `Philhealth` varchar(50) NOT NULL,
-  `Remarks` varchar(100) NOT NULL
+  `Philhealth` varchar(50) DEFAULT NULL,
+  `Remarks` varchar(100) DEFAULT NULL,
+  `Sex` varchar(6) DEFAULT NULL,
+  `Age` int(3) NOT NULL,
+  `Assist` int(20) NOT NULL,
+  `dateinsert` date NOT NULL,
+  `Nationality` varchar(20) NOT NULL,
+  `Religion` varchar(20) NOT NULL,
+  `Address` varchar(40) NOT NULL,
+  `Zipcode` int(111) NOT NULL,
+  `Landline` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tabletest`
 --
 
-INSERT INTO `tabletest` (`ID`, `HCID`, `Status`, `Type`, `LN`, `FN`, `MN`, `Brgy`, `St`, `City`, `BirthDate`, `CivilStatus`, `FamilyCode`, `Philhealth`, `Remarks`) VALUES
-(200005, 1, 'ACTIVE', 'CHILD', 'garcia', 'cara', '', '809', 'onyx st', 'manila', '2009-11-13', 'SINGLE', 1, '', ''),
-(202100, 1, 'NOT ACTIVE', 'CHILD', 'bayani', 'bayani', '', '808', 'onyx st', 'manila', '2018-11-10', 'MARRIED', 2, '', '');
+INSERT INTO `tabletest` (`ID`, `HCID`, `Status`, `Type`, `LN`, `FN`, `MN`, `Brgy`, `St`, `City`, `BirthDate`, `CivilStatus`, `FamilyCode`, `Philhealth`, `Remarks`, `Sex`, `Age`, `Assist`, `dateinsert`, `Nationality`, `Religion`, `Address`, `Zipcode`, `Landline`) VALUES
+(12323, 0, '0', 'ADULT', 'ASDDASD', 'ASDASD', 'ASDASD', '810', 'MANILA', 'MANILA', '2019-01-15', 'CHRISTIAN', 1, '1', '0', 'FEMALE', 0, 1001, '2019-01-20', 'Christian', 'CHRISTIAN', '2347 onyx st', 0, 0),
+(123234, 1, 'ACTIVE', 'CHILD', 'S', 'S', 'S', '808', 'TAGUIG', 'MAKATI', '2019-01-17', 'CATHOLIC', 3, NULL, 'D', 'MALE', 0, 1001, '2019-01-16', '', '', '', 0, NULL),
+(125923, 1, 'ACTIVE', 'CHILD', 'CHUA', 'MICHAEL', '', '809', 'Taguig', 'Makati', '2019-01-13', '', 3, NULL, NULL, 'MALE', 0, 1001, '0000-00-00', '', 'Christian', '', 0, 0),
+(101230412, 1, 'ACTIVE', 'CHILD', 'CHUA', 'ANGELICA', 'DE GUIA', '810', 'MANILA', 'MANILA', '2019-01-13', '', 1, NULL, 'GOOD', 'FEMALE', 0, 1001, '2019-01-13', '', 'CATHOLIC', '', 0, 0),
+(2147483647, 1, 'ACTIVE', 'CHILD', 'CHU', 'MERLYN', 'DE GUIA', '813', 'TAGUIG', 'MAKATI', '2019-01-17', 'CHRISTIAN', 1, NULL, 'BERY GOOD', 'FEMALE', 0, 1001, '2019-01-16', '', '', '', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -239,18 +280,23 @@ INSERT INTO `tabletest` (`ID`, `HCID`, `Status`, `Type`, `LN`, `FN`, `MN`, `Brgy
 --
 
 CREATE TABLE `users` (
+  `code` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `HCID` int(11) NOT NULL
+  `HCID` int(11) NOT NULL,
+  `LN` text NOT NULL,
+  `FN` text NOT NULL,
+  `MN` text NOT NULL,
+  `POSITION` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`username`, `password`, `HCID`) VALUES
-('valentina', 'pass', 1),
-('icasiano', 'pass', 2);
+INSERT INTO `users` (`code`, `username`, `password`, `HCID`, `LN`, `FN`, `MN`, `POSITION`) VALUES
+(1001, 'valentina', 'pass', 1, 'chua', 'merlyn', 'de guia', 'nurse'),
+(51231, 'icasiano', 'pass', 2, 'qw', 'qwe', 'qwe', 'qwe');
 
 --
 -- Indexes for dumped tables
@@ -292,6 +338,13 @@ ALTER TABLE `healthcenters`
   ADD KEY `BRGYID_2` (`BRGYID`);
 
 --
+-- Indexes for table `logs`
+--
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`auto`),
+  ADD KEY `code` (`code`);
+
+--
 -- Indexes for table `precords`
 --
 ALTER TABLE `precords`
@@ -324,12 +377,14 @@ ALTER TABLE `servicesdesc`
 --
 ALTER TABLE `tabletest`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `HCID` (`HCID`);
+  ADD KEY `HCID` (`HCID`),
+  ADD KEY `tabletest_ibfk_1` (`Assist`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
+  ADD PRIMARY KEY (`code`),
   ADD KEY `HID` (`HCID`);
 
 --
@@ -340,13 +395,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `family`
 --
 ALTER TABLE `family`
-  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `code` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `fdesc`
 --
 ALTER TABLE `fdesc`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202101;
+
+--
+-- AUTO_INCREMENT for table `logs`
+--
+ALTER TABLE `logs`
+  MODIFY `auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `precords`
@@ -364,7 +425,7 @@ ALTER TABLE `sample`
 -- AUTO_INCREMENT for table `tabletest`
 --
 ALTER TABLE `tabletest`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202101;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483647;
 
 --
 -- Constraints for dumped tables
@@ -396,6 +457,12 @@ ALTER TABLE `fdesc`
   ADD CONSTRAINT `fdesc_ibfk_3` FOREIGN KEY (`ID`) REFERENCES `tabletest` (`ID`);
 
 --
+-- Constraints for table `logs`
+--
+ALTER TABLE `logs`
+  ADD CONSTRAINT `code` FOREIGN KEY (`code`) REFERENCES `users` (`code`);
+
+--
 -- Constraints for table `precords`
 --
 ALTER TABLE `precords`
@@ -413,7 +480,7 @@ ALTER TABLE `servicesdesc`
 -- Constraints for table `tabletest`
 --
 ALTER TABLE `tabletest`
-  ADD CONSTRAINT `tabletest_ibfk_1` FOREIGN KEY (`HCID`) REFERENCES `healthcenters` (`HCID`);
+  ADD CONSTRAINT `tabletest_ibfk_1` FOREIGN KEY (`Assist`) REFERENCES `users` (`code`);
 
 --
 -- Constraints for table `users`
