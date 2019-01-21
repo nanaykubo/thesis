@@ -112,7 +112,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" href="index">
+            <a class="nav-link active" href="logged">
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>

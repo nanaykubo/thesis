@@ -149,6 +149,7 @@
     <div class="col-md-4 mb-3">
     <label for="validationCustom01">Sex *</label>
     <select class="custom-select" style="text-transform: uppercase;" id="inputSe" name="inputSe" required>
+      <option value="">Select...</option>
       <option value="MALE">Male</option>
       <option value="FEMALE">Female</option>
     </select>
@@ -336,7 +337,7 @@
 <script>
     $(document).ready(function() {
     var table= $('#myTable').DataTable({
-      "ajax": '<?php echo base_url('template/getEventDatatable/'.$data[3]['userlist'][0]->code); ?>',
+      "ajax": '<?php echo base_url('template/getEventDatatable/'.$data[3]['userlist'][0]->HCID); ?>',
       "type": 'POST',
       //Set column definition initialisation properties.
             "columnDefs": [
@@ -366,7 +367,6 @@
                   var parsed= JSON.parse(result);
                   $.each(parsed,function(index,value)
                   {
-                    alert(value[11])
                     $(".modal-body #inputID").val(value[0]);
                     $(".modal-body #inputFN").val(value[1]);
                     $(".modal-body #inputMN").val(value[2]);
@@ -374,6 +374,9 @@
                     $(".modal-body #inputS").val(value[4]).change();
                     $(".modal-body #inputSe").val(value[5]).change();
                     $(".modal-body #inputRe").val(value[6]).change();
+                    $(".modal-body #inputS option:selected").text(value[4]);
+                    $(".modal-body #inputSe").val(value[5]).change();
+                    $(".modal-body #inputRe option:selected").text(value[6]);
                     $(".modal-body #inputBD").val(value[7]);
                     $(".modal-body #inputType").val(value[8]);
                     $(".modal-body #inputAge").val(value[9]);
@@ -389,10 +392,8 @@
                     $(".modal-body #inputM").val(value[19]);
                     $(".modal-body #inputR").val(value[20]);
                     $(".modal-body #txtHCID").val(value[21]);
-                    
 
                     var val = $("#inputType").val();
-
                     if(val=='CHILD' || val== 'ADOLESCENCE')
                     {
                       $("#inputPN").prop("disabled",true);

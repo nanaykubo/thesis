@@ -23,7 +23,7 @@ class Template extends CI_Controller {
 	{
 		parent :: __construct();
 		$this -> load -> model('getinfo','m');
-	}
+	}	
 
 	function login()
 	{
@@ -52,7 +52,7 @@ class Template extends CI_Controller {
 		}
 
 		$this->session->set_flashdata('error_msg', 'Incorrect Username and Password');
-		redirect(base_url('template/login'));
+		redirect('template/login');
 	}
 
 	public function logged()
@@ -216,6 +216,37 @@ class Template extends CI_Controller {
 		}
 		
 		echo json_encode($data2);
+	}
+
+	public function getAnnual()
+	{
+	$data = $this->input->post();
+
+	$getdata = $this->m->getAnnual($data['Year']);
+
+	$data = array();
+	foreach ($getdata as $value)
+	{
+		$row = array();
+		$row[] = $value->ID;
+		$row[] = $value->Status;
+		$row[] = $value->LN;
+		$row[] = $value->FN;
+		$row[] = $value->BirthDate;
+		$row[] = $value->Sex;
+		$row[] = array(
+                    $value->Brgy,
+                    $value->St,
+                    $value->City               
+               );
+		$data[] = $row;
+	}
+
+	$output = array(
+		"data" => $data,
+	);
+
+	echo json_encode($output);
 	}
 
 	public function getLogs($code)

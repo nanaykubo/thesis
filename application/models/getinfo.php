@@ -46,10 +46,18 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
-	public function ajax($code)
+	public function ajax($HCID)
 	{																
 		$this->db->select("*");
-		$this->db->where('Assist',$code);
+		$this->db->where('HCID',$HCID);
+		$query = $this->db->get('tabletest');
+		return $query->result();
+	}
+
+	public function getAnnual($txtYear)
+	{
+		$this->db->select("*");
+		$this->db->where('YEAR(dateinsert)',$txtYear);
 		$query = $this->db->get('tabletest');
 		return $query->result();
 	}

@@ -8,14 +8,21 @@
   <meta name="author" content="Creative Tim">
   <title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
   <!-- Favicon -->
-  <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
+   <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
   <link href="../assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
   <link href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <!-- Argon CSS -->
   <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
+  <!-- Argon CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body>
@@ -111,7 +118,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="index">
+            <a class="nav-link" href="logged">
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
@@ -248,9 +255,9 @@
           <div class="col">
           <label for="selectReport">Select Reports..</label>
           <select id="inputSelect" class="form-control form-control-sm ">
-          <option>Cases of Diseases</option>
-          <option>No of Families in Barangay</option>
-          <option>No of Patients</option>
+          <option value="1">Cases of Diseases</option>
+          <option value="2">No of Families in Barangay</option>
+          <option value="3">No of Patients</option>
           </select>
           </div>
 
@@ -260,10 +267,10 @@
           <div class="col-md-4">
           <label for="selectReport">Reporting Period</label>
           <select id="inputReport" class="form-control form-control-sm ">
-          <option>Annual</option>
-          <option>Quarterly</option>
-          <option>Monthly</option>
-          <option>Custom Period</option>
+          <option value="Annual">Annual</option>
+          <option value="Quarterly">Quarterly</option>
+          <option value="Monthly">Monthly</option>
+          <option value="Custom Period">Custom Period</option>
           </select>
           </div>
 
@@ -273,23 +280,23 @@
           <div class="col-md-4">
           <label for="Year">Year</label>
           <select id="inputYear" class="form-control form-control-sm ">
-          <option>2019</option>
+          <option value="2019">2019</option>
           </select>
           </div>
 
           <div class="col-md-4">
           <label for="Quarter">Quarter</label>
           <select id="inputQuarter" class="form-control form-control-sm ">
-          <option value="1st">1st Quarter</option>
-          <option value="2nd">2nd Quarter</option>
-          <option value="3rd">3rd Quarter</option>
-          <option value="4th">4th Quarter</option>
+          <option value="1st Quarter">1st Quarter</option>
+          <option value="2nd Quarter">2nd Quarter</option>
+          <option value="3rd Quarter">3rd Quarter</option>
+          <option value="4th Quarter">4th Quarter</option>
           </select>
           </div>
 
           <div class="col-md-4">
           <label for="Months">Month</label>
-          <select id="inputState" class="form-control form-control-sm ">
+          <select id="inputMonth" class="form-control form-control-sm ">
           <option>January</option>
           </select>
           </div>
@@ -301,40 +308,138 @@
 
           <div class="col">
           <label for="txtStartDate">Start Date</label>
-          <input type="date" class="form-control form-control-sm " name="txtStartDate" placeholder="">
+          <input type="date" class="form-control form-control-sm " id="txtStartDate">
           </div>
 
           <div class="col">
           <label for="txtEndDate">End Date</label>
-          <input type="date" class="form-control form-control-sm "name="txtEndDate">
+          <input type="date" class="form-control form-control-sm "id="txtEndDate">
           </div>
 
           </div>
+          <br>
 
+          <div class="container">
           <div class="row">
-
-          <div class="col">
-
+          <div class="col text-center">
+          <input type="button" class="btn btn-primary" id="linkButton" value="Generate Report">
           </div>
-
+          </div>
           </div>
 
           </form>
-    
         </div>
           </div>
+
+        <div class="card">
+        <div class="card-body">
+          <table id="example" class="table">
+          <h3>REPORTS</h3>
+      <thead>
+      <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      </tr>
+      <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+      </tr>
+      <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+      </tr>
+      </tbody>
+      </table>
+   </div>
           </div>
           </div>
+
     </div>
   </div>
+
   <!-- Argon Scripts -->
   <!-- Core -->
-  <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Optional JS -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBd3PjUqq81lIOfBPYXrQGWwK5T4ystZjA"></script>
-  <!-- Argon JS -->
-  <script src="../assets/js/argon.js?v=1.0.0"></script>
+
+ <script>
+$(document).ready( function () {
+    $('#example').DataTable();
+});
+
+      $("#inputQuarter").prop("disabled",true);
+      $("#inputMonth").prop("disabled",true);
+      $("#txtStartDate").prop("disabled",true);
+      $("#txtEndDate").prop("disabled",true);
+
+      $("#inputReport").change(function() {
+      if($(this).val() == "Annual")
+      {
+      $("#inputYear").prop("disabled",false);  
+      $("#inputQuarter").prop("disabled",true);
+      $("#inputMonth").prop("disabled",true);
+      $("#txtStartDate").prop("disabled",true);
+      $("#txtEndDate").prop("disabled",true);
+      } 
+      if($(this).val() == "Quarterly")
+      {
+      $("#inputYear").prop("disabled",false); 
+      $("#inputQuarter").prop("disabled",false);  
+      $("#inputMonth").prop("disabled",true);
+      $("#txtStartDate").prop("disabled",true);
+      $("#txtEndDate").prop("disabled",true);
+      } 
+      if($(this).val() == "Monthly")
+      {
+      $("#inputYear").prop("disabled",false); 
+      $("#inputQuarter").prop("disabled",true);  
+      $("#inputMonth").prop("disabled",false);
+      $("#txtStartDate").prop("disabled",true);
+      $("#txtEndDate").prop("disabled",true);
+      } 
+      if($(this).val() == "Custom Period")
+      {
+      $("#inputYear").prop("disabled",true);
+      $("#inputQuarter").prop("disabled",true);  
+      $("#inputMonth").prop("disabled",true);
+      $("#txtStartDate").prop("disabled",false);
+      $("#txtEndDate").prop("disabled",false);
+      } 
+      });
+      $("#linkButton").click(function(){
+        $("#collapseOne").collapse('hide');
+        if($("#inputSelect").val() == "3" && $("#inputReport").val() == "Annual")
+        {
+            var txtYear= ($("#inputYear").val());
+            alert(txtYear)
+            $.ajax({
+            url: '<?php echo base_url('template/getAnnual/'); ?>', 
+            type: 'POST',
+            data: {'Year': txtYear},
+            success: function(result)
+            {
+              alert(result)
+            }});
+        }
+        else
+        {
+          alert('no')
+        }
+      }); 
+</script>
+
 </body>
 
 </html>
