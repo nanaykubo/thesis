@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
+  <title>Medical Record Tracking System</title>
   <!-- Favicon -->
    <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
   <!-- Fonts -->
@@ -22,6 +22,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 
 </head>
 
@@ -449,7 +451,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+        buttons: [
+            'print'
+        ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
@@ -470,6 +476,10 @@ $(document).ready( function () {
                 { "title": "Last Name", "data": "LN" }
                 ],
                 "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                ,dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
@@ -489,7 +499,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
@@ -509,7 +523,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                 "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
@@ -529,7 +547,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                 "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
@@ -550,7 +572,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
@@ -570,7 +596,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
@@ -590,7 +620,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
@@ -610,7 +644,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
@@ -630,7 +668,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
@@ -650,7 +692,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
@@ -670,7 +716,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
@@ -690,7 +740,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
@@ -710,7 +764,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
@@ -730,7 +788,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
@@ -750,7 +812,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
@@ -770,7 +836,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Custom")
@@ -789,7 +859,11 @@ $(document).ready( function () {
                 { "title": "Middle Name", "data": "MN" },
                 { "title": "Last Name", "data": "LN" }
                 ],
-                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
                 });
         }
       }); 

@@ -23,12 +23,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+
     <title>Hello, world!</title>
   </head>
 
 <body>
     
-   <table id="example" class="table">
+   <table id="example" class="display" cellspacing="0" width="100%">
           <h3>REPORTS</h3>
       <thead>
       <tr>
@@ -36,39 +39,40 @@
       <th scope="col">First</th>
       <th scope="col">Last</th>
       <th scope="col">Handle</th>
+      <th scope="col">Address</th>
+      <th scope="col">#</th>
       </tr>
       </thead>
-      <tbody>
-      <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      </tr>
-      <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      </tr>
-      <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      </tr>
-      </tbody>
+      
       </table>
    </div>
    
 <script>
 $(document).ready( function () {
-    $('#example').dataTable( {
-    "ajax": {
-    "url": '<?=site_url()?>/Test/getFamilyInfo',
-    "type": "POST",
-    "data": {"Year": 2019},
-  }
+    $('#example').dataTable(
+    {
+      "ajax": '<?php echo base_url('template/getEventDatatable/'."1"); ?>',
+      "type": 'POST',
+      dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'print',
+                text: 'Print',
+                title: 'Datatables example: Customisation of the print view window',
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '10pt' )
+                        .prepend(
+                            '<img src="http://datatables.net/media/images/logo-fade.png" style="position:absolute; top:0; left:0;" />'
+                        );
+ 
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit' );
+                }
+            }
+        ]
+    })
 });
 </script>
 
