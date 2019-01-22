@@ -222,26 +222,58 @@ class Template extends CI_Controller {
 	{
 	$data = $this->input->post();
 
-	$getdata = $this->m->getAnnual($data['Year']);
+	$Year = $this->m->getAnnual($data['Year']);
 
 	$output = array(
-		"data" => $getdata,
+		"data" => $Year,
 	);
 
 	echo json_encode($output);
 	}
 
-	public function get1stQuarter()
+	public function getQuarter()
 	{
 	$data = $this->input->post();
 
-	$txtYear = $this->m->getAnnual($data['Year']);
-	$txtQuarter = $this->m->getAnnual($data['Quarter']);
+	$Year = $data['Year'];
+	$Quarter = $data['Quarter'];
 
-	$getdata = $this->m->getAnnual($txtYear,$Quarter);
+	$result = $this->m->getQuarter($Year,$Quarter);
 
 	$output = array(
-		"data" => $getdata,
+		"data" => $result,
+	);
+
+	echo json_encode($output);
+	}
+
+	public function getMonth()
+	{
+	$data = $this->input->post();
+
+	$Month = $data['Month'];
+	$Year = $data['Year'];
+
+	$result = $this->m->getMonth($Month,$Year);
+
+	$output = array(
+		"data" => $result,
+	);
+
+	echo json_encode($output);
+	}
+
+	public function getCustom()
+	{
+	$data = $this->input->post();
+
+	$start = $data['Start'];
+	$end = $data['End'];
+
+	$result = $this->m->getCustom($start,$end);
+
+	$output = array(
+		"data" => $result,
 	);
 
 	echo json_encode($output);

@@ -270,7 +270,7 @@
           <option value="Annual">Annual</option>
           <option value="Quarterly">Quarterly</option>
           <option value="Monthly">Monthly</option>
-          <option value="Custom Period">Custom Period</option>
+          <option value="Custom">Custom Period</option>
           </select>
           </div>
 
@@ -287,17 +287,28 @@
           <div class="col-md-4">
           <label for="Quarter">Quarter</label>
           <select id="inputQuarter" class="form-control form-control-sm ">
-          <option value="1st">1st Quarter</option>
-          <option value="2nd">2nd Quarter</option>
-          <option value="3rd">3rd Quarter</option>
-          <option value="4th">4th Quarter</option>
+          <option value="1">1st Quarter</option>
+          <option value="2">2nd Quarter</option>
+          <option value="3">3rd Quarter</option>
+          <option value="4">4th Quarter</option>
           </select>
           </div>
 
           <div class="col-md-4">
           <label for="Months">Month</label>
           <select id="inputMonth" class="form-control form-control-sm ">
-          <option>January</option>
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
           </select>
           </div>
 
@@ -409,7 +420,7 @@ $(document).ready( function () {
       $("#txtStartDate").prop("disabled",true);
       $("#txtEndDate").prop("disabled",true);
       } 
-      if($(this).val() == "Custom Period")
+      if($(this).val() == "Custom")
       {
       $("#inputYear").prop("disabled",true);
       $("#inputQuarter").prop("disabled",true);  
@@ -427,9 +438,11 @@ $(document).ready( function () {
         {
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
-                "ajax": '<?php echo base_url('template/getAnnual/'); ?>',
-                "type": 'POST',
-                "data": {'Year': 'txtYear'},
+                "ajax": {
+                "url": '<?php echo base_url('template/getAnnual/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear}
+                },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
                 { "title": "First Name",  "data": "FN" },
@@ -440,11 +453,336 @@ $(document).ready( function () {
                 });
         }
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
-                 $("#inputQuarter").val() == "1st" )
+                 $("#inputQuarter").val() == "1" )
         {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
                 table = $('#example').DataTable({
-                "ajax": '<?php echo base_url('template/getAnnual'); ?>',
-                "type": 'POST',
+                "ajax": {
+                "url": '<?php echo base_url('template/getQuarter/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Quarter':txtQuarter}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
+                 $("#inputQuarter").val() == "2" )
+        {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getQuarter/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Quarter':txtQuarter}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
+                 $("#inputQuarter").val() == "3" )
+        {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getQuarter/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Quarter':txtQuarter}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
+                 $("#inputQuarter").val() == "4" )
+        {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getQuarter/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Quarter':txtQuarter}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "1" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "2" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "3" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "4" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "5" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "6" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "7" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "8" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "9" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "10" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "11" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "12" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
+        }
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Custom")
+        {
+                var txtStart = ($("#txtStartDate").val());
+                var txtEnd = ($("#txtEndDate").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCustom/'); ?>',
+                "type": "POST",
+                "data": {'Start': txtStart,'End':txtEnd}
+                },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
                 { "title": "First Name",  "data": "FN" },

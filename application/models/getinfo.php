@@ -70,6 +70,33 @@ class getinfo extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getQuarter($txtYear,$txtQuarter)
+	{
+		$this->db->select("*");
+		$this->db->where('QUARTER(dateinsert)',$txtQuarter);
+		$this->db->where('YEAR(dateinsert)',$txtYear);
+		$query = $this->db->get('tabletest');
+		return $query->result_array();
+	}
+
+	public function getMonth($txtMonth,$txtYear)
+	{
+		$this->db->select("*");
+		$this->db->where('MONTH(dateinsert)',$txtMonth);
+		$this->db->where('YEAR(dateinsert)',$txtYear);
+		$query = $this->db->get('tabletest');
+		return $query->result_array();
+	}
+
+	public function getCustom($txtStart,$txtEnd)
+	{
+		$this->db->select("*");
+		$this->db->where('dateinsert >=', $txtStart);
+		$this->db->where('dateinsert <=', $txtEnd);
+		$query = $this->db->get('tabletest');
+		return $query->result_array();
+	}
+
 	public function getLogs($code)
 	{
 		$this->db->select("activity,date");
