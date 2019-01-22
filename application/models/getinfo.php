@@ -54,12 +54,20 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function get1stQ($txtYear,$txtQuarter)
+	{																
+		$this->db->select("*");
+		$this->db->where('HCID',$HCID);
+		$query = $this->db->get('tabletest');
+		return $query->result_array();
+	}
+
 	public function getAnnual($txtYear)
 	{
 		$this->db->select("*");
 		$this->db->where('YEAR(dateinsert)',$txtYear);
 		$query = $this->db->get('tabletest');
-		return $query->result();
+		return $query->result_array();
 	}
 
 	public function getLogs($code)

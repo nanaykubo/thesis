@@ -343,7 +343,7 @@
             "columnDefs": [
                 {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Edit</button><button id="deleteBtn" class="dropdown-item"><i class="fas fa-trash-alt"></i>Delete</button></div></div>'},
                 {
-      "targets": [1,2,3,4,5,6,7 ],
+      "targets": [1,2,3,4,5,6,7],
       "orderable": false}
             ]
     });
@@ -364,6 +364,7 @@
                   data: {'ID': ID},
                   success: function (result) 
                   {
+                    alert(result)
                   var parsed= JSON.parse(result);
                   $.each(parsed,function(index,value)
                   {
@@ -392,7 +393,7 @@
                     $(".modal-body #inputM").val(value[19]);
                     $(".modal-body #inputR").val(value[20]);
                     $(".modal-body #txtHCID").val(value[21]);
-
+                    
                     var val = $("#inputType").val();
                     if(val=='CHILD' || val== 'ADOLESCENCE')
                     {

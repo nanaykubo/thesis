@@ -287,10 +287,10 @@
           <div class="col-md-4">
           <label for="Quarter">Quarter</label>
           <select id="inputQuarter" class="form-control form-control-sm ">
-          <option value="1st Quarter">1st Quarter</option>
-          <option value="2nd Quarter">2nd Quarter</option>
-          <option value="3rd Quarter">3rd Quarter</option>
-          <option value="4th Quarter">4th Quarter</option>
+          <option value="1st">1st Quarter</option>
+          <option value="2nd">2nd Quarter</option>
+          <option value="3rd">3rd Quarter</option>
+          <option value="4th">4th Quarter</option>
           </select>
           </div>
 
@@ -376,7 +376,7 @@
 
  <script>
 $(document).ready( function () {
-    $('#example').DataTable();
+
 });
 
       $("#inputQuarter").prop("disabled",true);
@@ -420,22 +420,39 @@ $(document).ready( function () {
       });
       $("#linkButton").click(function(){
         $("#collapseOne").collapse('hide');
+        var table = $('#example').DataTable();
+        table.destroy();
+        $('#example').empty();
         if($("#inputSelect").val() == "3" && $("#inputReport").val() == "Annual")
         {
-            var txtYear= ($("#inputYear").val());
-            alert(txtYear)
-            $.ajax({
-            url: '<?php echo base_url('template/getAnnual/'); ?>', 
-            type: 'POST',
-            data: {'Year': txtYear},
-            success: function(result)
-            {
-              alert(result)
-            }});
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": '<?php echo base_url('template/getAnnual/'); ?>',
+                "type": 'POST',
+                "data": {'Year': 'txtYear'},
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
         }
-        else
+        else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
+                 $("#inputQuarter").val() == "1st" )
         {
-          alert('no')
+                table = $('#example').DataTable({
+                "ajax": '<?php echo base_url('template/getAnnual'); ?>',
+                "type": 'POST',
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}]
+                });
         }
       }); 
 </script>

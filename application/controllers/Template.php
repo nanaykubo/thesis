@@ -224,26 +224,24 @@ class Template extends CI_Controller {
 
 	$getdata = $this->m->getAnnual($data['Year']);
 
-	$data = array();
-	foreach ($getdata as $value)
-	{
-		$row = array();
-		$row[] = $value->ID;
-		$row[] = $value->Status;
-		$row[] = $value->LN;
-		$row[] = $value->FN;
-		$row[] = $value->BirthDate;
-		$row[] = $value->Sex;
-		$row[] = array(
-                    $value->Brgy,
-                    $value->St,
-                    $value->City               
-               );
-		$data[] = $row;
+	$output = array(
+		"data" => $getdata,
+	);
+
+	echo json_encode($output);
 	}
 
+	public function get1stQuarter()
+	{
+	$data = $this->input->post();
+
+	$txtYear = $this->m->getAnnual($data['Year']);
+	$txtQuarter = $this->m->getAnnual($data['Quarter']);
+
+	$getdata = $this->m->getAnnual($txtYear,$Quarter);
+
 	$output = array(
-		"data" => $data,
+		"data" => $getdata,
 	);
 
 	echo json_encode($output);
@@ -266,6 +264,15 @@ class Template extends CI_Controller {
 	);
 
 	echo json_encode($output);
+	}
+
+	public function getTest()
+	{
+	$data = $this->input->post();
+
+	$txtYear = $this->m->getAnnual($data['Year']);
+
+	print_r($txtYear);
 	}
 
 	public function getEventDatatable($code)
