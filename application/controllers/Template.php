@@ -120,11 +120,6 @@ class Template extends CI_Controller {
 		$this->load->view('template/examples/tables');
 	}
 
-	public function records()
-	{
-		$this->load->view('template/records');		
-	}
-
 	public function reports()
 	{
 		$this->load->view('template/reports');		
@@ -151,6 +146,36 @@ class Template extends CI_Controller {
 		}	
 	}
 
+	public function getFDesc()
+	{
+		$data = $this->input->post();
+
+		$values = $this->m->getFDesc($data['FNo']);
+
+		$myvars = $values[0]->ID;
+
+		$getRecords = $this->m->getInfoID($myvars);
+
+		foreach ($values as $value) {
+			$row = array();
+			$row[0] = $value->ID;
+			$row[1] = $value->familyno;
+			$data2[] = $row;
+		}
+
+		echo json_encode($data2);
+	}
+
+	public function getRecords()
+	{
+		$getInfo = $this->m->getInfoID($ID);
+		$getRecords = $this->m->getRecords($ID);
+
+		$data['data'] = array($getInfo,$getRecords);
+
+		$this->load->view('template/records',$data);
+	}
+
 	public function testsubmit()
 	{
 		$result = $this->m->testsubmit();
@@ -161,6 +186,12 @@ class Template extends CI_Controller {
 	{
 		$result = $this->m->addNewRecords();
 		redirect(base_url('template/addpatient'));
+	}
+
+	public function submitFamilyRecords()
+	{
+		$result = $this->m->addNewFamilyRecords();
+		redirect(base_url('template/family'));
 	}
 
 	public function updateNewRecords()
@@ -335,8 +366,45 @@ class Template extends CI_Controller {
 	echo json_encode($output);
 	}
 
+	public function getFamilyCode($HCID)
+	{
+	$getdata = $this->m->family($HCID);
+	$data = array();
+	foreach ($getdata as $value)
+	{
+		$row = array();
+		$row[] = $value->familyno;
+		$row[] = $value->LN;
+		$row[] = $value->FN;
+		$row[] = $value->MN;
+		$row[] = array(
+                    $value->Brgy,
+                    $value->St,
+                    $value->City               
+               );
+		$data[] = $row;
+	}
+
+	$output = array(
+		"data" => $data,
+	);
+
+	echo json_encode($output);
+	}
+
 	public function family()
 	{
-		$this->load->view('template/family');		
+		if($this->session->userdata('logged_in')){
+			$get= $this->m->getUser(
+				$this->session->userdata('username')
+			   ,$this->session->userdata('password')
+			);
+
+		$myvars = $get[0]->HCID;
+
+		$brgylist['brgylist'] = $this->m->getBrgyInfo($myvars);
+
+		$this->load->view('template/family',$brgylist);		
+		}	
 	}
 }

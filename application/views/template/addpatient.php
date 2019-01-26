@@ -64,7 +64,7 @@
             <table class="table align-items-center table-flush" id="myTable">
   <thead class="thead-light">
     <tr>
-      <th width ="10%" scope="col">ID</th>
+      <th scope="col">ID</th>
       <th scope="col">Status</th>
       <th scope="col">Last Name</th>
       <th scope="col">First Name</th>
@@ -215,11 +215,23 @@
     <label for="validationCustom01">Family Number *</label>
     <select class="custom-select" style="text-transform: uppercase;" name="inputFam" id="inputFam" required>
       <?php foreach ($data[2]['famlist'] as $test) { ?>
-        <option><?php echo $test->code; ?>
+        <option><?php echo $test->familyno; ?>
         <?php }?></option>
+        <option value="New">Add New Family...</option>
     </select>
+    <small id="passwordHelpBlock" class="form-text text-muted text-center">If the family doesnt exist click add new family in the options</small>
     <div class="invalid-feedback">Please Select one of the following options</div>
     </div>
+<div class="col-md-4 mb-3">
+      <label for="validationCustom01">Relation</label>
+      <select class="custom-select" style="text-transform: uppercase;" name="inputRel" id="inputRel" required>
+          <option value="Daughter">Daughter</option>
+          <option value="Son">Son</option>
+          <option value="Nephew">Nephew</option>
+      </select>
+      <div class="invalid-feedback">
+        </div>
+      </div>
     </div>
 
   </div>
@@ -310,6 +322,26 @@
   </div>
 </div>
 
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
   (function() {
@@ -341,7 +373,7 @@
       "type": 'POST',
       //Set column definition initialisation properties.
             "columnDefs": [
-                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Edit</button><button id="deleteBtn" class="dropdown-item"><i class="fas fa-trash-alt"></i>Delete</button></div></div>'},
+                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="viewBtn" class="dropdown-item"><i class="fas fa-folder"></i>View Records</button><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Edit</button><button id="deleteBtn" class="dropdown-item"><i class="fas fa-trash-alt"></i>Delete</button></div></div>'},
                 {
       "targets": [1,2,3,4,5,6,7],
       "orderable": false}
@@ -352,6 +384,10 @@
             var data = table.row($(this).parents('tr') ).data();
             var action=this.id;
             var ID = data[0];
+            if (action=='viewBtn')
+            {
+                 window.location='getRecords';
+            }
             if (action=='deleteBtn')
             {
 
@@ -364,8 +400,8 @@
                   data: {'ID': ID},
                   success: function (result) 
                   {
-                    alert(result)
                   var parsed= JSON.parse(result);
+                  alert(parsed)
                   $.each(parsed,function(index,value)
                   {
                     $(".modal-body #inputID").val(value[0]);
@@ -431,6 +467,18 @@
     if(theEvent.preventDefault) theEvent.preventDefault();
   }
 };
+
+$("#inputFam").change(function() 
+  {    
+    if($(this).val()=="New")
+    {
+      window.location="family";
+    }
+    else
+    {
+      
+    }
+  });
 
  $("#inputBD").change(function() 
   {    

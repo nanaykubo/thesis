@@ -2,22 +2,32 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
-  <meta name="author" content="Creative Tim">
-  <title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
-  <!-- Favicon -->
-  <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
   <link href="../assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
   <link href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <!-- Argon CSS -->
   <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-</head>
+  <!-- Argon CSS -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+
+  </head>
 
 <body>
   <!-- Sidenav -->
@@ -225,8 +235,8 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-                    <button class="btn btn-icon btn-3 btn-secondary" type="button">
-      <span class="btn-inner--icon"><i class="fas fa-folder-plus"></i></span>
+      <button class="btn btn-icon btn-3 btn-secondary" data-toggle="modal" data-target="#exampleModal"  type="button">
+      <span class="btn-inner--icon" ><i class="fas fa-folder-plus"></i></span>
       
       <span class="btn-inner--text">Add New Family</span>
         </button>
@@ -245,52 +255,147 @@
             <div class="card-header border-2">
               <h1 class="mb-0">Families</h1>
               <br/>
-            <table class="table align-items-center table-flush" id="myTable">
-  <thead class="thead-light">
-    <tr>
+    <table id="example" class="table align-items-center table-flush" cellspacing="0" width="100%">
+      <thead>
+      <tr>
       <th scope="col">Family No</th>
-      <th scope="col">Family Name</th>
-      <th scope="col">Family Address</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Middle Name</th>
+      <th scope="col">Address</th>
       <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-<td>1</td>
-<td>Basco</td>
-<td> </td>
-<td class="text-right">
-    <div class="dropdown">
-      <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-ellipsis-v"></i>
-      </a>
-      <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-        <a class="dropdown-item" href="records"><i class="fas fa-users"></i>View Family Members</a>
-        <a class="dropdown-item" href="#"><i class="fas fa-edit"></i>Edit</a>
-        <a class="dropdown-item" href="#"><i class="fas fa-trash-alt"></i>Delete</a>
+      </tr>
+      </thead>
+      <tbody></tbody>
+      </table>
+   </div>
+
+<button data-toggle="modal" data-target="#myModal">CLICK</button>
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+      <form action="<?php echo base_url('template/submitFamilyRecords') ?>" method="post">
+           <input type="hidden" name="txtHCID" id="txtHCID" value="<?php echo $brgylist[0]->HCID?>"/>
+              <h2>Family Head</h2>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="inputEmail4">Last Name</label>
+      <input type="text" class="form-control" id="inputLN" name="inputLN" placeholder="Last Name">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputPassword4">First Name</label>
+      <input type="text" class="form-control" id="inputFN" name="inputFN" placeholder="First Name">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputPassword4">Middle Name</label>
+      <input type="text" class="form-control" id="inputMN" name="inputMN" placeholder="Middle Name">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="inputEmail4">Brgy</label>
+      <select class="custom-select" style="text-transform: uppercase;" id="inputBrgy" name="inputBrgy" required>
+      <option value="">Select Brgy...</option>
+      <?php foreach ($brgylist as $test) { ?>
+        <option><?php echo $test->BRGYID; ?>
+        <?php }?></option>
+    </select>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputPassword4">St</label>
+      <select class="custom-select" style="text-transform: uppercase;" id="inputSt" name="inputSt" required>
+          <option value="TAGUIG">Taguig</option>
+          <option value="MAKATI">Makati</option>
+          <option value="MANILA">Manila</option>
+    </select>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputPassword4">City/Municipality</label>
+      <select class="custom-select" style="text-transform: uppercase;" id="inputC" name="inputC" required>
+          <option value="TAGUIG">Taguig</option>
+          <option value="MAKATI">Makati</option>
+          <option value="MANILA">Manila</option>
+    </select>
+    </div>
+  </div>
+  <div class="modal-footer">
+        <div class="form-group">
+  </div>
+  <button class="btn btn-primary" type="submit">Add Family</button>
+      </div>
+</form>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" readonly class="form-control-plaintext" id="Head" value="Head : email@example.com">
+        <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Family Members:">
+         <ul id="friendsList">
+         </ul>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
-  </td>
-</tr>
-  </tbody>
-</table>
+  </div>
+</div>
 
-  <!-- Argon Scripts -->
-  <!-- Core -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready( function () {
-    $('#myTable').DataTable(
-      {
-    columnDefs: [
-        { targets: [1,2,3], orderable: false},
-    ]
+<script>
+$(document).ready( function () {
+    var table = $('#example').DataTable({
+      "ajax": '<?php echo base_url('template/getFamilyCode/'.$brgylist[0]->HCID); ?>',
+      "type": 'POST',
+      "columnDefs": [
+                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="viewBtn" class="dropdown-item"><i class="fas fa-users"></i>View Family Members</button><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Edit</button><button id="deleteBtn" class="dropdown-item"><i class="fas fa-trash-alt"></i>Delete</button></div></div>'},
+                {
+      "targets": [1,2,3,4,5],
+      "orderable": false}
+                ]
+    });
+
+    $('#example tbody').on( 'click', 'button', function (e) {
+            var data = table.row($(this).parents('tr') ).data();
+            var action=this.id;
+            var FNo = data[0];
+            if (action=='viewBtn')
+            {
+                $.ajax(
+                {
+                url:'<?php echo base_url('template/getFDesc/'); ?>',
+                type:'POST',
+                data:{'FNo': FNo},
+                success: function(data){
+                var parsed= JSON.parse(data);
+                alert(data)
+                 $.each(parsed,function(index,value)
+                  {
+                     
+                     $("#myModal").modal('show')
+                     $("#friendsList").append($("<li>").text(value[2]));
+                  });
+                }
+                }
+                );
+            }
+            });
 });
-} );
-    </script>
-</body>
+</script>
 
+</body>
 </html>

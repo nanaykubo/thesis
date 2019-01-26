@@ -37,7 +37,7 @@ class getinfo extends CI_Model
 		$query = $this->db->get('tabletest');
 		return $query->result();
 	}
-
+	
 	public function getHCName($HCID)
 	{
 		$this->db->select('*');
@@ -51,6 +51,14 @@ class getinfo extends CI_Model
 		$this->db->select("*");
 		$this->db->where('HCID',$HCID);
 		$query = $this->db->get('tabletest');
+		return $query->result();
+	}
+
+	public function family($HCID)
+	{																
+		$this->db->select("*");
+		$this->db->where('HCID',$HCID);
+		$query = $this->db->get('family');
 		return $query->result();
 	}
 
@@ -97,6 +105,30 @@ class getinfo extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getRecords($ID)
+	{
+		$this->db->select("*");
+		$this->db->where('',$ID);
+		$query = $this->db->get('logs');
+		return $query->result();
+	}
+
+	public function getInfoID($ID)
+	{
+		$this->db->select('*');
+		$this->db->where('ID', $ID);
+		$query = $this->db->get('tabletest');
+		return $query->result();
+	}
+
+	public function getArray($ID)
+	{
+		$this->db->select('*');
+		$this->db->where('ID', $ID);
+		$query = $this->db->get('tabletest');
+		return $query->result_array();
+	}
+
 	public function getLogs($code)
 	{
 		$this->db->select("activity,date");
@@ -132,7 +164,7 @@ class getinfo extends CI_Model
 
 	public function getTotalFamily($HCID)
 	{
-		$this->db->select('COUNT(code) as family');
+		$this->db->select('COUNT(familyno) as family');
 		$this->db->from('family');
 		$this->db->where('HCID',$HCID);
 		$query = $this->db->get();
@@ -170,7 +202,6 @@ class getinfo extends CI_Model
 		return false;
 		}
 	}
-
 	
 	public function getFilteredInfo($HCID,$searchValue)
 	{
@@ -210,14 +241,6 @@ class getinfo extends CI_Model
 		}
 	}
 
-	public function getInfoID($id)
-	{
-		$this->db->select('*');
-		$this->db->where('ID', $id);
-		$query = $this->db->get('tabletest');
-		return $query->result();
-	}
-
 	public function getUsername($username)
  	{
  	 $this->db->where('ID' , $username);
@@ -236,6 +259,14 @@ class getinfo extends CI_Model
 		$this->db->select("BRGYID");
 		$this->db->where('HCID', $id);
 		$query = $this->db->get('brgy');
+		return $query->result();
+	}
+
+	public function getFDesc($FNo)
+	{
+		$this->db->select("*");
+		$this->db->where('familyno', $FNo);
+		$query = $this->db->get('fdesc');
 		return $query->result();
 	}
 
@@ -284,6 +315,12 @@ class getinfo extends CI_Model
 			'code'=>$this->input->post('inputassist'),
 			'activity'=>$this->input->post('inputnote'),
 			'date'=>$this->input->post('inputinsert')
+			);
+
+	 $fam = array(
+			'ID'=>$this->input->post('inputID'),
+			'familyno'=>$this->input->post('inputFam'),
+			'RELATION'=>$this->input->post('inputRel')
 			);
 
 	$this->db->insert('tabletest', $records);
@@ -368,11 +405,16 @@ class getinfo extends CI_Model
 	}
 	}
 
-	public function addNewFamilyRecords($id)
+	public function addNewFamilyRecords()
 	{
 		$records = array(
-			'HCID'=>$this->input->post('txt_HCID'),	
-			'Name'=>$this->input->post('txt_Name')
+			'HCID'=>$this->input->post('txtHCID'),	
+			'LN'=>$this->input->post('inputLN'),
+			'FN'=>$this->input->post('inputFN'),
+			'MN'=>$this->input->post('inputMN'),
+			'Brgy'=>$this->input->post('inputBrgy'),	
+			'St'=>$this->input->post('inputSt'),
+			'City'=>$this->input->post('inputC')
 		);
 
 	$this->db->insert('family', $records);
@@ -441,13 +483,6 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
-	public function getRecords($id)
-	{
-		$this->db->select("*");
-		$this->db->where('ID', $id);
-		$query = $this->db->get('precords');
-		return $query->result();
-	}
 
 	public function getblob($recordno)
 	{

@@ -29,11 +29,11 @@
   <div class="row">
     <div class="col-md-5 offset-md-3">
 
-      <center class="mt-5">
+      <center class="mt-4">
         <span  style="font-size: 1.5em; color: black;">
         <br>
         </span>
-        <img src="../assets/img/brand/logo.jpg" width="300" height="180">
+        <img src="../assets/img/brand/logo.jpg" width="450" height="250">
       </center>
 
 
