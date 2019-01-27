@@ -150,9 +150,9 @@ class Template extends CI_Controller {
 	{
 		$data = $this->input->post();
 
-		$getRecords = $this->m->getFam($data['FNo']);
+		$getFam = $this->m->getFam($data['FNo']);
 
-		foreach ($getRecords as $value) 
+		foreach ($getFam as $value) 
 		{
 			$row = array();
 			$row[0] = $value->ID;
@@ -166,9 +166,12 @@ class Template extends CI_Controller {
 		echo json_encode($data2);
 	}
 
-	public function getRecords($ID)
+	public function getRecords()
 	{
-		$this->load->view('template/records');
+		$portid = $this->uri->segment(3);
+		$data['data'] = $this->m->getInfoID($portid);
+
+		$this->load->view('template/records',$data);
 	}
 
 	public function testsubmit()
