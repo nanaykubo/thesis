@@ -150,30 +150,25 @@ class Template extends CI_Controller {
 	{
 		$data = $this->input->post();
 
-		$values = $this->m->getFDesc($data['FNo']);
+		$getRecords = $this->m->getFam($data['FNo']);
 
-		$myvars = $values[0]->ID;
-
-		$getRecords = $this->m->getInfoID($myvars);
-
-		foreach ($values as $value) {
+		foreach ($getRecords as $value) 
+		{
 			$row = array();
 			$row[0] = $value->ID;
-			$row[1] = $value->familyno;
+			$row[1] = $value->LN;
+			$row[2] = $value->FN;
+			$row[3] = $value->MN;
+			$row[4] = $value->Relation;
 			$data2[] = $row;
 		}
 
 		echo json_encode($data2);
 	}
 
-	public function getRecords()
+	public function getRecords($ID)
 	{
-		$getInfo = $this->m->getInfoID($ID);
-		$getRecords = $this->m->getRecords($ID);
-
-		$data['data'] = array($getInfo,$getRecords);
-
-		$this->load->view('template/records',$data);
+		$this->load->view('template/records');
 	}
 
 	public function testsubmit()
@@ -404,7 +399,11 @@ class Template extends CI_Controller {
 
 		$brgylist['brgylist'] = $this->m->getBrgyInfo($myvars);
 
-		$this->load->view('template/family',$brgylist);		
+		$userlist['userlist'] = $get;
+
+		$data['data'] = array($brgylist,$userlist);
+
+		$this->load->view('template/family',$data);		
 		}	
 	}
 }

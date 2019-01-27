@@ -386,7 +386,7 @@
             var ID = data[0];
             if (action=='viewBtn')
             {
-                 window.location='getRecords';
+            location.href = "getRecords/" + "&parameter=" + ID;
             }
             if (action=='deleteBtn')
             {

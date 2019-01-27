@@ -108,7 +108,7 @@ class getinfo extends CI_Model
 	public function getRecords($ID)
 	{
 		$this->db->select("*");
-		$this->db->where('',$ID);
+		$this->db->where('ID',$ID);
 		$query = $this->db->get('logs');
 		return $query->result();
 	}
@@ -121,12 +121,12 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
-	public function getArray($ID)
+	public function getFam($familyno)
 	{
 		$this->db->select('*');
-		$this->db->where('ID', $ID);
+		$this->db->where('familyno', $familyno);
 		$query = $this->db->get('tabletest');
-		return $query->result_array();
+		return $query->result();
 	}
 
 	public function getLogs($code)
@@ -139,9 +139,9 @@ class getinfo extends CI_Model
 
 	public function getPieChart($HCID)
 	{
-		$this->db->select('brgy.BRGYID, brgy.HCID,COUNT(tabletest.Brgy) as total')
+		$this->db->select('brgy.BRGYID, brgy.HCID,COUNT(family.Brgy) as total')
 		->from('brgy');
-		$this->db->join('tabletest', 'brgy.BRGYID = tabletest.Brgy','left')
+		$this->db->join('family', 'brgy.BRGYID = family.Brgy','left')
          ->group_by('brgy.BRGYID');	
         $this->db->having('brgy.HCID=',$HCID);
         $query = $this->db->get();
@@ -302,7 +302,7 @@ class getinfo extends CI_Model
 			'City'=>$this->input->post('inputC'),
 			'Address'=>$this->input->post('inputAdd'),
 			'CivilStatus'=>$this->input->post('inputCS'),
-			'FamilyCode'=>$this->input->post('inputFam'),
+			'familyno'=>$this->input->post('inputFam'),
 			'Philhealth'=>$this->input->post('inputPN'),
 			'dateinsert'=>$this->input->post('inputinsert'),
 			'Assist'=>$this->input->post('inputassist'),
@@ -319,12 +319,12 @@ class getinfo extends CI_Model
 
 	 $fam = array(
 			'ID'=>$this->input->post('inputID'),
-			'familyno'=>$this->input->post('inputFam'),
-			'RELATION'=>$this->input->post('inputRel')
+			'familyno'=>$this->input->post('inputFam')
 			);
 
 	$this->db->insert('tabletest', $records);
 	$this->db->insert('logs', $logs);
+	$this->db->insert('fdesc', $fam);
 	
 	if($this->db->affected_rows() > 0)
 	{
@@ -368,7 +368,7 @@ class getinfo extends CI_Model
 			'St'=>$this->input->post('inputSt'),
 			'City'=>$this->input->post('inputC'),
 			'CivilStatus'=>$this->input->post('inputCS'),
-			'FamilyCode'=>$this->input->post('inputFam'),
+			'familyno'=>$this->input->post('inputFam'),
 			'Philhealth'=>$this->input->post('inputPN'),
 			'Remarks'=>$this->input->post('inputR'),
 			'Sex'=>$this->input->post('inputSe'),
@@ -417,7 +417,16 @@ class getinfo extends CI_Model
 			'City'=>$this->input->post('inputC')
 		);
 
+		$_POST['inputnote'] = "ADDED FAMILY " .$_POST['inputLN'] ." " .$_POST['inputFN'];
+
+		$logs = array(
+			'code'=>$this->input->post('inputAssist'),
+			'activity'=>$this->input->post('inputnote'),
+			'date'=>$this->input->post('inputinsert')
+			);
+
 	$this->db->insert('family', $records);
+	$this->db->insert('logs', $logs);
 	
 	if($this->db->affected_rows() > 0)
 	{

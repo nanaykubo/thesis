@@ -270,16 +270,17 @@
       </table>
    </div>
 
-<button data-toggle="modal" data-target="#myModal">CLICK</button>
-
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body">
       <form action="<?php echo base_url('template/submitFamilyRecords') ?>" method="post">
-           <input type="hidden" name="txtHCID" id="txtHCID" value="<?php echo $brgylist[0]->HCID?>"/>
-              <h2>Family Head</h2>
+  <input type="hidden" name="txtHCID" id="txtHCID" value="<?php echo $data[1]['userlist'][0]->HCID?>"/>
+  <input type="hidden" name="inputAssist" id="inputAssist" value="<?php echo $data[1]['userlist'][0]->code?>"/>
+  <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
+  <input type="hidden" name="inputnote" id="inputnote"/>
+  <h2>Family Head</h2>
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="inputEmail4">Last Name</label>
@@ -299,7 +300,7 @@
       <label for="inputEmail4">Brgy</label>
       <select class="custom-select" style="text-transform: uppercase;" id="inputBrgy" name="inputBrgy" required>
       <option value="">Select Brgy...</option>
-      <?php foreach ($brgylist as $test) { ?>
+      <?php foreach ($data[0]['brgylist'] as $test) { ?>
         <option><?php echo $test->BRGYID; ?>
         <?php }?></option>
     </select>
@@ -343,11 +344,11 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      
       <div class="modal-body">
-        <input type="text" readonly class="form-control-plaintext" id="Head" value="Head : email@example.com">
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Family Members:">
-         <ul id="friendsList">
-         </ul>
+        <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Family Members (Relation) :">
+         <ol id="friendsList">
+         </ol>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -359,7 +360,7 @@
 <script>
 $(document).ready( function () {
     var table = $('#example').DataTable({
-      "ajax": '<?php echo base_url('template/getFamilyCode/'.$brgylist[0]->HCID); ?>',
+      "ajax": '<?php echo base_url('template/getFamilyCode/'.$data[0]['brgylist'][0]->HCID); ?>',
       "type": 'POST',
       "columnDefs": [
                 {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="viewBtn" class="dropdown-item"><i class="fas fa-users"></i>View Family Members</button><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Edit</button><button id="deleteBtn" class="dropdown-item"><i class="fas fa-trash-alt"></i>Delete</button></div></div>'},
@@ -373,8 +374,10 @@ $(document).ready( function () {
             var data = table.row($(this).parents('tr') ).data();
             var action=this.id;
             var FNo = data[0];
+            $("#friendsList").empty();
             if (action=='viewBtn')
             {
+                $("#FamNo").val(FNo);
                 $.ajax(
                 {
                 url:'<?php echo base_url('template/getFDesc/'); ?>',
@@ -382,12 +385,11 @@ $(document).ready( function () {
                 data:{'FNo': FNo},
                 success: function(data){
                 var parsed= JSON.parse(data);
-                alert(data)
                  $.each(parsed,function(index,value)
                   {
-                     
+                     $("#friendsList").append('<li>'+value[0]+":"+" " +value[1]+" "+value[2]+" "+ value[3]+" "
+                      +"("+value[4]+")"+'</li>');
                      $("#myModal").modal('show')
-                     $("#friendsList").append($("<li>").text(value[2]));
                   });
                 }
                 }
