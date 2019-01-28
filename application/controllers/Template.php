@@ -218,18 +218,25 @@ class Template extends CI_Controller {
 	{
 		$something = $this->input->post('txtID');
 
-		$config['upload_path']   = './uploads/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']      = 0;
-
+		$config['upload_path'] = '/uploads/profilepics';
+		$config['allowed_types'] = 'gif|jpg|png|jpeg';
+		$config['max_size'] = 250;
 		$this->load->library('upload', $config);
-		$this->upload->do_upload('inputBlob');
-		$data_upload_files = $this->upload->data();
+		if (!$this->upload->do_upload('inputBlob'))
+		{
+		$error = array('error' => $this->upload->display_errors());
+		$this->load->view('upload_form', $error);
+		}
+		else
+		{	
+		$upload_data = $this->upload->data();
 
-		$image = $data_upload_files[full_path]; 
+		//get the uploaded file name
+		$data['inputBlob'] = $upload_data['file_name'];
 
-		$result = $this->m->addPRecords($image);
+		$result = $this->m->addPRecords($data);
 		redirect(base_url('template/getRecords/'.$something));
+		}
 	}
 
 	public function submitNewRecords()

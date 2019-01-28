@@ -2,7 +2,7 @@
 $connect = mysqli_connect("localhost","root","","demo");
 if(isset($_POST["insert"]))
 {
-  $file = addslashes(file_get_contents($_FILES["inputBlob"]["tmp_name"]));
+  $file = addslashes(file_get_contents($_FILES["file"]["tmp_name"]));
   $query = "INSERT INTO precords(ID,HCID,RecordType,DATE,RETURNDATE,RESULT,PRESCRIPTION,Attached) 
    VALUES ('".$_POST['txtID']."'
    ,'".$_POST['txt_HCID']."'
@@ -11,10 +11,9 @@ if(isset($_POST["insert"]))
    ,'".$_POST['inputReturn']."'
    ,'".$_POST['inputResult']."'
    ,'".$_POST['inputPrescripton']."'
-   ,'$file'
-   )";
+   ,'$file')";
   $qry = mysqli_query($connect, $query);
-
+  echo "<meta http-equiv='refresh' content='0'>";
 }
 ?>
 
@@ -344,9 +343,8 @@ if(isset($_POST["insert"]))
       <div class="modal-body">
 
        
-  <form method="post" enctype="multipart/form-data">
-
-  <input type="hidden" name="inputFN" id="inputFN" value="<?php echo $data[0]['pinfo'][0]->FN?>"/>      
+    <form action="<?php echo base_url('template/pRecords/') ?>" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="inputFN" id="inputFN" value="<?php echo $data[0]['pinfo'][0]->FN?>"/>      
   <input type="hidden" name="inputLN" id="inputLN" value="<?php echo $data[0]['pinfo'][0]->LN?>"/>
   <input type="hidden" name="txtHCID" id="txtHCID" value="<?php echo $data[0]['pinfo'][0]->HCID?>"/>
   <input type="hidden" name="txtID" id="txtID" value="<?php echo $data[0]['pinfo'][0]->ID?>"/>
@@ -388,7 +386,7 @@ if(isset($_POST["insert"]))
 
       </div>
       <div class="modal-footer">
-          <button type="submit" id="insert" name="insert"class="btn btn-primary">Add Record</button>
+          <button type="submit" class="btn btn-primary">Add Record</button>
       </div>
     </div>
   </div>
