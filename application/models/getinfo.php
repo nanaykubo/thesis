@@ -50,6 +50,7 @@ class getinfo extends CI_Model
 	{																
 		$this->db->select("*");
 		$this->db->where('HCID',$HCID);
+		$this->db->where('is_delete',"1");
 		$query = $this->db->get('tabletest');
 		return $query->result();
 	}
@@ -57,6 +58,7 @@ class getinfo extends CI_Model
 	public function family($HCID)
 	{																
 		$this->db->select("*");
+		$this->db->where('is_delete', "1");
 		$this->db->where('HCID',$HCID);
 		$query = $this->db->get('family');
 		return $query->result();
@@ -74,6 +76,7 @@ class getinfo extends CI_Model
 	{
 		$this->db->select("*");
 		$this->db->where('YEAR(dateinsert)',$txtYear);
+		$this->db->where('is_delete',"1");
 		$query = $this->db->get('tabletest');
 		return $query->result_array();
 	}
@@ -83,6 +86,7 @@ class getinfo extends CI_Model
 		$this->db->select("*");
 		$this->db->where('QUARTER(dateinsert)',$txtQuarter);
 		$this->db->where('YEAR(dateinsert)',$txtYear);
+		$this->db->where('is_delete',"1");
 		$query = $this->db->get('tabletest');
 		return $query->result_array();
 	}
@@ -92,6 +96,7 @@ class getinfo extends CI_Model
 		$this->db->select("*");
 		$this->db->where('MONTH(dateinsert)',$txtMonth);
 		$this->db->where('YEAR(dateinsert)',$txtYear);
+		$this->db->where('is_delete',"1");
 		$query = $this->db->get('tabletest');
 		return $query->result_array();
 	}
@@ -117,6 +122,7 @@ class getinfo extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->where('ID', $ID);
+		$this->db->where('is_delete', "1");
 		$query = $this->db->get('tabletest');
 		return $query->result();
 	}
@@ -439,6 +445,42 @@ class getinfo extends CI_Model
 	}
 	}
 
+	public function addPRecords($image)
+	{
+
+	$records = array(
+			'ID'=>$this->input->post('txtID'),	
+			'HCID'=>$this->input->post('txtHCID'),
+			'RecordType'=>$this->input->post('inputType'),
+			'DATE'=>$this->input->post('inputDate'),
+			'RETURNDATE'=>$this->input->post('inputReturn'),	
+			'RESULT'=>$this->input->post('inputResult'),
+			'PRESCRIPTION'=>$this->input->post('inputPrescripton'),
+			'Attached'=> $image
+		);
+
+	$_POST['inputnote'] = "ADDED RECORD " .$_POST['inputLN'] ." " .$_POST['inputFN'];
+
+	$logs = array(
+		'code'=>$this->input->post('inputassist'),
+		'activity'=>$this->input->post('inputnote'),
+		'date'=>$this->input->post('inputinsert')
+		);
+
+	$this->db->insert('precords', $records);
+	$this->db->insert('logs', $logs);
+	
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;	
+	}
+	}
+
 
 	public function testsubmit()
 	{
@@ -463,15 +505,42 @@ class getinfo extends CI_Model
 	}
 	}
 
-	public function delete($id)
-	{	
-	$this->db->where('ID',$id);
-	$this->db->delete('records');
-	$this->db->where('ID',$id);
-	$this->db->delete('fdesc');
-	$this->db->where('ID',$id);
-	$this->db->delete('tabletest');
+	public function deletefam($id)
+	{
+	$isfalse = array('is_delete' => 0);    
+	$this->db->where('familyno', $id);
+	$this->db->update('family', $isfalse); 
 	
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+	
+	}
+
+	public function delete($id,$code,$note,$date)
+	{
+	$logs = array(
+		'code' => $code,
+		'activity' => $note,
+		'date' => $date
+	);    
+
+	$this->db->insert('logs', $logs);
+
+	$isfalse = array('is_delete' => 0);    
+	$this->db->where('id', $id);
+	$this->db->update('tabletest', $isfalse); 
+	$this->db->where('id', $id);
+	$this->db->update('precords', $isfalse); 
+	$this->db->where('id', $id);
+	$this->db->update('fdesc', $isfalse); 
+
 	if($this->db->affected_rows() > 0)
 	{
 		return true;
@@ -492,6 +561,13 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getallRecords($id)
+	{
+		$this->db->select("*");
+		$this->db->where('ID', $id);
+		$query = $this->db->get('precords');
+		return $query->result();
+	}
 
 	public function getblob($recordno)
 	{

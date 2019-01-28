@@ -1,4 +1,3 @@
-<?php echo $data[0]?>
 <!DOCTYPE html>
 <html>
 
@@ -377,6 +376,30 @@ $(document).ready( function () {
             var FNo = data[0];
             $("#friendsList").empty();
             if (action=='viewBtn')
+            {
+                $("#FamNo").val(FNo);
+                $.ajax(
+                {
+                url:'<?php echo base_url('template/getFDesc/'); ?>',
+                type:'POST',
+                data:{'FNo': FNo},
+                success: function(data){
+                var parsed= JSON.parse(data);
+                 $.each(parsed,function(index,value)
+                  {
+                     $("#friendsList").append('<li>'+value[0]+":"+" " +value[1]+" "+value[2]+" "+ value[3]+" "
+                      +"("+value[4]+")"+'</li>');
+                     $("#myModal").modal('show')
+                  });
+                }
+                }
+                );
+            }
+            if (action=='deleteBtn')
+            {
+                window.location.href = "deleteFam/"+ FNo;
+            }
+            if (action=='deleteBtn')
             {
                 $("#FamNo").val(FNo);
                 $.ajax(

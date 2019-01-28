@@ -384,13 +384,18 @@
             var data = table.row($(this).parents('tr') ).data();
             var action=this.id;
             var ID = data[0];
+            var code = $('#inputassist').val();
+            var FN = data[2];
+            var LN = data[3];
+            var note = "DELETED" + " " + "PATIENT" + " " + FN + " " + LN;
+            var date = $('#inputinsert').val();
             if (action=='viewBtn')
             {
             window.location.href = "getRecords/"+ ID;
             }
             if (action=='deleteBtn')
             {
-
+            window.location.href = "deletePInfo/"+ ID + "/" + code + "/" + note + "/" + date;
             }
             if (action=='editBtn')
             {
@@ -400,6 +405,7 @@
                   data: {'ID': ID},
                   success: function (result) 
                   {
+                    alert(result)
                   var parsed= JSON.parse(result);
                   alert(parsed)
                   $.each(parsed,function(index,value)
@@ -445,7 +451,6 @@
                   } 
                   });
             }
-
             });
   });
 

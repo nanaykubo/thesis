@@ -1,3 +1,23 @@
+<?php
+$connect = mysqli_connect("localhost","root","","demo");
+if(isset($_POST["insert"]))
+{
+  $file = addslashes(file_get_contents($_FILES["inputBlob"]["tmp_name"]));
+  $query = "INSERT INTO precords(ID,HCID,RecordType,DATE,RETURNDATE,RESULT,PRESCRIPTION,Attached) 
+   VALUES ('".$_POST['txtID']."'
+   ,'".$_POST['txt_HCID']."'
+   ,'".$_POST['inputType']."'
+   ,'".$_POST['inputDate']."'
+   ,'".$_POST['inputReturn']."'
+   ,'".$_POST['inputResult']."'
+   ,'".$_POST['inputPrescripton']."'
+   ,'$file'
+   )";
+  $qry = mysqli_query($connect, $query);
+
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -111,27 +131,27 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="logged">
+            <a class="nav-link" href="<?php echo base_url('template/logged') ?>">
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="addpatient">
+            <a class="nav-link active" href="<?php echo base_url('template/addpatient') ?>">
               <i class="fas fa-plus-circle text-green"></i> Add Patient
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="family">
+            <a class="nav-link" href="<?php echo base_url('template/family') ?>">
               <i class="fas fa-users text-blue"></i> List of Families
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="reports">
+            <a class="nav-link" href="<?php echo base_url('template/reports') ?>">
               <i class="fas fa-file-signature text-info"></i> Reports
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login">
+            <a class="nav-link" href="<?php echo base_url('template/login') ?>">
               <i class="fas fa-sign-out-alt text-danger"></i> Log Out
             </a>
           </li>
@@ -170,7 +190,7 @@
         <!-- Brand -->
         <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="addpatient">Add Patient</a></li>
+        <li class="breadcrumb-item"><a href="<?php echo base_url('template/addpatient') ?>">Add Patient</a></li>
         <li class="breadcrumb-item active" aria-current="page">Medical Records</li>
       </ol>
       </nav>
@@ -234,13 +254,13 @@
           <!-- Card stats -->
           <div class="card">
           <div class="card-body">
-            <h1>KAREN D BASCO</h1>
+            <h1><?php echo $data[0]['pinfo'][0]->FN?> <?php echo $data[0]['pinfo'][0]->MN?> <?php echo $data[0]['pinfo'][0]->LN?></h1>
          <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
   <div class="btn-group" role="group" aria-label="First group">
     <p class="card-text"><a href="#" class="badge badge-info">Patient Information</a> </p>
   </div>
   <div class="input-group ">
-    <button class="btn btn-icon btn-3 btn-secondary" data-toggle="modal" data-target="#exampleModalLong" type="button">
+    <button class="btn btn-icon btn-3 btn-secondary" data-toggle="modal" data-target="#myModal" type="button">
       <span class="btn-inner--icon"><i class="fas fa-file-medical fa-lg text-default"></i></i></span>
       
       <span class="btn-inner--text">Add New Record</span>
@@ -268,24 +288,43 @@
             </div>
             <!-- body -->
 
-             <div class="col-12">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Records</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-  </li>
+            <table class="table table-hover text-center">
+  <thead>
+    <tr>
+      <th scope="col">Record No</th>
+      <th scope="col">Record Type</th>
+      <th scope="col">Date Inserted</th>
+      <th scope="col">Return Date</th>
+      <th scope="col">Result</th>
+      <th scope="col">Prescription</th>
+      <th scope="col">Attached</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+      //retrive parameters from Test.php controller
+      if($data[2]['precords'])
+      {
+        //set dataset info to variable test
+        foreach ($data[2]['precords'] as $test) 
+        //get header ID and print out each
+        {
+      ?>
+      <td><?php echo $test->recordno; ?></td>
+      <td><?php echo $test->RecordType; ?></td>
+      <td><?php echo $test->DATE; ?></td>
+      <td><?php echo $test->RETURNDATE; ?></td>
+      <td><?php echo $test->RESULT; ?></td>
+      <td><?php echo $test->PRESCRIPTION; ?></td>
+      <td><?php echo $test->Attached; ?></td>
+   </tbody>
+    <?php
+      //continuation to loop all in the dataset to the body
 
-</ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
-</div>
+      }
+
+      }
+      ?>
         </div>
           </div>
         </div>
@@ -293,128 +332,63 @@
     </div>
 
 
-<!-- Modal -->
-<div class="modal fade bd-example-modal-lg" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Add New Record</h5>
+        <h5 class="modal-title">Add Records</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        
-        <!-- tabular -->
-          <nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Patient Information</a>
-  </div>
-        </nav>
-<div class="tab-content " id="nav-tabContent">
-  <!-- patient tab -->
-  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-      <br/>
 
-      <!-- body -->
-<form class="needs-validation" novalidate>
+       
+  <form method="post" enctype="multipart/form-data">
+
+  <input type="hidden" name="inputFN" id="inputFN" value="<?php echo $data[0]['pinfo'][0]->FN?>"/>      
+  <input type="hidden" name="inputLN" id="inputLN" value="<?php echo $data[0]['pinfo'][0]->LN?>"/>
+  <input type="hidden" name="txtHCID" id="txtHCID" value="<?php echo $data[0]['pinfo'][0]->HCID?>"/>
+  <input type="hidden" name="txtID" id="txtID" value="<?php echo $data[0]['pinfo'][0]->ID?>"/>
+   <input type="hidden" name="inputassist" id="inputassist" value="<?php echo $data[1]['userlist'][0]->code?>"/>
+   <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
+   <input type="hidden" name="inputnote" id="inputnote"/>
+
   <div class="form-row">
-    <div class="col-md-12">
-    <label for="inputAddress">ID *</label>
-    <input type="text" required class="form-control" id="inputAddress" placeholder="Enter your ID">
-    <div class="invalid-feedback">
-          Please enter an ID
-        </div>
-        <br/>
-  </div>
-    <div class="col-md-4 mb-3">
-      <label for="validationCustom01">First Name *</label>
-      <input type="text" class="form-control" id="validationCustom02" placeholder="First Name"required>
-      <div class="invalid-feedback">
-          Please enter your First Name
-        </div>
+    <div class="form-group col-md-12">
+      <label for="inputState">Record Type</label>
+      <select id="inputType" name="inputType" class="form-control">
+        <option value="Checkup">Checkup</option>
+        <option value="Service">Service</option>
+      </select>
     </div>
-     <div class="col-md-4 mb-3">
-      <label for="validationCustom02">Middle name</label>
-      <input type="text" class="form-control" id="validationCustom02" placeholder="Middle name">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Date</label>
+      <input type="date" class="form-control" id="inputDate" name="inputDate" value="<?php echo date('Y-m-d'); ?>" readonly>
     </div>
-     <div class="col-md-4 mb-3">
-      <label for="validationCustom01">Last Name *</label>
-      <input type="text" class="form-control" id="validationCustom01" placeholder="Last Name" required>
-      <div class="invalid-feedback">
-          Please enter your Last Name
-        </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Return Date</label>
+      <input type="date" class="form-control" name="inputReturn" id="inputReturn">
     </div>
-    <div class="col-md-4 mb-3">
-    <label for="validationCustom01">Sex *</label>
-    <select class="custom-select" required>
-      <option value="">Select...</option>
-      <option>Male</option>
-      <option>Female</option>
-    </select>
-    <div class="invalid-feedback">Example invalid custom select feedback</div>
-  </div>
-  <div class="col-md-4 mb-3">
-    <label for="validationCustom01">Birth Date *</label>
-    <input type="date" class="form-control" id="validationCustom01" placeholder="Last Name" required>
-    <div class="invalid-feedback">Please enter your Birth Date</div>
-  </div>
-  <div class="col-md-4 mb-3">
-    <label for="validationCustom01">Religion *</label>
-    <select class="custom-select" required>
-      <option value="">Select...</option>
-      <option>Catholic</option>
-      <option>Christian</option>
-      <option>Born Again</option>
-    </select>
-    <div class="invalid-feedback">Please Select one of the following options</div>
-  </div>
-  <div class="col-md-4 mb-3">
-    <label for="validationCustom01">Nationality *</label>
-    <select class="custom-select" required>
-      <option value="">Select...</option>
-      <option>Catholic</option>
-      <option>Christian</option>
-      <option>Born Again</option>
-    </select>
-    <div class="invalid-feedback">Please Select one of the following options</div>
-  </div>
-  <div class="col-md-4 mb-3">
-    <label for="validationCustom01">Civil Status *</label>
-    <select class="custom-select" required>
-      <option value="">Select...</option>
-      <option>Catholic</option>
-      <option>Christian</option>
-      <option>Born Again</option>
-    </select>
-    <div class="invalid-feedback">Please Select one of the following options</div>
-  </div>
-  <div class="col-md-4 mb-3">
-    <label for="validationCustom01">BloodType *</label>
-    <select class="custom-select" required>
-      <option value="">Select...</option>
-      <option>Catholic</option>
-      <option>Christian</option>
-      <option>Born Again</option>
-    </select>
-    <div class="invalid-feedback">Please Select one of the following options</div>
-  </div>
-  <div class="col-md-4 mb-3">
-      <label for="validationCustom01">Philhealth No *</label>
-      <input type="text" class="form-control" id="validationCustom02" placeholder="First Name"required>
-      <div class="invalid-feedback">
-          Please enter your Philhealth No
-        </div>
-</div>
+     <div class="form-group col-md-12">
+    <label for="exampleFormControlTextarea1">Result</label>
+    <textarea class="form-control" name="inputResult" id="inputResult" rows="3"></textarea>
     </div>
+    <div class="form-group col-md-12">
+    <label for="exampleFormControlTextarea1">Prescription</label>
+    <textarea class="form-control" name="inputPrescripton" id="inputPrescripton" rows="3"></textarea>
+    </div>
+    <div class="form-group col-md-12">
+    <label for="inputEmail4">Attached (Optional)</label>
+    <input type="file" class="form-control" name="inputBlob" id="inputBlob">
+    <small id="passwordHelpBlock" class="form-text text-muted">
+    </small>
+    </div>
+  </div>
 
-  </div>  
-      <!-- body -->
       </div>
       <div class="modal-footer">
-        <div class="form-group">
-  </div>
-  <button class="btn btn-primary" type="submit">Submit</button>
+          <button type="submit" id="insert" name="insert"class="btn btn-primary">Add Record</button>
       </div>
     </div>
   </div>

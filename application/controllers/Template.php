@@ -168,16 +168,68 @@ class Template extends CI_Controller {
 
 	public function getRecords()
 	{
-		$portid = $this->uri->segment(3);
-		$data['data'] = $this->m->getInfoID($portid);
+		if($this->session->userdata('logged_in')){
+			$get= $this->m->getUser(
+				$this->session->userdata('username')
+			   ,$this->session->userdata('password')
+			);
 
-		$this->load->view('template/records',$data);
+			$this->load->library('upload');
+
+			$portid = $this->uri->segment(3);
+			$patientinfo['pinfo'] = $this->m->getInfoID($portid);
+			$userlist['userlist'] = $get;
+			$precords['precords'] =	$this->m->getallRecords($portid);
+
+			$data['data'] = array($patientinfo,$userlist,$precords);
+
+			$this->load-> view('template/records',$data);
+		}	
 	}
 
 	public function testsubmit()
 	{
 		$result = $this->m->testsubmit();
 		redirect(base_url('template/test'));
+	}
+
+	public function deletePInfo()
+	{
+		$portid = $this->uri->segment(3);
+		$code = $this->uri->segment(4);
+		$note = $this->uri->segment(5);
+		$note2 = urldecode($note);
+		$date = $this->uri->segment(6);
+		$result = $this->m->delete($portid,$code,$note2,$date);
+		redirect(base_url('template/addpatient'));
+	}
+
+	public function deleteFam()
+	{
+		$portid = $this->uri->segment(3);
+		$code = $this->uri->segment(4);
+		$note = $this->uri->segment(5);
+		$date = $this->uri->segment(6);
+		$result = $this->m->deletefam($portid,$code,$note,$date);
+		redirect(base_url('template/family'));
+	}
+
+	public function pRecords()
+	{
+		$something = $this->input->post('txtID');
+
+		$config['upload_path']   = './uploads/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size']      = 0;
+
+		$this->load->library('upload', $config);
+		$this->upload->do_upload('inputBlob');
+		$data_upload_files = $this->upload->data();
+
+		$image = $data_upload_files[full_path]; 
+
+		$result = $this->m->addPRecords($image);
+		redirect(base_url('template/getRecords/'.$something));
 	}
 
 	public function submitNewRecords()
@@ -232,7 +284,7 @@ class Template extends CI_Controller {
 			$row[10] = $value->Nationality;
 			$row[11] = $value->CivilStatus;
 			$row[12] = $value->Philhealth;
-			$row[13] = $value->FamilyCode;
+			$row[13] = $value->familyno;
 			$row[14] = $value->Address;
 			$row[15] = $value->Brgy;
 			$row[16] = $value->St;
