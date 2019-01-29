@@ -30,54 +30,34 @@
   </head>
 
 <body>
-    <img src="http://localhost/medrec/assets/uploads/11112.png" alt="Girl in a jacket">
-   <table id="choose-address-table" class="ui-widget ui-widget-content">
+   <table id="example" class="ui-widget ui-widget-content">
     <thead>
         <tr class="ui-widget-header ">
             <th>Name/Nr.</th>
             <th>Street</th>
             <th>Town</th>
             <th>Postcode</th>
-            <th>Country</th>
-            <th>Options</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td class="nr"><span>50</span>
-            </td>
-            <td>Some Street 1</td>
-            <td>Glasgow</td>
-            <td>G0 0XX</td>
-            <td>United Kingdom</td>
-            <td>
-                <button type="button" class="use-address" />
-            </td>
-        </tr>
-        <tr>
-            <td class="nr">49</td>
-            <td>Some Street 2</td>
-            <td>Glasgow</td>
-            <td>G0 0XX</td>
-            <td>United Kingdom</td>
-            <td>
-                <button type="button" class="use-address" />
-            </td>
-        </tr>
+       
     </tbody>
 </table>
    
 <script>
-$(document).ready( function () {
-   $(".use-address").click(function() {
-    var $row = $(this).closest("tr");    // Find the row
-    var $text = $row.find(".nr").text(); // Find the text
-    
-    // Let's test it out
-    alert($text);
-});
-} );
-</script>
+  $(document).ready(function() {
+    var table= $('#myTable').DataTable({
+      "ajax": '<?php echo base_url('template/getallUsers); ?>',
+      "type": 'POST',
+      //Set column definition initialisation properties.
+            "columnDefs": [
+                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="viewBtn" class="dropdown-item"><i class="fas fa-folder"></i>View Records</button><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Edit</button><button id="deleteBtn" class="dropdown-item"><i class="fas fa-trash-alt"></i>Delete</button></div></div>'},
+                {
+      "targets": [1,2,3,4,5,6,7],
+      "orderable": false}
+            ]
+    });
+  </script>
 
 
 </body>

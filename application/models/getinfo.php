@@ -10,6 +10,7 @@ class getinfo extends CI_Model
 		$this->db->where('password',$password);
 
 		$query = $this->db->get('users');
+		$query = $this->db->get('admin');
 
 		if ($query -> num_rows() > 0)
 		{
@@ -19,6 +20,16 @@ class getinfo extends CI_Model
 		{
 			return false;
 		}
+	}
+
+	public function getAdmin($username,$password)
+	{
+		$this->db->select('*');
+		$this->db->where('username',$username);
+		$this->db->where('password',$password);
+
+		$query = $this->db->get('admin');
+		return $query->result();
 	}
 
 	public function getUser($username,$password)
@@ -127,6 +138,13 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getAllInfo()
+	{
+		$this->db->select('*');
+		$query = $this->db->get('users');
+		return $query->result();
+	}
+
 	public function getFam($familyno)
 	{
 		$this->db->select('*');
@@ -140,6 +158,20 @@ class getinfo extends CI_Model
 		$this->db->select("activity,date");
 		$this->db->where('code',$code);
 		$query = $this->db->get('logs');
+		return $query->result();
+	}
+
+	public function getallLogs()
+	{
+		$this->db->select("*");
+		$query = $this->db->get('logs');
+		return $query->result();
+	}
+
+	public function getadminLogs()
+	{
+		$this->db->select("*");
+		$query = $this->db->get('adminlogs');
 		return $query->result();
 	}
 

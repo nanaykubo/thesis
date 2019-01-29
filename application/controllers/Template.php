@@ -35,6 +35,63 @@ class Template extends CI_Controller {
 		$this->load->view('template/try');	
 	}
 
+	public function admin()
+	{
+		if($this->session->userdata('logged_in')){
+			$get['get']= $this->m->getAdmin(
+				$this->session->userdata('username')
+			   ,$this->session->userdata('password')
+			);
+			$this->load->view('template/admindb',$get);	
+
+		}
+	}
+
+	public function adduser()
+	{
+		if($this->session->userdata('logged_in')){
+			$get['get']= $this->m->getAdmin(
+				$this->session->userdata('username')
+			   ,$this->session->userdata('password')
+			);
+			$this->load->view('template/adduser');	
+		}
+	}
+
+	public function viewlogs()
+	{
+		if($this->session->userdata('logged_in')){
+			$get['get']= $this->m->getAdmin(
+				$this->session->userdata('username')
+			   ,$this->session->userdata('password')
+			);
+			$this->load->view('template/viewlogs');	
+		}
+	}
+
+	public function getallUsers()
+	{
+			$allInfo= $this->m->getAllInfo();
+
+			foreach ($allInfo as $value) 
+			{
+			$row = array();
+			$row[0] = $value->code;
+			$row[1] = $value->HCID;
+			$row[2] = $value->FN;
+			$row[3] = $value->MN;
+			$row[4] = $value->LN;
+			$row[5] = $value->POSITION;
+			$data2[] = $row;
+			}
+
+			$output = array(
+			"data" => $data2,
+			);
+
+			echo json_encode($output);
+	}
+
 	function login_validation()
 	{
 		if($this->input->post('login')){
@@ -46,8 +103,17 @@ class Template extends CI_Controller {
 				$this->session->set_userdata("username", $username);
 				$this->session->set_userdata("password", $password);
 				$this->session->set_userdata("logged_in", true);
+				$get= $this->m->getAdmin($username,$password);
+				$myvars = $get[0]->POSITION;
+				if($myvars == 'ADMIN')
+				{
+					redirect('template/admin');	
+				}
+				else
+				{
+					redirect('template/logged');	
+				}
 
-				redirect('template/logged');	
 			}
 		}
 
@@ -377,6 +443,46 @@ class Template extends CI_Controller {
 
 	echo json_encode($output);
 	}
+
+	public function getallLogs()
+	{
+	$getdata = $this->m->getallLogs();
+	$data = array();
+	foreach ($getdata as $value)
+	{
+		$row = array();
+		$row[] = $value->code;
+		$row[] = $value->activity;
+		$row[] = $value->date;
+		$data[] = $row;
+	}
+
+	$output = array(
+		"data" => $data,
+	);
+
+	echo json_encode($output);
+	}
+
+	public function getadminLogs()
+	{
+	$getdata = $this->m->getadminLogs();
+	$data = array();
+	foreach ($getdata as $value)
+	{
+		$row = array();
+		$row[] = $value->activity;
+		$row[] = $value->date;
+		$data[] = $row;
+	}
+
+	$output = array(
+		"data" => $data,
+	);
+
+	echo json_encode($output);
+	}
+
 
 	public function getLogs($code)
 	{
