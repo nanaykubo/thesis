@@ -214,27 +214,38 @@ class Template extends CI_Controller {
 		redirect(base_url('template/family'));
 	}
 
+	
+	public function viewRecord()
+	{
+		$data = $this->input->post();
+
+		$values = $this->m->getImage($data['RNo']);
+
+		echo $values;
+	}
+
 	public function pRecords()
 	{
 		$something = $this->input->post('txtID');
+		$blob = $this->input->post('inputBlob');
 
-		$config['upload_path'] = '/uploads/profilepics';
-		$config['allowed_types'] = 'gif|jpg|png|jpeg';
-		$config['max_size'] = 250;
+		$config['upload_path'] = '/xampp/htdocs/medrec/assets/uploads';
+		$config['allowed_types'] = 'gif|jpg|jpeg|png';
+		$config['max_size'] = '1000';
+		$config['max_width'] = '1920';
+		$config['max_height'] = '1280';                     
+
 		$this->load->library('upload', $config);
-		if (!$this->upload->do_upload('inputBlob'))
-		{
+
+		if (!$this->upload->do_upload('inputBlob')) {
 		$error = array('error' => $this->upload->display_errors());
-		$this->load->view('upload_form', $error);
-		}
-		else
-		{	
-		$upload_data = $this->upload->data();
-
-		//get the uploaded file name
-		$data['inputBlob'] = $upload_data['file_name'];
-
-		$result = $this->m->addPRecords($data);
+		print_r($error);
+		} 
+		else 
+		{
+		$arr_image = $this->upload->data('full_path');
+		echo($arr_image);
+		$result = $this->m->addPRecords($arr_image);
 		redirect(base_url('template/getRecords/'.$something));
 		}
 	}

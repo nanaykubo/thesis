@@ -30,27 +30,52 @@
   </head>
 
 <body>
-    
-   <table id="example" class="display" cellspacing="0" width="100%">
-          <h3>REPORTS</h3>
-      <thead>
-      <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-      <th scope="col">Address</th>
-      <th scope="col">#</th>
-      </tr>
-      </thead>
-      <tbody></tbody>
-
-      </table>
-   </div>
+    <img src="http://localhost/medrec/assets/uploads/11112.png" alt="Girl in a jacket">
+   <table id="choose-address-table" class="ui-widget ui-widget-content">
+    <thead>
+        <tr class="ui-widget-header ">
+            <th>Name/Nr.</th>
+            <th>Street</th>
+            <th>Town</th>
+            <th>Postcode</th>
+            <th>Country</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="nr"><span>50</span>
+            </td>
+            <td>Some Street 1</td>
+            <td>Glasgow</td>
+            <td>G0 0XX</td>
+            <td>United Kingdom</td>
+            <td>
+                <button type="button" class="use-address" />
+            </td>
+        </tr>
+        <tr>
+            <td class="nr">49</td>
+            <td>Some Street 2</td>
+            <td>Glasgow</td>
+            <td>G0 0XX</td>
+            <td>United Kingdom</td>
+            <td>
+                <button type="button" class="use-address" />
+            </td>
+        </tr>
+    </tbody>
+</table>
    
 <script>
 $(document).ready( function () {
-    $('#example').DataTable();
+   $(".use-address").click(function() {
+    var $row = $(this).closest("tr");    // Find the row
+    var $text = $row.find(".nr").text(); // Find the text
+    
+    // Let's test it out
+    alert($text);
+});
 } );
 </script>
 

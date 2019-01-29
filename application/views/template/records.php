@@ -1,22 +1,3 @@
-<?php
-$connect = mysqli_connect("localhost","root","","demo");
-if(isset($_POST["insert"]))
-{
-  $file = addslashes(file_get_contents($_FILES["file"]["tmp_name"]));
-  $query = "INSERT INTO precords(ID,HCID,RecordType,DATE,RETURNDATE,RESULT,PRESCRIPTION,Attached) 
-   VALUES ('".$_POST['txtID']."'
-   ,'".$_POST['txt_HCID']."'
-   ,'".$_POST['inputType']."'
-   ,'".$_POST['inputDate']."'
-   ,'".$_POST['inputReturn']."'
-   ,'".$_POST['inputResult']."'
-   ,'".$_POST['inputPrescripton']."'
-   ,'$file')";
-  $qry = mysqli_query($connect, $query);
-  echo "<meta http-equiv='refresh' content='0'>";
-}
-?>
-
 <!DOCTYPE html>
 <html>
 
@@ -35,6 +16,11 @@ if(isset($_POST["insert"]))
   <link href="../../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
   <!-- Argon CSS -->
   <link type="text/css" href="../../assets/css/argon.css?v=1.0.0" rel="stylesheet">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
 </head>
 
 <body>
@@ -296,7 +282,7 @@ if(isset($_POST["insert"]))
       <th scope="col">Return Date</th>
       <th scope="col">Result</th>
       <th scope="col">Prescription</th>
-      <th scope="col">Attached</th>
+      <th scope="col">Attached (View)</th>
     </tr>
   </thead>
   <tbody>
@@ -309,14 +295,16 @@ if(isset($_POST["insert"]))
         //get header ID and print out each
         {
       ?>
-      <td><?php echo $test->recordno; ?></td>
+      <tr>
+      <td class="nr"><?php echo $test->recordno; ?></td>
       <td><?php echo $test->RecordType; ?></td>
       <td><?php echo $test->DATE; ?></td>
       <td><?php echo $test->RETURNDATE; ?></td>
       <td><?php echo $test->RESULT; ?></td>
       <td><?php echo $test->PRESCRIPTION; ?></td>
-      <td><?php echo $test->Attached; ?></td>
-   </tbody>
+      <td><button type="button" class="use-address" /></td>
+    </tr>
+   </tbody> 
     <?php
       //continuation to loop all in the dataset to the body
 
@@ -330,6 +318,25 @@ if(isset($_POST["insert"]))
       </div>
     </div>
 
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <img id="myImage" src="http://localhost/medrec/assets/uploads/11112.png">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -391,6 +398,28 @@ if(isset($_POST["insert"]))
     </div>
   </div>
 </div>
+
+<script>
+ $(document).ready(function() {
+   $(".use-address").click(function() {
+    var $row = $(this).closest("tr");    // Find the row
+    var $text = $row.find(".nr").text(); // Find the text
+
+    alert($text)
+    $.ajax({
+          url: '<?php echo base_url('template/viewRecord/'); ?>',  
+          type: 'POST',
+          data: {'RNo': $text},
+          success: function (result) 
+                  {
+                    alert(result)
+                    $("#viewModal").modal('show')
+                  }
+        });
+});
+
+});
+</script>
 
 
 

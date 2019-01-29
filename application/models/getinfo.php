@@ -276,6 +276,17 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getImage($RNo)
+	{
+		$this->db->select("Attached");
+		$this->db->where('recordno', $RNo);
+		$query = $this->db->get('precords');
+		$data = $query->row_array();
+		$value = $data['Attached'];
+		return $value;
+	}
+
+
 	public function addNewRecords()
 	{	
 		$_POST['inputS'] = strtoupper($_POST['inputS']);
@@ -456,7 +467,8 @@ class getinfo extends CI_Model
 			'RETURNDATE'=>$this->input->post('inputReturn'),	
 			'RESULT'=>$this->input->post('inputResult'),
 			'PRESCRIPTION'=>$this->input->post('inputPrescripton'),
-			'Attached'=> $image
+			'Attached'=> $image,
+			'is_delete'=> "1"
 		);
 
 	$_POST['inputnote'] = "ADDED RECORD " .$_POST['inputLN'] ." " .$_POST['inputFN'];
