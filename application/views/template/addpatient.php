@@ -107,6 +107,7 @@
    <input type="hidden" name="inputassist" id="inputassist" value="<?php echo $data[3]['userlist'][0]->code?>"/>
    <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
    <input type="hidden" name="inputnote" id="inputnote"/>
+   <input type="hidden" name="inputDel" id="inputDel" value="1"/>
   <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
       <br/>
 
@@ -225,9 +226,9 @@
 <div class="col-md-4 mb-3">
       <label for="validationCustom01">Relation</label>
       <select class="custom-select" style="text-transform: uppercase;" name="inputRel" id="inputRel" required>
-          <option value="Daughter">Daughter</option>
-          <option value="Son">Son</option>
-          <option value="Nephew">Nephew</option>
+          <option value="DAUGHTER">DAUGHTER</option>
+          <option value="SON">SON</option>
+          <option value="NEPHEW">NEPHEW</option>
       </select>
       <div class="invalid-feedback">
         </div>
@@ -322,25 +323,6 @@
   </div>
 </div>
 
-<div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
   <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -405,11 +387,10 @@
                   data: {'ID': ID},
                   success: function (result) 
                   {
-                    alert(result)
                   var parsed= JSON.parse(result);
-                  alert(parsed)
                   $.each(parsed,function(index,value)
                   {
+
                     $(".modal-body #inputID").val(value[0]);
                     $(".modal-body #inputFN").val(value[1]);
                     $(".modal-body #inputMN").val(value[2]);
@@ -417,9 +398,6 @@
                     $(".modal-body #inputS").val(value[4]).change();
                     $(".modal-body #inputSe").val(value[5]).change();
                     $(".modal-body #inputRe").val(value[6]).change();
-                    $(".modal-body #inputS option:selected").text(value[4]);
-                    $(".modal-body #inputSe").val(value[5]).change();
-                    $(".modal-body #inputRe option:selected").text(value[6]);
                     $(".modal-body #inputBD").val(value[7]);
                     $(".modal-body #inputType").val(value[8]);
                     $(".modal-body #inputAge").val(value[9]);
@@ -434,7 +412,8 @@
                     $(".modal-body #inputZ").val(value[18]);
                     $(".modal-body #inputM").val(value[19]);
                     $(".modal-body #inputR").val(value[20]);
-                    $(".modal-body #txtHCID").val(value[21]);
+                    $(".modal-body #inputRel").val(value[21]).change();
+                    $(".modal-body #txtHCID").val(value[22]);
                     
                     var val = $("#inputType").val();
                     if(val=='CHILD' || val== 'ADOLESCENCE')

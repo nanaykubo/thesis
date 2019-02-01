@@ -6,11 +6,11 @@ class getinfo extends CI_Model
 {
 	public function can_login($username,$password)
 	{
-		$this->db->where('username',$username);	
+		$this->db->select('*');
+		$this->db->where('username',$username);
 		$this->db->where('password',$password);
 
-		$query = $this->db->get('users');
-		$query = $this->db->get('admin');
+		$query =  $this->db->get('users');
 
 		if ($query -> num_rows() > 0)
 		{
@@ -138,9 +138,19 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getInfoCode($code)
+	{
+		$this->db->select('*');
+		$this->db->where('code', $code);
+		$query = $this->db->get('users');
+		return $query->result();
+	}
+
 	public function getAllInfo()
 	{
 		$this->db->select('*');
+		$this->db->where('POSITION', "NURSE");
+		$this->db->or_where('POSITION', "DOCTOR");
 		$query = $this->db->get('users');
 		return $query->result();
 	}
@@ -167,7 +177,7 @@ class getinfo extends CI_Model
 		$query = $this->db->get('logs');
 		return $query->result();
 	}
-
+	
 	public function getadminLogs()
 	{
 		$this->db->select("*");
@@ -300,11 +310,29 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function insertLogs()
+	{
+		$logs = array(
+			'code'=>$this->input->post('inputassist'),
+			'activity'=>$this->input->post('inputnote'),
+			'date'=>$this->input->post('inputinsert')
+			);
+
+		$this->db->insert('adminlogs', $logs);
+	}
+
 	public function getFDesc($FNo)
 	{
 		$this->db->select("*");
 		$this->db->where('familyno', $FNo);
 		$query = $this->db->get('fdesc');
+		return $query->result();
+	}
+
+	public function getallHCID()
+	{
+		$this->db->select("HCID");
+		$query = $this->db->get('healthcenters');
 		return $query->result();
 	}
 
@@ -317,7 +345,6 @@ class getinfo extends CI_Model
 		$value = $data['Attached'];
 		return $value;
 	}
-
 
 	public function addNewRecords()
 	{	
@@ -384,8 +411,90 @@ class getinfo extends CI_Model
 	{
 		return false;
 	}
-	
 	}
+
+	public function addNewUsers()
+	{
+		$_POST['inputLN'] = strtoupper($_POST['inputLN']);
+		$_POST['inputFN'] = strtoupper($_POST['inputFN']);
+		$_POST['inputMN'] = strtoupper($_POST['inputMN']);
+
+		$records = array(
+			'code'=>$this->input->post('inputCode'),
+			'username'=>$this->input->post('inputUser'),	
+			'password'=>$this->input->post('inputPass'),	
+			'HCID'=>$this->input->post('inputHCID'),
+			'LN'=>$this->input->post('inputLN'),
+			'FN'=>$this->input->post('inputFN'),
+			'MN'=>$this->input->post('inputMN'),
+			'POSITION'=>$this->input->post('Position'),
+			'date'=>$this->input->post('inputinsert')
+		);
+
+		$_POST['inputnote'] = "ADDED TO USERS " .$_POST['inputLN'] ." " .$_POST['inputFN'];
+
+		$logs = array(
+			'code'=>$this->input->post('inputassist'),
+			'activity'=>$this->input->post('inputnote'),
+			'date'=>$this->input->post('inputinsert')
+			);
+
+	$this->db->insert('users', $records);
+	$this->db->insert('adminlogs', $logs);
+	
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;	
+	}
+	}
+
+	public function updateUser()
+	{
+		$_POST['inputLN'] = strtoupper($_POST['inputLN']);
+		$_POST['inputFN'] = strtoupper($_POST['inputFN']);
+		$_POST['inputMN'] = strtoupper($_POST['inputMN']);
+
+		$code= $this->input->post('inputCode');
+
+		$records = array(
+			'username'=>$this->input->post('inputUser'),	
+			'password'=>$this->input->post('inputPass'),	
+			'HCID'=>$this->input->post('inputHCID'),
+			'LN'=>$this->input->post('inputLN'),
+			'FN'=>$this->input->post('inputFN'),
+			'MN'=>$this->input->post('inputMN'),
+			'POSITION'=>$this->input->post('Position'),
+			'date'=>$this->input->post('inputinsert')
+		);
+
+		$_POST['inputnote'] = "EDITED USER " .$_POST['inputLN'] ." " .$_POST['inputFN'];
+
+		$logs = array(
+			'code'=>$this->input->post('inputassist'),
+			'activity'=>$this->input->post('inputnote'),
+			'date'=>$this->input->post('inputinsert')
+			);
+
+	$this->db->where('code', $code);
+	$this->db->update('users', $records);
+	$this->db->insert('adminlogs', $logs);
+	
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;	
+	}
+	}
+
 
 	
 	public function update()
@@ -428,18 +537,20 @@ class getinfo extends CI_Model
 			'Religion'=>$this->input->post('inputRe'),
 			'Address'=>$this->input->post('inputAdd'),
 			'Zipcode'=>$this->input->post('inputZ'),
-			'Landline'=>$this->input->post('inputM')
+			'Landline'=>$this->input->post('inputM'),
+			'Relation'=>$this->input->post('inputRel'),
+			'is_delete'=>$this->input->post('inputDel')
 		);
 
-	$_POST['inputnote'] = "EDIT PATIENT " .$_POST['inputLN'] ." " .$_POST['inputFN'];
-		
-	 $logs = array(
-		'code'=>$this->input->post('inputassist'),
-		'activity'=>$this->input->post('inputnote'),
-		'date'=>$this->input->post('inputinsert')
-		);
+		$_POST['inputnote'] = "EDITED PATIENT " .$_POST['inputLN'] ." " .$_POST['inputFN'];
 
-	$this->db->where('ID',$id);
+		$logs = array(
+			'code'=>$this->input->post('inputAssist'),
+			'activity'=>$this->input->post('inputnote'),
+			'date'=>$this->input->post('inputinsert')
+			);
+
+	$this->db->where('ID', $id);
 	$this->db->update('tabletest', $field);
 	$this->db->insert('logs', $logs);
 

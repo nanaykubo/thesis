@@ -38,7 +38,7 @@ class Template extends CI_Controller {
 	public function admin()
 	{
 		if($this->session->userdata('logged_in')){
-			$get['get']= $this->m->getAdmin(
+			$get['get']= $this->m->getUser(
 				$this->session->userdata('username')
 			   ,$this->session->userdata('password')
 			);
@@ -50,23 +50,28 @@ class Template extends CI_Controller {
 	public function adduser()
 	{
 		if($this->session->userdata('logged_in')){
-			$get['get']= $this->m->getAdmin(
+			$get= $this->m->getUser(
 				$this->session->userdata('username')
 			   ,$this->session->userdata('password')
 			);
-			$this->load->view('template/adduser');	
+
+			$admincode['get']=$get;
+			$hcid['hcid']=$this->m->getallHCID();
+			$data['data']=array($hcid,$admincode);
+
+			$this->load->view('template/adduser',$data);	
 		}
 	}
 
 	public function viewlogs()
 	{
-		if($this->session->userdata('logged_in')){
-			$get['get']= $this->m->getAdmin(
-				$this->session->userdata('username')
-			   ,$this->session->userdata('password')
-			);
-			$this->load->view('template/viewlogs');	
-		}
+		
+	}
+
+	public function insertlogs()
+	{
+		$result = $this->m->insertLogs();
+		redirect(base_url('template/adduser'));
 	}
 
 	public function getallUsers()
@@ -115,10 +120,13 @@ class Template extends CI_Controller {
 				}
 
 			}
+			else
+			{
+			$this->session->set_flashdata('error_msg', 'Incorrect Username and Password');
+			redirect('template/login');
+			}
 		}
 
-		$this->session->set_flashdata('error_msg', 'Incorrect Username and Password');
-		redirect('template/login');
 	}
 
 	public function logged()
@@ -322,6 +330,12 @@ class Template extends CI_Controller {
 		redirect(base_url('template/addpatient'));
 	}
 
+	public function submitUser()
+	{
+		$result = $this->m->addNewUsers();
+		redirect(base_url('template/adduser'));
+	}
+
 	public function submitFamilyRecords()
 	{
 		$result = $this->m->addNewFamilyRecords();
@@ -332,6 +346,12 @@ class Template extends CI_Controller {
 	{
 		$result = $this->m->update();
 		redirect(base_url('template/addpatient'));
+	}
+
+	public function updateUser()
+	{
+		$result = $this->m->updateUser();
+		redirect(base_url('template/adduser'));
 	}
 
 	public function checkUsername()
@@ -376,12 +396,36 @@ class Template extends CI_Controller {
 			$row[18] = $value->Zipcode;
 			$row[19] = $value->Landline;
 			$row[20] = $value->Remarks;
-			$row[20] = $value->HCID;
+			$row[21] = $value->Relation;
+			$row[22] = $value->HCID;
 			$data2[] = $row;
 		}
 		
 		echo json_encode($data2);
 	}
+
+	public function editUser()
+	{
+		$data = $this->input->post();
+
+		$values = $this->m->getInfoCode($data['code']);
+
+		foreach ($values as $value) {
+			$row = array();
+			$row[0] = $value->code;
+			$row[1] = $value->HCID;
+			$row[2] = $value->username;
+			$row[3] = $value->password;
+			$row[4] = $value->LN;
+			$row[5] = $value->FN;
+			$row[6] = $value->MN;
+			$row[7] = $value->POSITION;
+			$data2[] = $row;
+		}
+		
+		echo json_encode($data2);
+	}
+
 
 	public function getAnnual()
 	{
@@ -462,6 +506,25 @@ class Template extends CI_Controller {
 	);
 
 	echo json_encode($output);
+	}
+
+	public function getallLogs2()
+	{
+	$data = $this->input->post();
+
+	$start = $data['code'];
+
+	$getdata = $this->m->getLogs($start);
+	$data = array();
+	foreach ($getdata as $value)
+	{
+		$row = array();
+		$row[] = $value->activity;
+		$row[] = $value->date;
+		$data2[] = $row;
+	}
+
+	echo json_encode($data2);
 	}
 
 	public function getadminLogs()

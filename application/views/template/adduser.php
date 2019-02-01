@@ -36,7 +36,7 @@
       </button>
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="../index.html">
-        <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+        <img src="../assets/img/brand/a.png" width="150" height="150" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
@@ -129,8 +129,8 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="viewlogs">
-              <i class="fas fa-users text-blue"></i> View Logs
+            <a class="nav-link " href="viewlogs">
+             <i class="fas fa-window-restore text-info"></i> Info Recovery
             </a>
           </li>
           <li class="nav-item">
@@ -211,7 +211,7 @@
           <!-- Card stats -->
 
           <!-- Button -->
-     <button class="btn btn-icon btn-3 btn-secondary" data-toggle="modal" data-target="#exampleModalLong" type="button">
+     <button class="btn btn-icon btn-3 btn-secondary" id="editUser" data-toggle="modal" data-target="#exampleModalLong" type="button">
       <span class="btn-inner--icon"><i class="fas fa-user-plus fa-lg text-default"></i></span>
       
       <span class="btn-inner--text">Add User</span>
@@ -255,282 +255,180 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Add New Patient</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Add User</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        
-        <!-- tabular -->
-          <nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Patient Information</a>
-    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Contact Information</a>
-  </div>
-        </nav>
-<form class="needs-validation" id="testform" action="<?php echo base_url('template/submitNewRecords') ?>" method="post" novalidate> 
-<div class="tab-content " id="nav-tabContent">
-  <!-- patient tab -->
-   <input type="hidden" name="txtHCID" id="txtHCID" value="<?php echo $data['0']['hname'][0]->HCID?>"/>
-   <input type="hidden" name="inputassist" id="inputassist" value="<?php echo $data[3]['userlist'][0]->code?>"/>
-   <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
-   <input type="hidden" name="inputnote" id="inputnote"/>
-  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-      <br/>
-
-      <!-- body -->  <div class="form-row">
-    <div class="col-md-12">
-    <label for="inputAddress">ID *</label>
-    <input type="text" required class="form-control" name="inputID" id="inputID" placeholder="Enter your ID (chars are not allowed)"  onkeypress='validate(event)'>
-    <span id="username_result"></span>
-    <div class="invalid-feedback">
-          Please enter an ID
-        </div>
-        <br/>
-  </div>
-    <div class="col-md-4 mb-3">
-      <label for="validationCustom01">First Name *</label>
-      <input type="text" class="form-control" name="inputFN" id="inputFN" style="text-transform: uppercase;" placeholder="First Name" required>
+        <form class="needs-validation" id="testform" action="<?php echo base_url('template/submitUser') ?>" method="post" novalidate>
+          <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
+          <input type="hidden" name="inputnote" id="inputnote"/>
+          <input type="hidden" name="inputassist" id="inputassist" value="<?php echo $data[1]['get'][0]->code; ?>"/>
+           <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="validationCustom01">Code</label>
+      <input type="text" class="form-control" id="inputCode" name="inputCode" placeholder="Code" required>
       <div class="invalid-feedback">
-          Please enter your First Name
-        </div>
-    </div>
-     <div class="col-md-4 mb-3">
-      <label for="validationCustom02">Middle name</label>
-      <input type="text" class="form-control" name="inputMN" style="text-transform: uppercase;" id="inputMN" placeholder="Middle name">
-    </div>
-     <div class="col-md-4 mb-3">
-      <label for="validationCustom01">Last Name *</label>
-      <input type="text" class="form-control" style="text-transform: uppercase;" name="inputLN" id="inputLN" required>
-      <div class="invalid-feedback">
-          Please enter your Last Name
-        </div>
-    </div>
-    <div class="col-md-4 mb-3">
-    <label for="validationCustom01">Status *</label>
-    <select class="custom-select" style="text-transform: uppercase;" id="inputS" name="inputS"required>
-      <option>ACTIVE</option>
-      <option>NOT ACTIVE</option>
-    </select>
-    <div class="invalid-feedback">Example invalid custom select feedback</div>
-  </div>
-    <div class="col-md-4 mb-3">
-    <label for="validationCustom01">Sex *</label>
-    <select class="custom-select" style="text-transform: uppercase;" id="inputSe" name="inputSe" required>
-      <option value="">Select...</option>
-      <option value="MALE">Male</option>
-      <option value="FEMALE">Female</option>
-    </select>
-    <div class="invalid-feedback">Example invalid custom select feedback</div>
-  </div>
-  <div class="col-md-4 mb-3">
-    <label for="validationCustom01">Religion *</label>
-    <select class="custom-select" style="text-transform: uppercase;" id="inputRe" name="inputRe" required>
-      <option value="CATHOLIC">Catholic</option>
-      <option value="CHRISTIAN">Christian</option>
-      <option value="BORN AGAIN">Born Again</option>
-    </select>
-    <div class="invalid-feedback">Please Select one of the following options</div>
-  </div>
-    <div class="col-md-4 mb-3">
-    <label for="validationCustom01">Birth Date *</label>
-    <input type="date" class="form-control" style="text-transform: uppercase;" name="inputBD" id="inputBD" required>
-    <div class="invalid-feedback">Please enter your Birth Date</div>
-  </div>
-    <div class="col-md-4 mb-3">
-      <label for="validationCustom01">Type *</label>
-      <input type="text" class="form-control" style="text-transform: uppercase;" name="inputType" id="inputType" placeholder="Enter a Birthdate" required readonly>
-      <div class="invalid-feedback">
-          Enter a Birth Date
-        </div>
-                </div>
-        <div class="col-md-4 mb-3">
-      <label for="validationCustom01">Age *</label>
-      <input type="text" class="form-control" style="text-transform: uppercase;" name="inputAge" id="inputAge" placeholder="Enter a Birthdate" required readonly>
-      <div class="invalid-feedback">
-          Enter a Birth Date
-        </div>
-  </div>
-  
-  <div class="col-md-4 mb-3">
-    <label for="validationCustom01">Nationality *</label>
-    <select class="custom-select" style="text-transform: uppercase;" name="inputN" id="inputN" required>
-        <option value="FILIPINO">Filipino</option>
-        <option value="MARRIED">Taiwanese</option>
-        <option value="ALGERIAN">Algerian</option>
-    </select>
-    <div class="invalid-feedback">Please Select one of the following options</div>
-  </div>
-
-  <div class="col-md-4 mb-3">
-    <label for="validationCustom01">Civil Status *</label>
-    <select class="custom-select" style="text-transform: uppercase;" name="inputCS" id="inputCS" required>
-      <option value="SINGLE">SINGLE</option>
-      <option value="MARRIED">MARRIED</option>
-      <option value="WIDOW">WIDOW</option>
-    </select>
-    <div class="invalid-feedback">Please Select one of the following options</div>
-  </div>
-  <div class="col-md-4 mb-3">
-      <label for="validationCustom01">Philhealth No *</label>
-      <input type="text" class="form-control" style="text-transform: uppercase;" name="inputPN" id="inputPN" placeholder="Philhealth No"required>
-      <div class="invalid-feedback">
-          Please enter your Philhealth No
-        </div>
-</div>
-
-<div class="col-md-4 mb-3">
-    <label for="validationCustom01">Family Number *</label>
-    <select class="custom-select" style="text-transform: uppercase;" name="inputFam" id="inputFam" required>
-      <?php foreach ($data[2]['famlist'] as $test) { ?>
-        <option><?php echo $test->familyno; ?>
-        <?php }?></option>
-        <option value="New">Add New Family...</option>
-    </select>
-    <small id="passwordHelpBlock" class="form-text text-muted text-center">If the family doesnt exist click add new family in the options</small>
-    <div class="invalid-feedback">Please Select one of the following options</div>
-    </div>
-<div class="col-md-4 mb-3">
-      <label for="validationCustom01">Relation</label>
-      <select class="custom-select" style="text-transform: uppercase;" name="inputRel" id="inputRel" required>
-          <option value="Daughter">Daughter</option>
-          <option value="Son">Son</option>
-          <option value="Nephew">Nephew</option>
-      </select>
-      <div class="invalid-feedback">
-        </div>
+        Please provide details.
       </div>
     </div>
-
+    <div class="col-md-6 mb-3">
+      <label for="validationCustom02">Health Center ID (HCID)</label>
+      <select id="inputHCID" name="inputHCID" class="custom-select" required>
+      <option value="">Select HCID...</option>
+      <?php foreach ($data[0]['hcid'] as $test) { ?>
+        <option><?php echo $test->HCID; ?>
+        <?php }?></option>
+      </select>
+     <div class="invalid-feedback">Example invalid custom select feedback</div>
+    </div>
   </div>
-  <!-- body -->
-  <!-- contact tab -->
-  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-<br/>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom01">First name</label>
+      <input type="text" class="form-control" id="inputFN" name="inputFN" placeholder="First name" required>
+      <div class="invalid-feedback">
+        Please provide details.
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom02">Middle name</label>
+      <input type="text" class="form-control" id="inputMN" name="inputMN" placeholder="Middle name"  required>
+      <div class="invalid-feedback">
+        Please provide details.
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom02">Last name</label>
+      <input type="text" class="form-control" id="inputLN" name="inputLN" placeholder="Last name" required>
+      <div class="invalid-feedback">
+        Please provide details.
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="validationCustom03">Username</label>
+      <input type="text" class="form-control" id="inputUser" name="inputUser" placeholder="Username" required>
+      <div class="invalid-feedback">
+        Please provide details.
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="validationCustom03">Password</label>
+      <input type="text" class="form-control" id="inputPass" name="inputPass" placeholder="Password" required>
+      <div class="invalid-feedback">
+        Please provide details.
+      </div>
+    </div>
+  </div>
   <div class="form-row">
     <div class="col-md-12 mb-3">
-    <label for="inputAddress">Permanent Address *</label>     
-    <input type="text" required class="form-control" style="text-transform: uppercase;" id="inputAdd" name="inputAdd" placeholder="(House/Bldg. No., Street, Subdivision" required>
-    <div class="invalid-feedback">
-          Please your House/Bldg, No. , Street, Subdivision
-        </div>
-      </div>
-      <div class="col-md-4 mb-3">
-    <label for="validationCustom01">Brgy *</label>
-    <select class="custom-select" style="text-transform: uppercase;" id="inputBrgy" name="inputBrgy" required>
-      <option value="">Select Brgy...</option>
-      <?php foreach ($data[1]['brgylist'] as $test) { ?>
-        <option><?php echo $test->BRGYID; ?>
-        <?php }?></option>
-    </select>
-    <div class="invalid-feedback">Please Select one of the following options</div>
-  </div>
-  <div class="col-md-4 mb-3">
-    <label for="validationCustom01">St *</label>
-    <select class="custom-select" style="text-transform: uppercase;" id="inputSt" name="inputSt" required>
-          <option value="TAGUIG">Taguig</option>
-          <option value="MAKATI">Makati</option>
-          <option value="MANILA">Manila</option>
-    </select>
-    <div class="invalid-feedback">Please Select one of the following options</div>
-  </div>
-    <div class="col-md-4 mb-3">
-    <label for="validationCustom01">City/Municipality *</label>
-    <select class="custom-select" style="text-transform: uppercase;" id="inputC" name="inputC" required>
-          <option value="TAGUIG">Taguig</option>
-          <option value="MAKATI">Makati</option>
-          <option value="MANILA">Manila</option>
-    </select>
-    <div class="invalid-feedback">Please Select one of the following options</div>
-  </div>
-        <div class="col-md-4 mb-3">
-      <label for="validationCustom01">Zip Code *</label>
-      <input type="text" class="form-control" style="text-transform: uppercase;" id="inputZ" name="inputZ" placeholder="Zip Code" required>
-      <div class="invalid-feedback">
-          Please enter ZipCode
-        </div>
+      <label for="validationCustom02">Position</label>
+      <select id="Position" name="Position" class="custom-select" required>
+      <option value="">Select Position...</option>
+      <option value="NURSE">NURSE</option>
+      <option value="DOCTOR">DOCTOR</option>
+      </select>
+     <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
+  </div>
+  <button class="btn btn-primary" style="float:right;"type="submit">Add User</button>
+</form>
 
-    <div class="col-md-4">
-      <label for="validationCustom01">Mobile/Landline *</label>
-      <input type="text" class="form-control" style="text-transform: uppercase;" id="inputM" name="inputM" placeholder="Mobile" required>
-      <div class="invalid-feedback">
-          Please enter Mobile
         </div>
-    </div>
-
-     <div class="col-md-4 mb-3">
-      <label for="validationCustom01">Assisted By :  *</label>
-      <input type="text" class="form-control" name="inputAssist" id="inputAssist" 
-      value="<?php echo strtoupper($data[3]['userlist'][0]->FN) ?> <?php echo strtoupper($data[3]['userlist'][0]->LN) ?>" readonly>
-       </div>
-
-    <div class="col-md-12">
-      <label for="validationCustom01">Remarks *</label>
-    <textarea class="form-control" style="text-transform: uppercase;" id="inputR" name="inputR" rows="4"></textarea>
-    </div>
-
-    <div class="form-group">
-    
-  </div>
-
-      <!-- body -->
-
-  </div>
-</div>
-  
-      <!-- body -->
-      </div>
-      <div class="modal-footer">
-        <div class="form-group">
-  </div>
-  <button class="btn btn-primary" type="submit">Submit</button>
       </div>
     </div>
   </div>
 </div>
+</div>
+</div>
 
-<div class="modal" tabindex="-1" role="dialog">
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
+        <h5 class="modal-title">Account Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+         <form action="<?php echo base_url('template/insertlogs') ?>" method="post">
+          <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
+          <input type="hidden" name="inputnote" id="inputnote" value="VIEW ACCOUNT DETAILS OF <?php echo $data[1]['get'][0]->FN; ?> <?php echo $data[1]['get'][0]->LN; ?>"/>
+          <input type="hidden" name="inputassist" id="inputassist" value="<?php echo $data[1]['get'][0]->code; ?>"/>      
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Email:</label>
+    <div class="col-sm-10">
+      <input type="text" readonly class="form-control-plaintext" id="staticUser" value="">
+    </div>
+  </div>
+  <div class="form-group row">
+   <label for="staticEmail" class="col-sm-2 col-form-label">Password:</label>
+    <div class="col-sm-10">
+      <input type="text" readonly class="form-control-plaintext" id="staticPass" value="">
+    </div>
+      </div>
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-secondary">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>Modal body text goes here.</p>
+        <table class="table" id="logs">
+  <thead>
+    <tr>
+      <th scope="col">Activity</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
 </div>
 
   <script>
-  // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (function() {
-    'use strict';
-    window.addEventListener('load', function() {
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
-      // Loop over them and prevent submission
-      var validation = Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  })();
-  </script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
 
   <!-- Argon Scripts -->
   <!-- Core -->
@@ -542,13 +440,101 @@
       "type": 'GET',
       //Set column definition initialisation properties.
             "columnDefs": [
-                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="update" class="dropdown-item"><i class="fas fa-user-edit"></i></i>Edit User</button><button id="account" class="dropdown-item"><i class="fas fa-lock"></i></i>Account Details</button></div></div>'},
+                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="logs" class="dropdown-item"><i class="fa fa-history" aria-hidden="true"></i>View Logs</button><button id="update" class="dropdown-item"><i class="fas fa-user-edit"></i></i>Edit User</button><button id="account" class="dropdown-item"><i class="fas fa-lock"></i></i>Account Details</button></div></div>'},
                 {
       "targets": [1,2,3,4,5,6],
       "orderable": false}
             ]
     });
-  });
+
+    $("#editUser").on("click",function(){
+
+            $("#inputCode").prop("readonly",false);
+     });
+
+
+    $('#myTable tbody').on( 'click', 'button', function (e) {
+            var data = table.row($(this).parents('tr') ).data();
+            var action=this.id;
+            var code = data[0];
+             $("#logs tbody").empty();
+            if (action=='logs')
+            {
+            $.ajax({
+            url: '<?php echo base_url('template/getallLogs2/'); ?>', 
+            type: 'POST',
+            data: {'code': code},
+            success: function (result) {
+             if(!result.length)
+            {
+              alert('none')
+            }
+            var parsed= JSON.parse(result);        
+            alert(parsed)      
+            $.each(parsed,function(index,value)
+                  {
+                    $(".modal-body #logs tbody").append("<tr><td>"+value[0]+"</td>+<td>"+value[1]+"</td></tr>");
+                    $("#exampleModalCenter").modal('show')
+                  });
+            }
+
+            });
+            }
+            if (action=='account')
+            {
+              $.ajax({
+            url: '<?php echo base_url('template/editUser/'); ?>', 
+            type: 'POST',
+            data: {'code': code},
+            success: function (result) {
+            var parsed= JSON.parse(result);              
+            $.each(parsed,function(index,value)
+                  {
+                    $(".modal-body #staticUser").val(value[2]);
+                    $(".modal-body #staticPass").val(value[3]);
+
+                    $("#myModal").modal('show')
+                    $("#myModal").attr("action",'<?php echo base_url('template/updateUser') ?>');
+                  });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+               console.log(textStatus, errorThrown);
+            }
+            });
+            }
+            if (action=='update')
+            {
+            $.ajax({
+            url: '<?php echo base_url('template/editUser/'); ?>', 
+            type: 'POST',
+            data: {'code': code},
+            success: function (result) {
+            var parsed= JSON.parse(result);              
+            $.each(parsed,function(index,value)
+                  {
+                    $(".modal-body #inputCode").val(value[0]);
+                    $(".modal-body #inputHCID").val(value[1]).change();
+                    $(".modal-body #inputFN").val(value[4]);
+                    $(".modal-body #inputMN").val(value[5]);
+                    $(".modal-body #inputLN").val(value[6]);
+                    $(".modal-body #inputUser").val(value[2]);
+                    $(".modal-body #inputPass").val(value[3]);
+                    $(".modal-body #Position").val(value[7]).change();
+                    
+                    $("#inputCode").prop("readonly",true);
+                    
+                    $("#exampleModalLong").modal('show')
+                    $("#testform").attr("action",'<?php echo base_url('template/updateUser') ?>');
+                  });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+               console.log(textStatus, errorThrown);
+            }
+            });
+            }
+            });
+               });
+ 
   </script>
 </body>
 
