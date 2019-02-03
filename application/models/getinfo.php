@@ -226,12 +226,29 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getHCCode($HCID)
+	{
+		$this->db->select('healthcenters.HCID,healthcenters.Name,healthcenters.Location,brgy.BRGYID');    
+		$this->db->from('healthcenters');
+		$this->db->join('brgy', 'brgy.HCID = healthcenters.HCID');
+		$this->db->where('brgy.HCID', $HCID);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	public function getAllInfo()
 	{
 		$this->db->select('*');
 		$this->db->where('POSITION', "NURSE");
 		$this->db->or_where('POSITION', "DOCTOR");
 		$query = $this->db->get('users');
+		return $query->result();
+	}
+
+	public function getHC()
+	{
+		$this->db->select('*');
+		$query = $this->db->get('healthcenters');
 		return $query->result();
 	}
 
@@ -274,6 +291,20 @@ class getinfo extends CI_Model
         $this->db->having('brgy.HCID=',$HCID);
         $query = $this->db->get();
 		return $query->result();
+	}
+
+	public function create($data)
+	{
+	$this->db->insert_batch('brgy', $data);
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;	
+	}
 	}
 
 	public function getTotalPatients($HCID)

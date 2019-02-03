@@ -239,12 +239,10 @@
             <table class="table align-items-center table-flush" id="myTable">
   <thead class="thead-light">
     <tr>
-      <th scope="col">Code</th>
       <th scope="col">HCID</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Middle Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">Position</th>
+      <th scope="col">Health Center Name</th>
+      <th scope="col">Location</th>
+      <th scope="col">BRGY ID</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -265,12 +263,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="needs-validation" id="testform" action="<?php echo base_url('template/submitUser') ?>" method="post" novalidate>
+        <form class="needs-validation" id="testform" action="<?php echo base_url('template/create') ?>" method="post" novalidate>
  
            <div class="form-row">
     <div class="col-md-12 mb-3">
       <label for="validationCustom01">HCID</label>
-      <input type="text" class="form-control" id="inputHCID" name="inputHCID" placeholder="HCID" required>
+      <input type="text" class="form-control" id="inputHCID" name="inputHCID" placeholder="HCID">
       <div class="invalid-feedback">
         Please provide details.
       </div>
@@ -279,7 +277,7 @@
   <div class="form-row">
     <div class="col-md-12 mb-3">
       <label for="validationCustom01">Health Center Name</label>
-      <input type="text" class="form-control" id="inputHC" name="inputHC" placeholder="Health Center Name" required>
+      <input type="text" class="form-control" id="inputHC" name="inputHC" placeholder="Health Center Name" >
       <div class="invalid-feedback">
         Please provide details.
       </div>
@@ -288,7 +286,7 @@
   <div class="form-row">
     <div class="col-md-12 mb-3">
       <label for="validationCustom01">Location</label>
-      <input type="text" class="form-control" id="inputLoc" name="inputLoc" placeholder="Location" required>
+      <input type="text" class="form-control" id="inputLoc" name="inputLoc" placeholder="Location" >
       <div class="invalid-feedback">
         Please provide details.
       </div>
@@ -307,14 +305,17 @@
       <option value="7">Port Area</option>
       <option value="8">Quiapo</option>
       <option value="9">Sampaloc</option>
-      <option value="10">Sta Cruz</option>
-      <option value="11">Tondo</option>
+      <option value="10">San Miguel</option>
+      <option value="11">San Nicolas</option>
+      <option value="12">Sta Ana</option>
+      <option value="13">Sta Cruz</option>
+      <option value="14">Tondo</option>
       </select>
      <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
     <div class="col-md-4 mb-3">
       <label for="exampleFormControlSelect2">Example multiple select</label>
-    <select multiple class="form-control" id="Brgy">
+    <select multiple class="form-control" name="Brgy[]" id="Brgy">
       <option>1</option>
       <option>2</option>
       <option>3</option>
@@ -328,7 +329,7 @@
     </div>
     <div class="col-md-4 mb-3">
        <label for="exampleFormControlTextarea1">Selected Brgy</label>
-    <textarea class="form-control" id="ta" rows="3"></textarea>
+    <textarea class="form-control" id="ta" name="ta" rows="3"></textarea>
      <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
   </div>
@@ -432,14 +433,210 @@ aria-labelledby="myModalLabel">
 
 <script>
   $(document).ready(function() {
+    var sub_array = [];
+    var val= $('#Position').val();
+    if(val=='1')
+    {
+      for ($x = 287; $x <= 296; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if (val=='2')
+    {
+      var super_array =['659-A','660-A','650-A'];
+      for ($x = 659; $x <= 670; $x++) 
+      {
+      sub_array.push($x);
+      super_array.push(sub_array.splice(0));
+      }
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(super_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='3')
+    {
+      for ($x = 654; $x <= 658; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='4')
+    {
+      for ($x = 688; $x <= 744; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='5')
+    {
+      var super_array =['662','644-A','660-A','650-A'];
+      var p = [];
+      for ($x = 659; $x <= 670; $x++) 
+      {
+      sub_array.push($x);
+      super_array.push(sub_array.splice(0));
+      }
+      for ($x = 809; $x <= 832; $x++) 
+      {
+      p.push($x);
+      super_array.push(p.splice(0));
+      }
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(super_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='6')
+    {
+      for ($x = 833; $x <= 872; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='7')
+    {
+      for ($x = 649; $x <= 653; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='8')
+    {
+      
+    }
+    else if(val=='9')
+    {
+      for ($x = 395; $x <= 636; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='10')
+    {
+     for ($x = 637; $x <= 648; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='11')
+    {
+      for ($x = 268; $x <= 286; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='12')
+    {
+      for ($x = 745; $x <= 905; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='13')
+    {
+      for ($x = 297; $x <= 382; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='14')
+    {
+      for ($x = 1; $x <= 267; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
     var table= $('#myTable').DataTable({
-      "ajax": '<?php echo base_url('template/getallUsers'); ?>',
+      "ajax": '<?php echo base_url('template/getHC'); ?>',
       "type": 'GET',
       //Set column definition initialisation properties.
             "columnDefs": [
-                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="logs" class="dropdown-item"><i class="fa fa-history" aria-hidden="true"></i>View Logs</button><button id="update" class="dropdown-item"><i class="fas fa-user-edit"></i></i>Edit User</button><button id="account" class="dropdown-item"><i class="fas fa-lock"></i></i>Account Details</button></div></div>'},
+                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="logs" class="dropdown-item"><i class="fas fa-warehouse"></i>View Barangays</button><button id="update" class="dropdown-item"><i class="fas fa-edit"></i></i>Edit Health Center</button></div></div>'},
                 {
-      "targets": [1,2,3,4,5,6],
+      "targets": [1,2,3,4],
       "orderable": false}
             ]
     });
@@ -456,131 +653,229 @@ aria-labelledby="myModalLabel">
 
    $("#Position").change(function() 
     {   
-    var all = new Array();
+    var sub_array = [];
     var val= $(this).val();
     if(val=='1')
     {
-      var a = 287;
       for ($x = 287; $x <= 296; $x++) 
       {
-      all[$x]=a;
-      a++;
+      sub_array.push($x);
       }
-      alert(all)
+      
       var $el = $("#Brgy");
       $el.empty();
-      $.each(all, function(key,value) {
+      $.each(sub_array, function(key,value) {
       $el.append($("<option></option>")
-      .attr("value", value).text(key));
+      .attr("value", value).text(value));
       });
     }
     else if (val=='2')
     {
-
+      var super_array =['659-A','660-A','650-A'];
+      for ($x = 659; $x <= 670; $x++) 
+      {
+      sub_array.push($x);
+      super_array.push(sub_array.splice(0));
+      }
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(super_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
     }
     else if(val=='3')
     {
-
+      for ($x = 654; $x <= 658; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
     }
     else if(val=='4')
     {
- 
+      for ($x = 688; $x <= 744; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
     }
     else if(val=='5')
     {
-  
+      var super_array =['662','644-A','660-A','650-A'];
+      var p = [];
+      for ($x = 659; $x <= 670; $x++) 
+      {
+      sub_array.push($x);
+      super_array.push(sub_array.splice(0));
+      }
+      for ($x = 809; $x <= 832; $x++) 
+      {
+      p.push($x);
+      super_array.push(p.splice(0));
+      }
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(super_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
     }
     else if(val=='6')
     {
-
+      for ($x = 833; $x <= 872; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
     }
     else if(val=='7')
     {
-   
+      for ($x = 649; $x <= 653; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
     }
     else if(val=='8')
     {
-   
+      
     }
     else if(val=='9')
     {
+      for ($x = 395; $x <= 636; $x++) 
+      {
+      sub_array.push($x);
+      }
       
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
     }
     else if(val=='10')
     {
-     
-    }
-    else
-    {
+     for ($x = 637; $x <= 648; $x++) 
+      {
+      sub_array.push($x);
+      }
       
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='11')
+    {
+      for ($x = 268; $x <= 286; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='12')
+    {
+      for ($x = 745; $x <= 905; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='13')
+    {
+      for ($x = 297; $x <= 382; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
+    }
+    else if(val=='14')
+    {
+      for ($x = 1; $x <= 267; $x++) 
+      {
+      sub_array.push($x);
+      }
+      
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
     }
    });
 
     $('#myTable tbody').on( 'click', 'button', function (e) {
             var data = table.row($(this).parents('tr') ).data();
             var action=this.id;
-            var code = data[0];
+            var HCID = data[0];
              $("#logs tbody").empty();
             if (action=='logs')
             {
-            $.ajax({
-            url: '<?php echo base_url('template/getallLogs2/'); ?>', 
-            type: 'POST',
-            data: {'code': code},
-            success: function (result) {
-            var parsed= JSON.parse(result);        
-            $.each(parsed,function(index,value)
-                  {
-                    $(".modal-body #logs tbody").append("<tr><td>"+value[0]+"</td>+<td>"+value[1]+"</td></tr>");
-                    $("#exampleModalCenter").modal('show')
-                  });
-            }
-
-            });
-            }
-            if (action=='account')
-            {
-              $.ajax({
-            url: '<?php echo base_url('template/editUser/'); ?>', 
-            type: 'POST',
-            data: {'code': code},
-            success: function (result) { 
-            var parsed= JSON.parse(result);           
-            $.each(parsed,function(index,value)
-                  {
-                    $(".modal-body #inputnote").val("VIEW ACCOUNT DETAILS "+value[6] + " " +value[5]);
-                    $(".modal-body #staticUser").val(value[2]);
-                    $(".modal-body #staticPass").val(value[3]);
-
-                    $("#myModal").modal('show')
-                  });
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-               console.log(textStatus, errorThrown);
-            }
-            });
+             alert('yes')
             }
             if (action=='update')
             {
             $.ajax({
-            url: '<?php echo base_url('template/editUser/'); ?>', 
+            url: '<?php echo base_url('template/editHC/'); ?>', 
             type: 'POST',
-            data: {'code': code},
+            data: {'HCID': HCID},
             success: function (result) {
-            var parsed= JSON.parse(result);              
+            var parsed= JSON.parse(result);    
             $.each(parsed,function(index,value)
                   {
-                    $(".modal-body #inputCode").val(value[0]);
-                    $(".modal-body #inputHCID").val(value[1]).change();
-                    $(".modal-body #inputFN").val(value[4]);
-                    $(".modal-body #inputMN").val(value[5]);
-                    $(".modal-body #inputLN").val(value[6]);
-                    $(".modal-body #inputUser").val(value[2]);
-                    $(".modal-body #inputPass").val(value[3]);
-                    $(".modal-body #Position").val(value[7]).change();
-                    
-                    $("#inputCode").prop("readonly",true);
-                    
+                    $(".modal-body #Brgy option[value='" + value[3] + "']").prop("selected", true);
+                    $(".modal-body #inputHCID").val(value[0]);
+                    $(".modal-body #inputHC").val(value[1]);
+                    $(".modal-body #inputLoc").val(value[2]);
+                    $(".modal-body #ta").val(value[3]);
+
                     $("#exampleModalLong").modal('show')
 
                     $("#testform").attr("action",'<?php echo base_url('template/updateUser') ?>');

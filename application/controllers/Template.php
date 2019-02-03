@@ -117,6 +117,27 @@ class Template extends CI_Controller {
 			echo json_encode($output);
 	}
 
+	public function getHC()
+	{
+			$allInfo= $this->m->getHC();
+
+			foreach ($allInfo as $value) 
+			{
+			$row = array();
+			$row[0] = $value->HCID;
+			$row[1] = $value->Name;
+			$row[2] = $value->Location;
+			$row[3] = $value->BRGYID;
+			$data[] = $row;
+			}
+
+			$output = array(
+			"data" => $data,
+			);
+
+			echo json_encode($output);
+	}
+
 	function login_validation()
 	{
 		if($this->input->post('login')){
@@ -350,6 +371,19 @@ class Template extends CI_Controller {
 		redirect(base_url('template/adduser'));
 	}
 
+	public function create()
+	{
+		$foods = $this->input->post('Brgy');
+		$name= $this->input->post('inputHCID');
+		$data = array();
+		foreach($foods as $k => $v){
+		$data[$k]['HCID']=$name;
+		$data[$k]['BRGYID']=$v;
+		}
+
+		$this->m->create($data);
+	}
+
 	public function activateuser()
 	{
 		$portid = $this->uri->segment(3);
@@ -456,6 +490,24 @@ class Template extends CI_Controller {
 			$row[5] = $value->FN;
 			$row[6] = $value->MN;
 			$row[7] = $value->POSITION;
+			$data2[] = $row;
+		}
+		
+		echo json_encode($data2);
+	}
+
+	public function editHC()
+	{
+		$data = $this->input->post();
+
+		$values = $this->m->getHCCode('1');
+
+		foreach ($values as $value) {
+			$row = array();
+			$row[0] = $value->HCID;
+			$row[1] = $value->Name;
+			$row[2] = $value->Location;
+			$row[3] = $value->BRGYID;
 			$data2[] = $row;
 		}
 		
