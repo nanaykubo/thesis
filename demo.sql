@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2019 at 09:00 AM
+-- Generation Time: Feb 03, 2019 at 12:34 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -21,6 +21,60 @@ SET time_zone = "+00:00";
 --
 -- Database: `demo`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `code` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `LN` varchar(50) NOT NULL,
+  `FN` varchar(50) NOT NULL,
+  `MN` varchar(50) NOT NULL,
+  `POSITION` varchar(50) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`code`, `username`, `password`, `LN`, `FN`, `MN`, `POSITION`, `date`) VALUES
+(1001, 'admin', 'admin', 'Chua', 'Angel', 'De Guia', 'ADMIN', '0000-00-00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adminlogs`
+--
+
+CREATE TABLE `adminlogs` (
+  `auto` int(11) NOT NULL,
+  `code` int(20) NOT NULL,
+  `activity` text NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `adminlogs`
+--
+
+INSERT INTO `adminlogs` (`auto`, `code`, `activity`, `date`) VALUES
+(23, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-01'),
+(24, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-01'),
+(25, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-01'),
+(26, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-01'),
+(27, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-01'),
+(28, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-01'),
+(29, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-01'),
+(30, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-02'),
+(31, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02'),
+(32, 1212, 'RESTORED USER ANGELICA CHUA', '2019-02-02'),
+(33, 1212, 'RESTORED FAMILY 6', '2019-02-02');
 
 -- --------------------------------------------------------
 
@@ -107,7 +161,7 @@ CREATE TABLE `fdesc` (
 --
 
 INSERT INTO `fdesc` (`ID`, `familyno`, `is_delete`) VALUES
-(2147483647, 5, 0);
+(2147483647, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -140,25 +194,40 @@ CREATE TABLE `logs` (
   `auto` int(11) NOT NULL,
   `code` int(20) NOT NULL,
   `activity` text NOT NULL,
-  `date` date NOT NULL
+  `date` date NOT NULL,
+  `POSITION` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `logs`
 --
 
-INSERT INTO `logs` (`auto`, `code`, `activity`, `date`) VALUES
-(33, 1001, 'ADDED RECORD CHUA ASDASD', '2019-01-28'),
-(34, 1001, 'DELETED PATIENT CHUA ASDASD', '2019-01-28'),
-(35, 1001, 'ADDED RECORD CHUA ASDASD', '2019-01-28'),
-(36, 1001, 'DELETED PATIENT CHUA ASDASD', '2019-01-29'),
-(37, 1001, 'ADDED RECORD CHUA ANGELICA', '2019-01-29'),
-(38, 1001, 'ADDED RECORD CHUA ANGELICA', '2019-01-29'),
-(39, 1001, 'ADDED RECORD CHUA ANGELICA', '2019-01-29'),
-(40, 1001, 'ADDED RECORD CHUA ANGELICA', '2019-01-29'),
-(41, 1001, 'ADDED RECORD CHUA ANGELICA', '2019-01-29'),
-(42, 1001, 'ADDED RECORD CHUA ANGELICA', '2019-01-29'),
-(43, 1001, 'ADDED RECORD CHUA ANGELICA', '2019-01-29');
+INSERT INTO `logs` (`auto`, `code`, `activity`, `date`, `POSITION`) VALUES
+(44, 1001, 'ADDED PATIENT ', '0000-00-00', 'DOCTOR'),
+(45, 1212, 'EDIT PATIENT DE GUIA CHUA', '2019-02-01', ''),
+(46, 1212, 'EDIT PATIENT DE GUIA CHUA', '2019-02-01', ''),
+(47, 1001, 'EDIT PATIENT CHUA ANGELICA', '2019-02-01', ''),
+(48, 1001, 'EDIT PATIENT CHUA ANGELICA', '2019-02-01', ''),
+(49, 1001, 'EDIT PATIENT CHUA ANGELICA', '2019-02-01', ''),
+(51, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
+(52, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
+(53, 1212, 'RESTORED USER ANGELICA CHUA', '2019-02-02', ''),
+(54, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
+(55, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
+(56, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
+(57, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
+(58, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
+(59, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
+(60, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
+(61, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
+(62, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
+(63, 1212, 'RESTORED FAMILY 5', '2019-02-02', ''),
+(64, 1212, 'RESTORED USER ANGELICA CHUA', '2019-02-02', ''),
+(65, 1212, 'RESTORED FAMILY 6', '2019-02-02', ''),
+(66, 1212, 'RESTORED FAMILY 5', '2019-02-02', ''),
+(67, 1212, 'RESTORED USER ANGELICA CHUA', '2019-02-02', ''),
+(68, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
+(69, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', '');
 
 -- --------------------------------------------------------
 
@@ -287,8 +356,8 @@ CREATE TABLE `tabletest` (
 --
 
 INSERT INTO `tabletest` (`ID`, `HCID`, `Status`, `Type`, `LN`, `FN`, `MN`, `Brgy`, `St`, `City`, `BirthDate`, `CivilStatus`, `familyno`, `Philhealth`, `Remarks`, `Sex`, `Age`, `Assist`, `dateinsert`, `Nationality`, `Religion`, `Address`, `Zipcode`, `Landline`, `Relation`, `is_delete`) VALUES
-(150380212, 1, 'ACTIVE', 'CHILD', 'CHUA', 'ASDASD', 'ASD', '810', 'MANILA', 'MANILA', '2019-01-27', 'SINGLE', 5, NULL, '', 'MALE', 0, 1001, '2019-01-26', 'FILIPINO', '', '2347 onyx st', 0, NULL, 'DAUGHTER', 0),
-(2147483647, 1, 'ACTIVE', 'CHILD', 'CHUA', 'ANGELICA', 'DE GUIA', '813', 'TAGUIG', 'TAGUIG', '2019-01-20', 'SINGLE', 5, NULL, '', 'MALE', 0, 1221, '2019-12-27', 'FILIPINO', '', '2347 onyx st', 0, NULL, 'SON', 1);
+(150380212, 1, 'ACTIVE', 'CHILD', 'CHUA', 'ASDASD', 'ASD', '810', 'MANILA', 'MANILA', '2019-01-27', 'SINGLE', 5, NULL, '12', 'FEMALE', 0, 1001, '2019-02-01', 'FILIPINO', 'CHRISTIAN', '2347 onyx st', 0, 0, 'DAUGHTER', 1),
+(2147483647, 1, 'ACTIVE', 'CHILD', 'CHUA', 'ANGELICA', 'DE GUIA', '813', 'TAGUIG', 'TAGUIG', '2019-01-20', 'SINGLE', 5, NULL, '1', 'MALE', 0, 1001, '2019-02-01', 'FILIPINO', 'BORN AGAIN', '2347 onyx st', 0, 0, 'SON', 1);
 
 -- --------------------------------------------------------
 
@@ -304,21 +373,37 @@ CREATE TABLE `users` (
   `LN` text NOT NULL,
   `FN` text NOT NULL,
   `MN` text NOT NULL,
-  `POSITION` text NOT NULL
+  `POSITION` varchar(50) NOT NULL,
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`code`, `username`, `password`, `HCID`, `LN`, `FN`, `MN`, `POSITION`) VALUES
-(1001, 'valentina', 'pass', 1, 'chua', 'merlyn', 'de guia', 'nurse'),
-(1221, 'MERLYN', 'CHUA', 1, 'CHUA', 'MICHAEL', 'JR', 'DOCTOR'),
-(51231, 'icasiano', 'pass', 2, 'qw', 'qwe', 'qwe', 'qwe');
+INSERT INTO `users` (`code`, `username`, `password`, `HCID`, `LN`, `FN`, `MN`, `POSITION`, `date`) VALUES
+(1001, 'valentina', 'pass', 2, 'DE GUIA', 'CHUA', 'MERLYN', 'NURSE', '2019-02-01'),
+(1212, 'admin', 'admin', 1, 'BASCO', 'KAREN', 'DE GUIA', 'ADMIN', '0000-00-00'),
+(1221, 'MERLYN', 'CHUA', 1, 'CHUA', 'MICHAEL', 'JR', 'DOCTOR', '0000-00-00'),
+(23123, 'bastille', 'happier', 1, 'DE  TORRES', 'STINSTON', 'ANGELICA', 'DOCTOR', '2019-02-01');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`code`),
+  ADD KEY `POSITION` (`POSITION`);
+
+--
+-- Indexes for table `adminlogs`
+--
+ALTER TABLE `adminlogs`
+  ADD PRIMARY KEY (`auto`),
+  ADD KEY `code` (`code`);
 
 --
 -- Indexes for table `brgy`
@@ -360,7 +445,7 @@ ALTER TABLE `healthcenters`
 --
 ALTER TABLE `logs`
   ADD PRIMARY KEY (`auto`),
-  ADD KEY `code` (`code`);
+  ADD KEY `logs_ibfk_1` (`code`);
 
 --
 -- Indexes for table `precords`
@@ -397,11 +482,18 @@ ALTER TABLE `tabletest`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`code`),
-  ADD KEY `HID` (`HCID`);
+  ADD KEY `HID` (`HCID`),
+  ADD KEY `POSITION` (`POSITION`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `adminlogs`
+--
+ALTER TABLE `adminlogs`
+  MODIFY `auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `family`
@@ -419,7 +511,7 @@ ALTER TABLE `fdesc`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `precords`
@@ -442,6 +534,12 @@ ALTER TABLE `tabletest`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `adminlogs`
+--
+ALTER TABLE `adminlogs`
+  ADD CONSTRAINT `adminlogs_ibfk_1` FOREIGN KEY (`code`) REFERENCES `users` (`code`);
 
 --
 -- Constraints for table `brgy`
@@ -472,7 +570,7 @@ ALTER TABLE `fdesc`
 -- Constraints for table `logs`
 --
 ALTER TABLE `logs`
-  ADD CONSTRAINT `code` FOREIGN KEY (`code`) REFERENCES `users` (`code`);
+  ADD CONSTRAINT `logs_ibfk_1` FOREIGN KEY (`code`) REFERENCES `users` (`code`);
 
 --
 -- Constraints for table `precords`

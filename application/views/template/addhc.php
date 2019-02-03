@@ -124,12 +124,12 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="adduser">
+            <a class="nav-link " href="adduser">
               <i class="fas fa-plus-circle text-green"></i> Add User
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="addhc">
+            <a class="nav-link active" href="addhc">
              <i class="fas fa-hospital text-orange"></i> Health Centers
             </a>
           </li>
@@ -157,7 +157,7 @@
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">Add User</a>
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">Health Centers</a>
         <!-- Form -->
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
           <div class="form-group mb-0">
@@ -217,9 +217,9 @@
 
           <!-- Button -->
      <button class="btn btn-icon btn-3 btn-secondary" id="editUser" data-toggle="modal" data-target="#exampleModalLong" type="button">
-      <span class="btn-inner--icon"><i class="fas fa-user-plus fa-lg text-default"></i></span>
+      <span class="btn-inner--icon"><i class="fas fa-hospital-alt"></i></span>
       
-      <span class="btn-inner--text">Add User</span>
+      <span class="btn-inner--text">Add Health Center</span>
         </button>
 
             </div>
@@ -260,68 +260,17 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Add User</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Add Health Center</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         </button>
       </div>
       <div class="modal-body">
         <form class="needs-validation" id="testform" action="<?php echo base_url('template/submitUser') ?>" method="post" novalidate>
-          <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
-          <input type="hidden" name="inputnote" id="inputnote"/>
-          <input type="hidden" name="inputassist" id="inputassist" value="<?php echo $data[1]['get'][0]->code; ?>"/>
+ 
            <div class="form-row">
-    <div class="col-md-6 mb-3">
-      <label for="validationCustom01">Code</label>
-      <input type="text" class="form-control" id="inputCode" name="inputCode" placeholder="Code" required>
-      <div class="invalid-feedback">
-        Please provide details.
-      </div>
-    </div>
-    <div class="col-md-6 mb-3">
-      <label for="validationCustom02">Health Center ID (HCID)</label>
-      <select id="inputHCID" name="inputHCID" class="custom-select" required>
-      <option value="">Select HCID...</option>
-      <?php foreach ($data[0]['hcid'] as $test) { ?>
-        <option><?php echo $test->HCID; ?>
-        <?php }?></option>
-      </select>
-     <div class="invalid-feedback">Example invalid custom select feedback</div>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md-4 mb-3">
-      <label for="validationCustom01">First name</label>
-      <input type="text" class="form-control" id="inputFN" name="inputFN" placeholder="First name" required>
-      <div class="invalid-feedback">
-        Please provide details.
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="validationCustom02">Middle name</label>
-      <input type="text" class="form-control" id="inputMN" name="inputMN" placeholder="Middle name"  required>
-      <div class="invalid-feedback">
-        Please provide details.
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="validationCustom02">Last name</label>
-      <input type="text" class="form-control" id="inputLN" name="inputLN" placeholder="Last name" required>
-      <div class="invalid-feedback">
-        Please provide details.
-      </div>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md-6 mb-3">
-      <label for="validationCustom03">Username</label>
-      <input type="text" class="form-control" id="inputUser" name="inputUser" placeholder="Username" required>
-      <div class="invalid-feedback">
-        Please provide details.
-      </div>
-    </div>
-    <div class="col-md-6 mb-3">
-      <label for="validationCustom03">Password</label>
-      <input type="text" class="form-control" id="inputPass" name="inputPass" placeholder="Password" required>
+    <div class="col-md-12 mb-3">
+      <label for="validationCustom01">HCID</label>
+      <input type="text" class="form-control" id="inputHCID" name="inputHCID" placeholder="HCID" required>
       <div class="invalid-feedback">
         Please provide details.
       </div>
@@ -329,12 +278,57 @@
   </div>
   <div class="form-row">
     <div class="col-md-12 mb-3">
-      <label for="validationCustom02">Position</label>
+      <label for="validationCustom01">Health Center Name</label>
+      <input type="text" class="form-control" id="inputHC" name="inputHC" placeholder="Health Center Name" required>
+      <div class="invalid-feedback">
+        Please provide details.
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-12 mb-3">
+      <label for="validationCustom01">Location</label>
+      <input type="text" class="form-control" id="inputLoc" name="inputLoc" placeholder="Location" required>
+      <div class="invalid-feedback">
+        Please provide details.
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-4 mb-3">
+      <label for="validationCustom02">City/District</label>
       <select id="Position" name="Position" class="custom-select" required>
-      <option value="">Select Position...</option>
-      <option value="NURSE">NURSE</option>
-      <option value="DOCTOR">DOCTOR</option>
+      <option value="1">Binondo</option>
+      <option value="2">Ermita</option>
+      <option value="3">Intramuros</option>
+      <option value="4">Malate</option>
+      <option value="5">Paco</option>
+      <option value="6">Pandacan</option>
+      <option value="7">Port Area</option>
+      <option value="8">Quiapo</option>
+      <option value="9">Sampaloc</option>
+      <option value="10">Sta Cruz</option>
+      <option value="11">Tondo</option>
       </select>
+     <div class="invalid-feedback">Example invalid custom select feedback</div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label for="exampleFormControlSelect2">Example multiple select</label>
+    <select multiple class="form-control" id="Brgy">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+          <small id="passwordHelpBlock" class="form-text text-muted">
+    Multiple select list (hold ctrl or shift (or drag with the mouse) to select more than one)
+    </small>
+     <div class="invalid-feedback">Example invalid custom select feedback</div>
+    </div>
+    <div class="col-md-4 mb-3">
+       <label for="exampleFormControlTextarea1">Selected Brgy</label>
+    <textarea class="form-control" id="ta" rows="3"></textarea>
      <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
   </div>
@@ -453,7 +447,74 @@ aria-labelledby="myModalLabel">
     $("#editUser").on("click",function(){
 
             $("#inputCode").prop("readonly",false);
+    });
+
+    $("#Brgy").on("click",function(){
+        var value = $(this).val();
+        $("#ta ").text(value);
      });
+
+   $("#Position").change(function() 
+    {   
+    var all = new Array();
+    var val= $(this).val();
+    if(val=='1')
+    {
+      var a = 287;
+      for ($x = 287; $x <= 296; $x++) 
+      {
+      all[$x]=a;
+      a++;
+      }
+      alert(all)
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(all, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(key));
+      });
+    }
+    else if (val=='2')
+    {
+
+    }
+    else if(val=='3')
+    {
+
+    }
+    else if(val=='4')
+    {
+ 
+    }
+    else if(val=='5')
+    {
+  
+    }
+    else if(val=='6')
+    {
+
+    }
+    else if(val=='7')
+    {
+   
+    }
+    else if(val=='8')
+    {
+   
+    }
+    else if(val=='9')
+    {
+      
+    }
+    else if(val=='10')
+    {
+     
+    }
+    else
+    {
+      
+    }
+   });
 
     $('#myTable tbody').on( 'click', 'button', function (e) {
             var data = table.row($(this).parents('tr') ).data();

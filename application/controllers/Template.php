@@ -35,6 +35,17 @@ class Template extends CI_Controller {
 		$this->load->view('template/try');	
 	}
 
+	public function addhc()
+	{
+		if($this->session->userdata('logged_in')){
+			$get['get']= $this->m->getUser(
+				$this->session->userdata('username')
+			   ,$this->session->userdata('password')
+			);
+			$this->load->view('template/addhc',$get);	
+		}
+	}
+
 	public function admin()
 	{
 		if($this->session->userdata('logged_in')){
@@ -65,7 +76,16 @@ class Template extends CI_Controller {
 
 	public function viewlogs()
 	{
-		
+		if($this->session->userdata('logged_in')){
+			$get= $this->m->getUser(
+				$this->session->userdata('username')
+			   ,$this->session->userdata('password')
+			);
+
+			$data['data']=$get;
+
+			$this->load->view('template/viewlogs',$data);	
+		}
 	}
 
 	public function insertlogs()
@@ -188,17 +208,6 @@ class Template extends CI_Controller {
 			echo json_encode($responce); 
 	} 
 
-
-	public function tables()
-	{
-		$this->load->view('template/examples/tables');
-	}
-
-	public function reports()
-	{
-		$this->load->view('template/reports');		
-	}
-
 	public function addpatient()
 	{
 		if($this->session->userdata('logged_in')){
@@ -298,6 +307,11 @@ class Template extends CI_Controller {
 		echo $values;
 	}
 
+	public function reports()
+	{
+		$this->load->view('template/reports');
+	}
+
 	public function pRecords()
 	{
 		$something = $this->input->post('txtID');
@@ -334,6 +348,28 @@ class Template extends CI_Controller {
 	{
 		$result = $this->m->addNewUsers();
 		redirect(base_url('template/adduser'));
+	}
+
+	public function activateuser()
+	{
+		$portid = $this->uri->segment(3);
+		$FN = $this->uri->segment(4);
+		$assist = $this->uri->segment(5);
+		$date = $this->uri->segment(6);
+		$note = urldecode($FN);
+		$result = $this->m->activateuser($portid,$assist,$note,$date);
+		redirect(base_url('template/viewlogs'));
+	}
+
+	public function activatefam()
+	{
+		$portid = $this->uri->segment(3);
+		$FN = $this->uri->segment(4);
+		$assist = $this->uri->segment(5);
+		$date = $this->uri->segment(6);
+		$note = urldecode($FN);
+		$result = $this->m->activatefamily($portid,$assist,$note,$date);
+		redirect(base_url('template/viewlogs'));
 	}
 
 	public function submitFamilyRecords()
@@ -488,6 +524,50 @@ class Template extends CI_Controller {
 	echo json_encode($output);
 	}
 
+	public function pinfo()
+	{
+		$pinfo=$this->m->pinfo();
+
+		foreach ($pinfo as $value)
+		{
+		$row = array();
+		$row[0] = $value->ID;
+		$row[1] = $value->FN;
+		$row[2] = $value->MN;
+		$row[3] = $value->LN;
+		$row[4] = $value->is_delete;
+		$data[] = $row;
+		}
+
+		$output = array(
+		"data" => $data,
+		);
+
+		echo json_encode($output);
+	}
+
+	public function finfo()
+	{
+		$finfo=$this->m->finfo();
+
+		foreach ($finfo as $value)
+		{
+		$row = array();
+		$row[0] = $value->familyno;
+		$row[1] = $value->FN;
+		$row[2] = $value->MN;
+		$row[3] = $value->LN;
+		$row[4] = $value->is_delete;
+		$data[] = $row;
+		}
+
+		$output = array(
+		"data" => $data,
+		);
+
+		echo json_encode($output);
+	}
+
 	public function getallLogs()
 	{
 	$getdata = $this->m->getallLogs();
@@ -510,21 +590,19 @@ class Template extends CI_Controller {
 
 	public function getallLogs2()
 	{
-	$data = $this->input->post();
+		$data = $this->input->post();
 
-	$start = $data['code'];
+		$hcid=$this->m->getUserCode($data['code']);
 
-	$getdata = $this->m->getLogs($start);
-	$data = array();
-	foreach ($getdata as $value)
-	{
-		$row = array();
-		$row[] = $value->activity;
-		$row[] = $value->date;
-		$data2[] = $row;
-	}
+		foreach ($hcid as $value) 
+			{
+			$row = array();
+			$row[0] = $value->activity;
+			$row[1] = $value->date;
+			$data2[] = $row;
+			}
 
-	echo json_encode($data2);
+			echo json_encode($data2);
 	}
 
 	public function getadminLogs()

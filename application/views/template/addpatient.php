@@ -71,7 +71,7 @@
       <th scope="col">Date of Birth</th>
       <th scope="col">Sex</th>
       <th scope="col">Address</th>
-      <th scope="col"></th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -387,6 +387,7 @@
                   data: {'ID': ID},
                   success: function (result) 
                   {
+                    alert(result)
                   var parsed= JSON.parse(result);
                   $.each(parsed,function(index,value)
                   {

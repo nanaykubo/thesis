@@ -238,7 +238,7 @@
               <h1 class="mb-0">Families</h1>
               <br/>
     <table id="example" class="table align-items-center table-flush" cellspacing="0" width="100%">
-      <thead>
+      <thead class="thead-light">
       <tr>
       <th scope="col">Family No</th>
       <th scope="col">Last Name</th>

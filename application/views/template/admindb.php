@@ -129,6 +129,11 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="addhc">
+             <i class="fas fa-hospital text-orange"></i> Health Centers
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link " href="viewlogs">
              <i class="fas fa-window-restore text-info"></i> Info Recovery
             </a>

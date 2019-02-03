@@ -30,6 +30,8 @@
   </head>
 
 <body>
+  <button type="button" id="users" class="btn btn-primary">Users</button>
+  <br><br>
    <table id="example" class="ui-widget ui-widget-content">
     <thead>
         <tr class="ui-widget-header ">
@@ -37,6 +39,7 @@
             <th>Street</th>
             <th>Town</th>
             <th>Postcode</th>
+             <th>Postcode</th>
         </tr>
     </thead>
     <tbody>
@@ -45,20 +48,26 @@
 </table>
    
 <script>
-  $(document).ready(function() {
-    var table= $('#myTable').DataTable({
-      "ajax": '<?php echo base_url('template/getallUsers); ?>',
+$(document).ready(function() {
+      var table = $('#example').DataTable( {
+      "ajax": '<?php echo base_url('template/pinfo/'); ?>',
       "type": 'POST',
-      //Set column definition initialisation properties.
-            "columnDefs": [
-                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="viewBtn" class="dropdown-item"><i class="fas fa-folder"></i>View Records</button><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Edit</button><button id="deleteBtn" class="dropdown-item"><i class="fas fa-trash-alt"></i>Delete</button></div></div>'},
-                {
-      "targets": [1,2,3,4,5,6,7],
+      "columns": [
+                { "title": "ID"},
+                { "title": "First Name"},
+                { "title": "Middle Name"},
+                { "title": "Last Name"},
+                { "title": "is_delete"},
+                ],
+      "columnDefs": [
+      {"targets":-1,"className": 'dt-body-center',"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="viewBtn" class="dropdown-item"><i class="fas fa-folder"></i>View Records</button><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Edit</button><button id="deleteBtn" class="dropdown-item"><i class="fas fa-trash-alt"></i>Delete</button></div></div>'},
+      {
+      "targets": [1,2,3,4,],
       "orderable": false}
-            ]
+      ]
     });
+  });
   </script>
-
 
 </body>
 </html>

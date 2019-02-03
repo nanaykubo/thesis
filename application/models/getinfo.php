@@ -42,6 +42,86 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function activateuser($portid,$assist,$note,$date)
+	{
+	$logs = array(
+		'code' => $assist,
+		'activity' => $note,
+		'date' => $date
+	);    
+
+	$this->db->insert('logs', $logs);
+
+	$isfalse = array('is_delete' => "1");    
+	$this->db->where('id', $portid);
+	$this->db->update('tabletest', $isfalse); 
+	$this->db->where('id', $portid);
+	$this->db->update('precords', $isfalse); 
+	$this->db->where('id', $portid);
+	$this->db->update('fdesc', $isfalse); 
+
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+	}
+
+	public function activatefamily($portid,$assist,$note,$date)
+	{
+	$logs = array(
+		'code' => $assist,
+		'activity' => $note,
+		'date' => $date
+	);    
+
+	$this->db->insert('adminlogs', $logs);
+
+	$isfalse = array('is_delete' => 1);    
+	$this->db->where('familyno', $portid);
+	$this->db->update('family', $isfalse); 
+
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+	}
+
+
+	public function pinfo()
+	{
+		$this->db->select('*');
+		$this->db->where('is_delete',"0");
+		$query = $this->db->get('tabletest');
+		return $query->result();
+	}
+
+	public function finfo()
+	{
+		$this->db->select('*');
+		$this->db->where('is_delete',"0");
+		$query = $this->db->get('family');
+		return $query->result();
+	}
+
+	public function getUserCode($code)
+	{
+		$this->db->select('*');
+		$this->db->where('code',$code);
+
+		$query = $this->db->get('logs');
+		return $query->result();
+	}
+
 	public function getHCInfo($HCID)
 	{
 		$this->db->where('HCID',$HCID);
@@ -177,7 +257,7 @@ class getinfo extends CI_Model
 		$query = $this->db->get('logs');
 		return $query->result();
 	}
-	
+
 	public function getadminLogs()
 	{
 		$this->db->select("*");
