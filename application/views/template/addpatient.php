@@ -253,7 +253,7 @@
     <select class="custom-select" style="text-transform: uppercase;" id="inputBrgy" name="inputBrgy" required>
       <option value="">Select Brgy...</option>
       <?php foreach ($data[1]['brgylist'] as $test) { ?>
-        <option><?php echo $test->BRGYID; ?>
+        <option><?php echo $test->Brgy; ?>
         <?php }?></option>
     </select>
     <div class="invalid-feedback">Please Select one of the following options</div>

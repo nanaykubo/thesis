@@ -257,7 +257,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body">
-      <form action="<?php echo base_url('template/submitFamilyRecords') ?>" method="post">
+      <form action="<?php echo base_url('template/submitFamilyRecords') ?>" id="testform" method="post">
   <input type="hidden" name="txtHCID" id="txtHCID" value="<?php echo $data[1]['userlist'][0]->HCID?>"/>
   <input type="hidden" name="inputAssist" id="inputAssist" value="<?php echo $data[1]['userlist'][0]->code?>"/>
   <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
@@ -283,16 +283,8 @@
       <select class="custom-select" style="text-transform: uppercase;" id="inputBrgy" name="inputBrgy" required>
       <option value="">Select Brgy...</option>
       <?php foreach ($data[0]['brgylist'] as $test) { ?>
-        <option><?php echo $test->BRGYID; ?>
+        <option><?php echo $test->BRGY; ?>
         <?php }?></option>
-    </select>
-    </div>
-    <div class="form-group col-md-4">
-      <label for="inputPassword4">St</label>
-      <select class="custom-select" style="text-transform: uppercase;" id="inputSt" name="inputSt" required>
-          <option value="TAGUIG">Taguig</option>
-          <option value="MAKATI">Makati</option>
-          <option value="MANILA">Manila</option>
     </select>
     </div>
     <div class="form-group col-md-4">
@@ -302,6 +294,10 @@
           <option value="MAKATI">Makati</option>
           <option value="MANILA">Manila</option>
     </select>
+    </div>
+    <div class="form-group col-md-4">
+    <label for="inputPassword4">Health Center</label>
+    <input type="text" class="form-control" id="inputHCID" name="inputHCID" value="<?php echo $data[2]['hname'][0]->Name?>" disabled>
     </div>
   </div>
   <div class="modal-footer">
@@ -367,6 +363,7 @@ $(document).ready( function () {
                 data:{'FNo': FNo},
                 success: function(data){
                 var parsed= JSON.parse(data);
+                alert(parsed)
                  $.each(parsed,function(index,value)
                   {
                      $("#friendsList").append('<li>'+value[0]+":"+" " +value[1]+" "+value[2]+" "+ value[3]+" "
@@ -381,21 +378,26 @@ $(document).ready( function () {
             {
                 window.location.href = "deleteFam/"+ FNo;
             }
-            if (action=='deleteBtn')
+            if (action=='editBtn')
             {
-                $("#FamNo").val(FNo);
                 $.ajax(
                 {
-                url:'<?php echo base_url('template/getFDesc/'); ?>',
+                url:'<?php echo base_url('template/getFInfo/'); ?>',
                 type:'POST',
                 data:{'FNo': FNo},
                 success: function(data){
                 var parsed= JSON.parse(data);
+                alert(parsed)
                  $.each(parsed,function(index,value)
                   {
-                     $("#friendsList").append('<li>'+value[0]+":"+" " +value[1]+" "+value[2]+" "+ value[3]+" "
-                      +"("+value[4]+")"+'</li>');
-                     $("#myModal").modal('show')
+                    $(".modal-body #inputLN").val(value[1]);
+                    $(".modal-body #inputFN").val(value[2]);
+                    $(".modal-body #inputMN").val(value[3]);
+                    $(".modal-body #inputBrgy").val(value[4]).change();
+                    $(".modal-body #inputC").val(value[5]).change();
+                    $("#exampleModal").modal('show')
+                    var Fno=value[0];
+                    $("#testform").attr("action",'<?php echo base_url('template/updateNewRecords') ?>');
                   });
                 }
                 }

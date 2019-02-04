@@ -228,7 +228,7 @@ class getinfo extends CI_Model
 
 	public function getHCCode($HCID)
 	{
-		$this->db->select('healthcenters.HCID,healthcenters.Name,healthcenters.Location,brgy.BRGYID');    
+		$this->db->select('healthcenters.HCID,healthcenters.Name,healthcenters.Location,brgy.Brgy');    
 		$this->db->from('healthcenters');
 		$this->db->join('brgy', 'brgy.HCID = healthcenters.HCID');
 		$this->db->where('brgy.HCID', $HCID);
@@ -247,8 +247,10 @@ class getinfo extends CI_Model
 
 	public function getHC()
 	{
-		$this->db->select('*');
-		$query = $this->db->get('healthcenters');
+		$this->db->select('healthcenters.HCID,healthcenters.Name,healthcenters.Location,brgy.Brgy');    
+		$this->db->from('healthcenters');
+		$this->db->join('brgy', 'brgy.HCID = healthcenters.HCID');
+		$query = $this->db->get();
 		return $query->result();
 	}
 
@@ -284,10 +286,11 @@ class getinfo extends CI_Model
 
 	public function getPieChart($HCID)
 	{
-		$this->db->select('brgy.BRGYID, brgy.HCID,COUNT(family.Brgy) as total')
+		$this->db->select('brgy.BRGY, brgy.HCID,COUNT(family.Brgy) as total')
 		->from('brgy');
-		$this->db->join('family', 'brgy.BRGYID = family.Brgy','left')
-         ->group_by('brgy.BRGYID');	
+		$this->db->join('family', 'brgy.BRGY = family.Brgy','left')
+         ->group_by('brgy.Brgy');	
+        $this->db->where('is_delete',"1");
         $this->db->having('brgy.HCID=',$HCID);
         $query = $this->db->get();
 		return $query->result();
@@ -326,6 +329,7 @@ class getinfo extends CI_Model
 		$this->db->select('COUNT(familyno) as family');
 		$this->db->from('family');
 		$this->db->where('HCID',$HCID);
+		$this->db->or_where('is_delete', "1");
 		$query = $this->db->get();
 		if ($query->num_rows() > 0 )
 		{
@@ -415,7 +419,7 @@ class getinfo extends CI_Model
 
 	public function getID($id)
 	{
-		$this->db->select("BRGYID");
+		$this->db->select("Brgy");
 		$this->db->where('HCID', $id);
 		$query = $this->db->get('brgy');
 		return $query->result();
@@ -685,7 +689,8 @@ class getinfo extends CI_Model
 			'MN'=>$this->input->post('inputMN'),
 			'Brgy'=>$this->input->post('inputBrgy'),	
 			'St'=>$this->input->post('inputSt'),
-			'City'=>$this->input->post('inputC')
+			'City'=>$this->input->post('inputC'),
+			'is_delete'=>("1")
 		);
 
 		$_POST['inputnote'] = "ADDED FAMILY " .$_POST['inputLN'] ." " .$_POST['inputFN'];
@@ -789,6 +794,38 @@ class getinfo extends CI_Model
 	
 	}
 
+	public function updateFam()
+	{
+	$logs = array(
+		'code' => $code,
+		'activity' => $note,
+		'date' => $date
+	);    
+
+	$Fno = $this->input->post('inputLN');
+	$fam = array(
+		'LN' => $this->input->post('inputLN'),
+		'FN' => $this->input->post('inputFN'),
+		'MN' => $this->input->post('inputMN'),
+		'Brgy' => $this->input->post('inputBrgy'),
+		'City' => $this->input->post('inputC')
+	);  
+
+	$this->db->where('family', $fam);
+	$this->db->update('family', $fam);
+	$this->db->insert('logs', $logs);
+
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+	}
+
 	public function delete($id,$code,$note,$date)
 	{
 	$logs = array(
@@ -843,11 +880,11 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
-	public function getFamily($id)
+	public function getFamily($FNo)
 	{
 		$this->db->select("*");
-		$this->db->where('code', $id);
-		$query = $this->db->get('fdesc');
+		$this->db->where('familyno', $FNo);
+		$query = $this->db->get('family');
 		return $query->result();
 	}
 

@@ -127,7 +127,7 @@ class Template extends CI_Controller {
 			$row[0] = $value->HCID;
 			$row[1] = $value->Name;
 			$row[2] = $value->Location;
-			$row[3] = $value->BRGYID;
+			$row[3] = $value->Brgy;
 			$data[] = $row;
 			}
 
@@ -201,7 +201,7 @@ class Template extends CI_Controller {
 
 			$responce->cols[] = array( 
 			"id" => "", 
-			"label" => "BRGYID", 
+			"label" => "BRGY", 
 			"pattern" => "", 
 			"type" => "string" 
 			); 
@@ -216,7 +216,7 @@ class Template extends CI_Controller {
 			{ 
 			$responce->rows[]["c"] = array( 
 			array( 
-			    "v" => "$cd->BRGYID", 
+			    "v" => "$cd->BRGY", 
 			    "f" => null 
 			) , 
 			array( 
@@ -258,12 +258,33 @@ class Template extends CI_Controller {
 
 		foreach ($getFam as $value) 
 		{
-			$row = array();
+			$row = array();	
 			$row[0] = $value->ID;
 			$row[1] = $value->LN;
 			$row[2] = $value->FN;
 			$row[3] = $value->MN;
 			$row[4] = $value->Relation;
+			$data2[] = $row;
+		}
+
+		echo json_encode($data2);
+	}
+
+	public function getFInfo()
+	{
+		$data = $this->input->post();
+
+		$getFam = $this->m->getFamily($data['FNo']);
+
+		foreach ($getFam as $value) 
+		{
+			$row = array();	
+			$row[0] = $value->familyno;
+			$row[1] = $value->LN;
+			$row[2] = $value->FN;
+			$row[3] = $value->MN;
+			$row[4] = $value->Brgy;
+			$row[5] = $value->City;
 			$data2[] = $row;
 		}
 
@@ -500,14 +521,14 @@ class Template extends CI_Controller {
 	{
 		$data = $this->input->post();
 
-		$values = $this->m->getHCCode('1');
+		$values = $this->m->getHCCode($data['HCID']);
 
 		foreach ($values as $value) {
 			$row = array();
 			$row[0] = $value->HCID;
 			$row[1] = $value->Name;
 			$row[2] = $value->Location;
-			$row[3] = $value->BRGYID;
+			$row[3] = $value->Brgy;
 			$data2[] = $row;
 		}
 		
@@ -773,7 +794,9 @@ class Template extends CI_Controller {
 
 		$userlist['userlist'] = $get;
 
-		$data['data'] = array($brgylist,$userlist);
+		$hname['hname'] = $this->m->getHCName($myvars);
+
+		$data['data'] = array($brgylist,$userlist,$hname);
 
 		$this->load->view('template/family',$data);		
 		}	

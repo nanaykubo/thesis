@@ -631,12 +631,13 @@ aria-labelledby="myModalLabel">
     }
     var table= $('#myTable').DataTable({
       "ajax": '<?php echo base_url('template/getHC'); ?>',
-      "type": 'GET',
+      "type": 'POST',
+      
       //Set column definition initialisation properties.
             "columnDefs": [
                 {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="logs" class="dropdown-item"><i class="fas fa-warehouse"></i>View Barangays</button><button id="update" class="dropdown-item"><i class="fas fa-edit"></i></i>Edit Health Center</button></div></div>'},
                 {
-      "targets": [1,2,3,4],
+      "targets": [1,2,3],
       "orderable": false}
             ]
     });
@@ -867,10 +868,10 @@ aria-labelledby="myModalLabel">
             type: 'POST',
             data: {'HCID': HCID},
             success: function (result) {
-            var parsed= JSON.parse(result);    
+            var parsed= JSON.parse(result);
+            alert(parsed)    
             $.each(parsed,function(index,value)
                   {
-                    $(".modal-body #Brgy option[value='" + value[3] + "']").prop("selected", true);
                     $(".modal-body #inputHCID").val(value[0]);
                     $(".modal-body #inputHC").val(value[1]);
                     $(".modal-body #inputLoc").val(value[2]);
