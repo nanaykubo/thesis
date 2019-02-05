@@ -87,7 +87,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Add New Patient</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" input="addpatient" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -134,7 +134,7 @@
     </div>
      <div class="col-md-4 mb-3">
       <label for="validationCustom01">Last Name *</label>
-      <input type="text" class="form-control" style="text-transform: uppercase;" name="inputLN" id="inputLN" required>
+      <input type="text" class="form-control" style="text-transform: uppercase;" name="inputLN" id="inputLN" placeholder="Last name" required>
       <div class="invalid-feedback">
           Please enter your Last Name
         </div>
@@ -362,6 +362,10 @@
             ]
     });
 
+    $('#exampleModalLong').on('hidden.bs.modal', function () {
+    $(this).find('form').trigger('reset');
+    })
+
     $('#myTable tbody').on( 'click', 'button', function (e) {
             var data = table.row($(this).parents('tr') ).data();
             var action=this.id;
@@ -391,7 +395,6 @@
                   var parsed= JSON.parse(result);
                   $.each(parsed,function(index,value)
                   {
-
                     $(".modal-body #inputID").val(value[0]);
                     $(".modal-body #inputFN").val(value[1]);
                     $(".modal-body #inputMN").val(value[2]);

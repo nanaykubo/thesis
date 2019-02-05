@@ -260,7 +260,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Add User</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle" id="adduser">Add User</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         </button>
       </div>
@@ -338,7 +338,7 @@
      <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
   </div>
-  <button class="btn btn-primary" style="float:right;"type="submit">Add User</button>
+  <button class="btn btn-primary" id="buttonuser" style="float:right;"type="submit">Add User</button>
 </form>
 
         </div>
@@ -480,7 +480,7 @@ aria-labelledby="myModalLabel">
             if (action=='account')
             {
               $.ajax({
-            url: '<?php echo base_url('template/editUser/'); ?>', 
+            url: '<?php echo base_url('template/editUser/'); ?>',  
             type: 'POST',
             data: {'code': code},
             success: function (result) { 
@@ -490,6 +490,7 @@ aria-labelledby="myModalLabel">
                     $(".modal-body #inputnote").val("VIEW ACCOUNT DETAILS "+value[6] + " " +value[5]);
                     $(".modal-body #staticUser").val(value[2]);
                     $(".modal-body #staticPass").val(value[3]);
+                    $(".modal-body #buttonuser").html('Edit User');
 
                     $("#myModal").modal('show')
                   });

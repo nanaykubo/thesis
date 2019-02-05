@@ -228,10 +228,9 @@ class getinfo extends CI_Model
 
 	public function getHCCode($HCID)
 	{
-		$this->db->select('healthcenters.HCID,healthcenters.Name,healthcenters.Location,brgy.Brgy');    
+		$this->db->select('healthcenters.*,(SELECT GROUP_CONCAT(brgy.BRGY) FROM brgy WHERE healthcenters.HCID = brgy.HCID) AS combinedsolutions');
+		$this->db->where('healthcenters.HCID', $HCID);
 		$this->db->from('healthcenters');
-		$this->db->join('brgy', 'brgy.HCID = healthcenters.HCID');
-		$this->db->where('brgy.HCID', $HCID);
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -247,9 +246,8 @@ class getinfo extends CI_Model
 
 	public function getHC()
 	{
-		$this->db->select('healthcenters.HCID,healthcenters.Name,healthcenters.Location,brgy.Brgy');    
+		$this->db->select('healthcenters.*,(SELECT GROUP_CONCAT(brgy.BRGY)  FROM brgy WHERE healthcenters.HCID = brgy.HCID) AS combinedsolutions');
 		$this->db->from('healthcenters');
-		$this->db->join('brgy', 'brgy.HCID = healthcenters.HCID');
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -290,7 +288,6 @@ class getinfo extends CI_Model
 		->from('brgy');
 		$this->db->join('family', 'brgy.BRGY = family.Brgy','left')
          ->group_by('brgy.Brgy');	
-        $this->db->where('is_delete',"1");
         $this->db->having('brgy.HCID=',$HCID);
         $query = $this->db->get();
 		return $query->result();
@@ -298,6 +295,13 @@ class getinfo extends CI_Model
 
 	public function create($data)
 	{
+	$records = array(
+			'HCID'=>$this->input->post('inputHCID'),
+			'Name'=>$this->input->post('inputHC'),	
+			'Location'=>$this->input->post('inputLoc')
+			);
+
+	$this->db->insert('healthcenters',$records);
 	$this->db->insert_batch('brgy', $data);
 	if($this->db->affected_rows() > 0)
 	{
@@ -497,10 +501,11 @@ class getinfo extends CI_Model
 			'Philhealth'=>$this->input->post('inputPN'),
 			'dateinsert'=>$this->input->post('inputinsert'),
 			'Assist'=>$this->input->post('inputassist'),
-			'Remarks'=>$this->input->post('inputR')		
+			'Remarks'=>$this->input->post('inputR'),
+			'is_delete'=>("1")	
 	);
 
-	$_POST['inputnote'] = "ADDED PATIENT " .$_POST['inputLN'] ." " .$_POST['inputFN'];
+	$_POST['inputnote'] = "ADDED PATIENT ID" ."(". $_POST['inputID'].")"." ".$_POST['inputLN'] ." " .$_POST['inputFN'];
 	
 	 $logs = array(
 			'code'=>$this->input->post('inputassist'),
@@ -546,7 +551,7 @@ class getinfo extends CI_Model
 			'date'=>$this->input->post('inputinsert')
 		);
 
-		$_POST['inputnote'] = "ADDED TO USERS " .$_POST['inputLN'] ." " .$_POST['inputFN'];
+		$_POST['inputnote'] = "ADDED USER" ."(". $_POST['inputCode'].")"." ".$_POST['inputLN'] ." " .$_POST['inputFN'];
 
 		$logs = array(
 			'code'=>$this->input->post('inputassist'),
@@ -587,7 +592,7 @@ class getinfo extends CI_Model
 			'date'=>$this->input->post('inputinsert')
 		);
 
-		$_POST['inputnote'] = "EDITED USER " .$_POST['inputLN'] ." " .$_POST['inputFN'];
+		$_POST['inputnote'] = "EDITED USER CODE" ."(". $_POST['inputCode'].")"." ".$_POST['inputLN'] ." " .$_POST['inputFN'];
 
 		$logs = array(
 			'code'=>$this->input->post('inputassist'),
@@ -653,14 +658,13 @@ class getinfo extends CI_Model
 			'Address'=>$this->input->post('inputAdd'),
 			'Zipcode'=>$this->input->post('inputZ'),
 			'Landline'=>$this->input->post('inputM'),
-			'Relation'=>$this->input->post('inputRel'),
-			'is_delete'=>$this->input->post('inputDel')
+			'Relation'=>$this->input->post('inputRel')
 		);
 
-		$_POST['inputnote'] = "EDITED PATIENT " .$_POST['inputLN'] ." " .$_POST['inputFN'];
+		$_POST['inputnote'] = "EDITED PATIENT NO" ."(". $_POST['inputID'].")"." ".$_POST['inputLN'] ." " .$_POST['inputFN'];
 
 		$logs = array(
-			'code'=>$this->input->post('inputAssist'),
+			'code'=>$this->input->post('inputassist'),
 			'activity'=>$this->input->post('inputnote'),
 			'date'=>$this->input->post('inputinsert')
 			);
@@ -714,6 +718,42 @@ class getinfo extends CI_Model
 		return false;	
 	}
 	}
+
+	public function editFam()
+	{
+		$records = array(
+			'LN'=>$this->input->post('inputLN'),
+			'FN'=>$this->input->post('inputFN'),
+			'MN'=>$this->input->post('inputMN'),
+			'Brgy'=>$this->input->post('inputBrgy'),	
+			'City'=>$this->input->post('inputC')
+		);
+
+		$id = $this->input->post('inputFam');
+
+		$_POST['inputnote'] = "UPDATED FAMILY NO" ."(". $_POST['inputFam'].")"." ".$_POST['inputLN'] ." " .$_POST['inputFN'];
+
+		$logs = array(
+			'code'=>$this->input->post('inputAssist'),
+			'activity'=>$this->input->post('inputnote'),
+			'date'=>$this->input->post('inputinsert')
+			);
+
+	$this->db->where('familyno', $id);
+	$this->db->update('family', $records);
+	$this->db->insert('logs', $logs);
+	
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;	
+	}
+	}
+
 
 	public function addPRecords($image)
 	{

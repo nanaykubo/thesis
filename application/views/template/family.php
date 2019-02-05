@@ -217,7 +217,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-      <button class="btn btn-icon btn-3 btn-secondary" data-toggle="modal" data-target="#exampleModal"  type="button">
+      <button class="btn btn-icon btn-3 btn-secondary" id="addfamily" data-toggle="modal" data-target="#exampleModal" type="button">
       <span class="btn-inner--icon" ><i class="fas fa-folder-plus"></i></span>
       
       <span class="btn-inner--text">Add New Family</span>
@@ -262,6 +262,7 @@
   <input type="hidden" name="inputAssist" id="inputAssist" value="<?php echo $data[1]['userlist'][0]->code?>"/>
   <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
   <input type="hidden" name="inputnote" id="inputnote"/>
+  <input type="hidden" name="inputFam" id="inputFam" value=""/>
   <h2>Family Head</h2>
   <div class="form-row">
     <div class="form-group col-md-4">
@@ -303,7 +304,7 @@
   <div class="modal-footer">
         <div class="form-group">
   </div>
-  <button class="btn btn-primary" type="submit">Add Family</button>
+  <button class="btn btn-primary" id="buttonAdd" type="submit">Add Family</button>
       </div>
 </form>
     </div>
@@ -348,6 +349,14 @@ $(document).ready( function () {
                 ]
     });
 
+    $('#exampleModal').on('hidden.bs.modal', function () {
+    $(this).find('form').trigger('reset');
+    })
+
+     $("#addfamily").on("click",function(){
+        $(".modal-body #buttonAdd").html('Add Family');
+     });
+
     $('#example tbody').on( 'click', 'button', function (e) {
             var data = table.row($(this).parents('tr') ).data();
             var action=this.id;
@@ -387,7 +396,6 @@ $(document).ready( function () {
                 data:{'FNo': FNo},
                 success: function(data){
                 var parsed= JSON.parse(data);
-                alert(parsed)
                  $.each(parsed,function(index,value)
                   {
                     $(".modal-body #inputLN").val(value[1]);
@@ -396,8 +404,9 @@ $(document).ready( function () {
                     $(".modal-body #inputBrgy").val(value[4]).change();
                     $(".modal-body #inputC").val(value[5]).change();
                     $("#exampleModal").modal('show')
-                    var Fno=value[0];
-                    $("#testform").attr("action",'<?php echo base_url('template/updateNewRecords') ?>');
+                    $(".modal-body #inputFam").val(value[0]);
+                    $(".modal-body #buttonAdd").html('Edit Family');
+                    $("#testform").attr("action",'<?php echo base_url('template/editFam/') ?>');
                   });
                 }
                 }

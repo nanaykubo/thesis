@@ -240,10 +240,11 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">HCID</th>
-      <th scope="col">Health Center Name</th>
+      <th scope="col">Health Center</th>
       <th scope="col">Location</th>
-      <th scope="col">BRGY ID</th>
-      <th scope="col">Actions</th>
+      <th scope="col">City</th>
+      <th scope="col">BRGY</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -277,7 +278,7 @@
   <div class="form-row">
     <div class="col-md-12 mb-3">
       <label for="validationCustom01">Health Center Name</label>
-      <input type="text" class="form-control" id="inputHC" name="inputHC" placeholder="Health Center Name" >
+      <input type="text" class="form-control" id="inputHC" name="inputHCID" placeholder="Health Center Name" >
       <div class="invalid-feedback">
         Please provide details.
       </div>
@@ -296,26 +297,26 @@
     <div class="col-md-4 mb-3">
       <label for="validationCustom02">City/District</label>
       <select id="Position" name="Position" class="custom-select" required>
-      <option value="1">Binondo</option>
-      <option value="2">Ermita</option>
-      <option value="3">Intramuros</option>
-      <option value="4">Malate</option>
-      <option value="5">Paco</option>
-      <option value="6">Pandacan</option>
-      <option value="7">Port Area</option>
-      <option value="8">Quiapo</option>
-      <option value="9">Sampaloc</option>
-      <option value="10">San Miguel</option>
-      <option value="11">San Nicolas</option>
-      <option value="12">Sta Ana</option>
-      <option value="13">Sta Cruz</option>
-      <option value="14">Tondo</option>
+      <option value="0">Binondo</option>
+      <option value="1">Ermita</option>
+      <option value="2">Intramuros</option>
+      <option value="3">Malate</option>
+      <option value="4">Paco</option>
+      <option value="5">Pandacan</option>
+      <option value="6">Port Area</option>
+      <option value="7">Quiapo</option>
+      <option value="8">Sampaloc</option>
+      <option value="9">San Miguel</option>
+      <option value="10">San Nicolas</option>
+      <option value="11">Sta Ana</option>
+      <option value="12">Sta Cruz</option>
+      <option value="13">Tondo</option>
       </select>
      <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
     <div class="col-md-4 mb-3">
       <label for="exampleFormControlSelect2">Example multiple select</label>
-    <select multiple class="form-control" name="Brgy[]" id="Brgy">
+    <select multiple="multiple" class="form-control" name="Brgy[]" id="Brgy">
       <option>1</option>
       <option>2</option>
       <option>3</option>
@@ -435,7 +436,7 @@ aria-labelledby="myModalLabel">
   $(document).ready(function() {
     var sub_array = [];
     var val= $('#Position').val();
-    if(val=='1')
+    if(val=='0')
     {
       for ($x = 287; $x <= 296; $x++) 
       {
@@ -449,7 +450,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if (val=='2')
+    else if (val=='1')
     {
       var super_array =['659-A','660-A','650-A'];
       for ($x = 659; $x <= 670; $x++) 
@@ -464,7 +465,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='3')
+    else if(val=='2')
     {
       for ($x = 654; $x <= 658; $x++) 
       {
@@ -478,7 +479,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='4')
+    else if(val=='3')
     {
       for ($x = 688; $x <= 744; $x++) 
       {
@@ -492,7 +493,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='5')
+    else if(val=='4')
     {
       var super_array =['662','644-A','660-A','650-A'];
       var p = [];
@@ -513,7 +514,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='6')
+    else if(val=='5')
     {
       for ($x = 833; $x <= 872; $x++) 
       {
@@ -527,7 +528,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='7')
+    else if(val=='6')
     {
       for ($x = 649; $x <= 653; $x++) 
       {
@@ -541,11 +542,21 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='8')
+    else if(val=='7')
     {
+       for ($x = 306; $x <= 394; $x++) 
+      {
+      sub_array.push($x);
+      }
       
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
     }
-    else if(val=='9')
+    else if(val=='8')
     {
       for ($x = 395; $x <= 636; $x++) 
       {
@@ -559,7 +570,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='10')
+    else if(val=='9')
     {
      for ($x = 637; $x <= 648; $x++) 
       {
@@ -573,7 +584,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='11')
+    else if(val=='10')
     {
       for ($x = 268; $x <= 286; $x++) 
       {
@@ -587,7 +598,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='12')
+    else if(val=='11')
     {
       for ($x = 745; $x <= 905; $x++) 
       {
@@ -601,7 +612,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='13')
+    else if(val=='12')
     {
       for ($x = 297; $x <= 382; $x++) 
       {
@@ -615,7 +626,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='14')
+    else if(val=='13')
     {
       for ($x = 1; $x <= 267; $x++) 
       {
@@ -637,7 +648,7 @@ aria-labelledby="myModalLabel">
             "columnDefs": [
                 {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="logs" class="dropdown-item"><i class="fas fa-warehouse"></i>View Barangays</button><button id="update" class="dropdown-item"><i class="fas fa-edit"></i></i>Edit Health Center</button></div></div>'},
                 {
-      "targets": [1,2,3],
+      "targets": [1,2,3,4,5],
       "orderable": false}
             ]
     });
@@ -656,7 +667,7 @@ aria-labelledby="myModalLabel">
     {   
     var sub_array = [];
     var val= $(this).val();
-    if(val=='1')
+    if(val=='0')
     {
       for ($x = 287; $x <= 296; $x++) 
       {
@@ -670,7 +681,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if (val=='2')
+    else if (val=='1')
     {
       var super_array =['659-A','660-A','650-A'];
       for ($x = 659; $x <= 670; $x++) 
@@ -685,7 +696,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='3')
+    else if(val=='2')
     {
       for ($x = 654; $x <= 658; $x++) 
       {
@@ -699,7 +710,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='4')
+    else if(val=='3')
     {
       for ($x = 688; $x <= 744; $x++) 
       {
@@ -713,7 +724,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='5')
+    else if(val=='4')
     {
       var super_array =['662','644-A','660-A','650-A'];
       var p = [];
@@ -734,7 +745,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='6')
+    else if(val=='5')
     {
       for ($x = 833; $x <= 872; $x++) 
       {
@@ -748,7 +759,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='7')
+    else if(val=='6')
     {
       for ($x = 649; $x <= 653; $x++) 
       {
@@ -762,11 +773,21 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='8')
+    else if(val=='7')
     {
+       for ($x = 306; $x <= 394; $x++) 
+      {
+      sub_array.push($x);
+      }
       
+      var $el = $("#Brgy");
+      $el.empty();
+      $.each(sub_array, function(key,value) {
+      $el.append($("<option></option>")
+      .attr("value", value).text(value));
+      });
     }
-    else if(val=='9')
+    else if(val=='8')
     {
       for ($x = 395; $x <= 636; $x++) 
       {
@@ -780,7 +801,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='10')
+    else if(val=='9')
     {
      for ($x = 637; $x <= 648; $x++) 
       {
@@ -794,7 +815,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='11')
+    else if(val=='10')
     {
       for ($x = 268; $x <= 286; $x++) 
       {
@@ -808,7 +829,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='12')
+    else if(val=='11')
     {
       for ($x = 745; $x <= 905; $x++) 
       {
@@ -822,7 +843,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='13')
+    else if(val=='12')
     {
       for ($x = 297; $x <= 382; $x++) 
       {
@@ -836,7 +857,7 @@ aria-labelledby="myModalLabel">
       .attr("value", value).text(value));
       });
     }
-    else if(val=='14')
+    else if(val=='13')
     {
       for ($x = 1; $x <= 267; $x++) 
       {
@@ -869,14 +890,17 @@ aria-labelledby="myModalLabel">
             data: {'HCID': HCID},
             success: function (result) {
             var parsed= JSON.parse(result);
-            alert(parsed)    
             $.each(parsed,function(index,value)
                   {
                     $(".modal-body #inputHCID").val(value[0]);
                     $(".modal-body #inputHC").val(value[1]);
                     $(".modal-body #inputLoc").val(value[2]);
-                    $(".modal-body #ta").val(value[3]);
-
+                    $('.modal-body #Position option')
+                    .filter(function() { return $.trim( $(this).text() ) == value[3]; })
+                    .attr('selected',true);
+                    $(".modal-body #ta").val(value[4]);
+                    var data=($("#Position").prop('selectedIndex'));
+                    $("#Position").val(data).change();
                     $("#exampleModalLong").modal('show')
 
                     $("#testform").attr("action",'<?php echo base_url('template/updateUser') ?>');

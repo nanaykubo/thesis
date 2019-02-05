@@ -127,7 +127,8 @@ class Template extends CI_Controller {
 			$row[0] = $value->HCID;
 			$row[1] = $value->Name;
 			$row[2] = $value->Location;
-			$row[3] = $value->Brgy;
+			$row[3] = $value->City;
+			$row[4] = $value->combinedsolutions;
 			$data[] = $row;
 			}
 
@@ -399,10 +400,11 @@ class Template extends CI_Controller {
 		$data = array();
 		foreach($foods as $k => $v){
 		$data[$k]['HCID']=$name;
-		$data[$k]['BRGYID']=$v;
+		$data[$k]['BRGY']=$v;
 		}
 
 		$this->m->create($data);
+		redirect(base_url('template/addhc'));
 	}
 
 	public function activateuser()
@@ -430,6 +432,12 @@ class Template extends CI_Controller {
 	public function submitFamilyRecords()
 	{
 		$result = $this->m->addNewFamilyRecords();
+		redirect(base_url('template/family'));
+	}
+
+	public function editFam()
+	{
+		$result = $this->m->editFam();
 		redirect(base_url('template/family'));
 	}
 
@@ -528,7 +536,8 @@ class Template extends CI_Controller {
 			$row[0] = $value->HCID;
 			$row[1] = $value->Name;
 			$row[2] = $value->Location;
-			$row[3] = $value->Brgy;
+			$row[3] = $value->City;
+			$row[4] = $value->combinedsolutions;
 			$data2[] = $row;
 		}
 		
