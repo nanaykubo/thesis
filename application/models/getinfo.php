@@ -615,7 +615,24 @@ class getinfo extends CI_Model
 	}
 	}
 
+	public function updateHC($data)
+	{
+	$HCID = $this->input->post('inputHCID');
 
+	$this->db->where('HCID', $HCID);
+	$this->db->delete('brgy');
+	$this->db->insert_batch('brgy', $data);
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;	
+	}
+
+	}
 	
 	public function update()
 	{

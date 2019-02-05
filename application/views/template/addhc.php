@@ -216,7 +216,7 @@
           <!-- Card stats -->
 
           <!-- Button -->
-     <button class="btn btn-icon btn-3 btn-secondary" id="editUser" data-toggle="modal" data-target="#exampleModalLong" type="button">
+     <button class="btn btn-icon btn-3 btn-secondary" id="healthcenter" data-toggle="modal" data-target="#exampleModalLong" type="button">
       <span class="btn-inner--icon"><i class="fas fa-hospital-alt"></i></span>
       
       <span class="btn-inner--text">Add Health Center</span>
@@ -260,7 +260,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Add Health Center</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" id="healthcenter" class="close" data-dismiss="modal" aria-label="Close">
         </button>
       </div>
       <div class="modal-body">
@@ -278,7 +278,7 @@
   <div class="form-row">
     <div class="col-md-12 mb-3">
       <label for="validationCustom01">Health Center Name</label>
-      <input type="text" class="form-control" id="inputHC" name="inputHCID" placeholder="Health Center Name" >
+      <input type="text" class="form-control" id="inputHC" name="inputHC" placeholder="Health Center Name" >
       <div class="invalid-feedback">
         Please provide details.
       </div>
@@ -334,7 +334,7 @@
      <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
   </div>
-  <button class="btn btn-primary" style="float:right;"type="submit">Add User</button>
+  <button class="btn btn-primary" id="editUser" style="float:right;"type="submit">Add User</button>
 </form>
 
         </div>
@@ -660,7 +660,7 @@ aria-labelledby="myModalLabel">
 
     $("#Brgy").on("click",function(){
         var value = $(this).val();
-        $("#ta ").text(value);
+        $("#ta").text(value);
      });
 
    $("#Position").change(function() 
@@ -873,6 +873,15 @@ aria-labelledby="myModalLabel">
     }
    });
 
+    $("#healthcenter").on("click",function(){
+        $("#editUser").html('Add User');
+        $(".modal-title").html('Add User');
+     });
+
+    $('#exampleModalLong').on('hidden.bs.modal', function () {
+    $(this).find('form').trigger('reset');
+    })
+
     $('#myTable tbody').on( 'click', 'button', function (e) {
             var data = table.row($(this).parents('tr') ).data();
             var action=this.id;
@@ -884,6 +893,7 @@ aria-labelledby="myModalLabel">
             }
             if (action=='update')
             {
+            values=new Array();
             $.ajax({
             url: '<?php echo base_url('template/editHC/'); ?>', 
             type: 'POST',
@@ -898,12 +908,25 @@ aria-labelledby="myModalLabel">
                     $('.modal-body #Position option')
                     .filter(function() { return $.trim( $(this).text() ) == value[3]; })
                     .attr('selected',true);
-                    $(".modal-body #ta").val(value[4]);
                     var data=($("#Position").prop('selectedIndex'));
                     $("#Position").val(data).change();
-                    $("#exampleModalLong").modal('show')
 
-                    $("#testform").attr("action",'<?php echo base_url('template/updateUser') ?>');
+                    var values =value[4];
+                    var selectedOptions = values.split(",");
+                    for(var i in selectedOptions) {
+                    var optionVal = selectedOptions[i];
+                    $(".modal-body #Brgy").find("option[value="+optionVal+"]").prop("selected", "selected");
+                    
+                    }
+
+                    var selOption = $('#Brgy').val();
+
+                      $("#ta").text(selOption);
+
+                    $(".modal-body #editUser").html('Edit User');
+                    $(".modal-title").html('Edit User');
+                    $("#exampleModalLong").modal('show')
+                    $("#testform").attr("action",'<?php echo base_url('template/updateHC') ?>');
                   });
             },
             error: function(jqXHR, textStatus, errorThrown) {

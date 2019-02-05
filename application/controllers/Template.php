@@ -453,6 +453,20 @@ class Template extends CI_Controller {
 		redirect(base_url('template/adduser'));
 	}
 
+	public function updateHC()
+	{
+		$foods = $this->input->post('Brgy');
+		$name= $this->input->post('inputHCID');
+		$data = array();
+		foreach($foods as $k => $v){
+		$data[$k]['HCID']=$name;
+		$data[$k]['BRGY']=$v;
+		}
+
+		$this->m->updateHC($data);
+		redirect(base_url('template/addhc'));
+	}
+
 	public function checkUsername()
  	{
   	if($this->m->getUsername($_POST['username']))
