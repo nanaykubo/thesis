@@ -295,7 +295,11 @@ $(document).ready(function() {
       {
       "targets": [1,2,3,4,5],
       "orderable": false}
-      ]
+      ],
+      success:function(data)
+      {
+        
+      }
     });
 
       $("#users").click(function(){

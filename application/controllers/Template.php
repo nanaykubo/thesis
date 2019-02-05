@@ -624,6 +624,16 @@ class Template extends CI_Controller {
 	{
 		$pinfo=$this->m->pinfo();
 
+		if($pinfo==null)
+		{
+			$output = array(
+			"data" => $data,
+			);
+
+			echo json_encode($output);
+		}
+		else
+		{
 		foreach ($pinfo as $value)
 		{
 		$row = array();
@@ -640,6 +650,7 @@ class Template extends CI_Controller {
 		);
 
 		echo json_encode($output);
+		}
 	}
 
 	public function finfo()

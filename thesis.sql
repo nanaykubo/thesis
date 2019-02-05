@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2019 at 12:34 PM
+-- Generation Time: Feb 05, 2019 at 12:10 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `demo`
+-- Database: `thesis`
 --
 
 -- --------------------------------------------------------
@@ -74,7 +74,9 @@ INSERT INTO `adminlogs` (`auto`, `code`, `activity`, `date`) VALUES
 (30, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-02'),
 (31, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02'),
 (32, 1212, 'RESTORED USER ANGELICA CHUA', '2019-02-02'),
-(33, 1212, 'RESTORED FAMILY 6', '2019-02-02');
+(33, 1212, 'RESTORED FAMILY 6', '2019-02-02'),
+(34, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-04'),
+(35, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-04');
 
 -- --------------------------------------------------------
 
@@ -84,23 +86,30 @@ INSERT INTO `adminlogs` (`auto`, `code`, `activity`, `date`) VALUES
 
 CREATE TABLE `brgy` (
   `HCID` int(11) NOT NULL,
-  `BRGYID` int(11) NOT NULL
+  `BRGY` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `brgy`
 --
 
-INSERT INTO `brgy` (`HCID`, `BRGYID`) VALUES
-(1, 808),
-(1, 809),
-(1, 810),
-(1, 811),
-(1, 813),
-(1, 814),
-(1, 815),
-(2, 823),
-(2, 824);
+INSERT INTO `brgy` (`HCID`, `BRGY`) VALUES
+(6, 662),
+(6, 644),
+(6, 660),
+(6, 650),
+(0, 644),
+(0, 660),
+(0, 650),
+(0, 644),
+(0, 650),
+(0, 288),
+(0, 293),
+(0, 296),
+(4, 288),
+(4, 290),
+(4, 291),
+(4, 296);
 
 -- --------------------------------------------------------
 
@@ -141,8 +150,9 @@ CREATE TABLE `family` (
 
 INSERT INTO `family` (`familyno`, `HCID`, `LN`, `FN`, `MN`, `Brgy`, `St`, `City`, `is_delete`) VALUES
 (5, 1, 'JUSAY', 'ALLEN', 'DE  TORRES', 808, 'MANILA', 'MANILA', 0),
-(6, 1, 'CHUA', 'ANGELICA', 'DE GUIA', 809, 'MANILA', 'TAGUIG', 1),
-(8, 1, 'STINSTON', 'BARNEY', '', 813, 'MANILA', 'MANILA', 1);
+(8, 1, 'STINSTON', 'BARNEY', '', 813, 'MANILA', 'MANILA', 1),
+(9, 2, 'BASCO', 'KAREN', 'LUGAY', 823, 'MAKATI', 'MANILA', 1),
+(10, 2, 'CHUA', 'MICHAEL', 'WONG', 823, 'MAKATI', 'MANILA', 1);
 
 -- --------------------------------------------------------
 
@@ -161,6 +171,7 @@ CREATE TABLE `fdesc` (
 --
 
 INSERT INTO `fdesc` (`ID`, `familyno`, `is_delete`) VALUES
+(12312312, 10, 0),
 (2147483647, 5, 1);
 
 -- --------------------------------------------------------
@@ -173,16 +184,17 @@ CREATE TABLE `healthcenters` (
   `HCID` int(11) NOT NULL,
   `Name` varchar(50) NOT NULL,
   `Location` varchar(50) NOT NULL,
-  `BRGYID` int(11) NOT NULL
+  `City` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `healthcenters`
 --
 
-INSERT INTO `healthcenters` (`HCID`, `Name`, `Location`, `BRGYID`) VALUES
-(1, 'VALENTINA HEALTH CENTER', '1563 E. Valentina St. Paco Mla. Manila, Philippine', 1),
-(2, 'M. ICASIANO HEALTH CENTER', 'Pedro Gil St, Santa Ana, Manila, Metro Manila', 2);
+INSERT INTO `healthcenters` (`HCID`, `Name`, `Location`, `City`) VALUES
+(1, 'VALENTINA HEALTH CENTER', '1563 E. Valentina St. Paco Mla. Manila, Philippine', 'Paco'),
+(2, 'M. ICASIANO HEALTH CENTER', 'Pedro Gil St, Santa Ana, Manila, Metro Manila', 'Paco'),
+(4, 'SAN ANDRES HEALTH CENTER', 'HEALTH CENTER', 'Binondo');
 
 -- --------------------------------------------------------
 
@@ -203,31 +215,10 @@ CREATE TABLE `logs` (
 --
 
 INSERT INTO `logs` (`auto`, `code`, `activity`, `date`, `POSITION`) VALUES
-(44, 1001, 'ADDED PATIENT ', '0000-00-00', 'DOCTOR'),
-(45, 1212, 'EDIT PATIENT DE GUIA CHUA', '2019-02-01', ''),
-(46, 1212, 'EDIT PATIENT DE GUIA CHUA', '2019-02-01', ''),
-(47, 1001, 'EDIT PATIENT CHUA ANGELICA', '2019-02-01', ''),
-(48, 1001, 'EDIT PATIENT CHUA ANGELICA', '2019-02-01', ''),
-(49, 1001, 'EDIT PATIENT CHUA ANGELICA', '2019-02-01', ''),
-(51, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
-(52, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
-(53, 1212, 'RESTORED USER ANGELICA CHUA', '2019-02-02', ''),
-(54, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
-(55, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
-(56, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
-(57, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
-(58, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
-(59, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
-(60, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
-(61, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
-(62, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
-(63, 1212, 'RESTORED FAMILY 5', '2019-02-02', ''),
-(64, 1212, 'RESTORED USER ANGELICA CHUA', '2019-02-02', ''),
-(65, 1212, 'RESTORED FAMILY 6', '2019-02-02', ''),
-(66, 1212, 'RESTORED FAMILY 5', '2019-02-02', ''),
-(67, 1212, 'RESTORED USER ANGELICA CHUA', '2019-02-02', ''),
-(68, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', ''),
-(69, 1212, 'RESTORED USER ASDASD CHUA', '2019-02-02', '');
+(76, 1001, 'UPDATED FAMILY NO(9) BASCO KAREN', '2019-02-04', ''),
+(77, 1001, 'ADDED PATIENT BASCO KAREN', '2019-02-04', ''),
+(80, 1001, 'EDITED PATIENT NO(12312312) BASCO KAREN', '2019-02-04', ''),
+(81, 1001, 'UPDATED FAMILY NO(9) BASCO KAREN', '2019-02-04', '');
 
 -- --------------------------------------------------------
 
@@ -356,8 +347,9 @@ CREATE TABLE `tabletest` (
 --
 
 INSERT INTO `tabletest` (`ID`, `HCID`, `Status`, `Type`, `LN`, `FN`, `MN`, `Brgy`, `St`, `City`, `BirthDate`, `CivilStatus`, `familyno`, `Philhealth`, `Remarks`, `Sex`, `Age`, `Assist`, `dateinsert`, `Nationality`, `Religion`, `Address`, `Zipcode`, `Landline`, `Relation`, `is_delete`) VALUES
-(150380212, 1, 'ACTIVE', 'CHILD', 'CHUA', 'ASDASD', 'ASD', '810', 'MANILA', 'MANILA', '2019-01-27', 'SINGLE', 5, NULL, '12', 'FEMALE', 0, 1001, '2019-02-01', 'FILIPINO', 'CHRISTIAN', '2347 onyx st', 0, 0, 'DAUGHTER', 1),
-(2147483647, 1, 'ACTIVE', 'CHILD', 'CHUA', 'ANGELICA', 'DE GUIA', '813', 'TAGUIG', 'TAGUIG', '2019-01-20', 'SINGLE', 5, NULL, '1', 'MALE', 0, 1001, '2019-02-01', 'FILIPINO', 'BORN AGAIN', '2347 onyx st', 0, 0, 'SON', 1);
+(12312312, 2, 'ACTIVE', 'CHILD', 'BASCO', 'KAREN', 'DE GUIA', '823', 'MANILA', 'MANILA', '2019-02-05', 'WIDOW', 10, NULL, '', 'FEMALE', 0, 1001, '2019-02-04', 'ALGERIAN', 'BORN AGAIN', '2347 onyx st', 0, 5629270, 'NEPHEW', 1),
+(150380212, 1, 'ACTIVE', 'CHILD', 'CHUA', 'ASDASD', 'ASD', '810', 'MANILA', 'MANILA', '2019-01-27', 'SINGLE', 9, NULL, '12', 'FEMALE', 0, 1001, '2019-02-01', 'FILIPINO', 'CHRISTIAN', '2347 onyx st', 0, 0, 'DAUGHTER', 1),
+(2147483647, 2, 'ACTIVE', 'CHILD', 'CHUA', 'ANGELICA', 'DE GUIA', '813', 'TAGUIG', 'TAGUIG', '2019-01-20', 'SINGLE', 9, NULL, '1', 'MALE', 0, 1001, '2019-02-01', 'FILIPINO', 'BORN AGAIN', '2347 onyx st', 0, 0, 'SON', 1);
 
 -- --------------------------------------------------------
 
@@ -409,8 +401,7 @@ ALTER TABLE `adminlogs`
 -- Indexes for table `brgy`
 --
 ALTER TABLE `brgy`
-  ADD KEY `HCID` (`HCID`),
-  ADD KEY `BRGYID` (`BRGYID`);
+  ADD KEY `BRGYID` (`BRGY`);
 
 --
 -- Indexes for table `checkup`
@@ -436,9 +427,7 @@ ALTER TABLE `fdesc`
 -- Indexes for table `healthcenters`
 --
 ALTER TABLE `healthcenters`
-  ADD PRIMARY KEY (`HCID`),
-  ADD KEY `BRGYID` (`BRGYID`),
-  ADD KEY `BRGYID_2` (`BRGYID`);
+  ADD PRIMARY KEY (`HCID`);
 
 --
 -- Indexes for table `logs`
@@ -493,13 +482,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `adminlogs`
 --
 ALTER TABLE `adminlogs`
-  MODIFY `auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `family`
 --
 ALTER TABLE `family`
-  MODIFY `familyno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `familyno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `fdesc`
@@ -511,7 +500,7 @@ ALTER TABLE `fdesc`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `precords`
@@ -580,23 +569,10 @@ ALTER TABLE `precords`
   ADD CONSTRAINT `precords_ibfk_2` FOREIGN KEY (`HCID`) REFERENCES `healthcenters` (`HCID`);
 
 --
--- Constraints for table `servicesdesc`
---
-ALTER TABLE `servicesdesc`
-  ADD CONSTRAINT `servicesdesc_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `tabletest` (`ID`),
-  ADD CONSTRAINT `servicesdesc_ibfk_2` FOREIGN KEY (`ServicesCode`) REFERENCES `services` (`ServicesCode`);
-
---
 -- Constraints for table `tabletest`
 --
 ALTER TABLE `tabletest`
   ADD CONSTRAINT `tabletest_ibfk_1` FOREIGN KEY (`Assist`) REFERENCES `users` (`code`);
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`HCID`) REFERENCES `healthcenters` (`HCID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
