@@ -38,23 +38,29 @@ class Template extends CI_Controller {
 	public function addhc()
 	{
 		if($this->session->userdata('logged_in')){
-			$get['get']= $this->m->getUser(
+			$get['userlist']= $this->m->getUser(
 				$this->session->userdata('username')
 			   ,$this->session->userdata('password')
 			);
-			$this->load->view('template/addhc',$get);	
+
+			$userlist = $get;
+
+			$this->load->view('template/addhc',$userlist);	
+
 		}
 	}
 
 	public function admin()
 	{
 		if($this->session->userdata('logged_in')){
-			$get['get']= $this->m->getUser(
+			$get= $this->m->getUser(
 				$this->session->userdata('username')
 			   ,$this->session->userdata('password')
 			);
-			$this->load->view('template/admindb',$get);	
 
+			$data['data']=$get;
+
+			$this->load->view('template/admindb',$data);	
 		}
 	}
 
@@ -352,7 +358,18 @@ class Template extends CI_Controller {
 
 	public function reports()
 	{
-		$this->load->view('template/reports');
+		if($this->session->userdata('logged_in')){
+			$get= $this->m->getUser(
+				$this->session->userdata('username')
+			   ,$this->session->userdata('password')
+			);
+
+			$myvars = $get[0]->HCID;
+
+			$userlist['userlist'] = $get;
+
+			$this->load-> view('template/reports',$userlist);
+		}	
 	}
 
 	public function pRecords()
@@ -435,10 +452,33 @@ class Template extends CI_Controller {
 		redirect(base_url('template/family'));
 	}
 
+	public function submitReport()
+	{
+		$result = $this->m->addReport();
+		redirect(base_url('template/logged'));
+	}
+
 	public function editFam()
 	{
 		$result = $this->m->editFam();
 		redirect(base_url('template/family'));
+	}
+
+	public function getMessage()
+	{
+		$data = $this->input->post();
+
+		$values = $this->m->getInfoID($data['reportno']);
+
+		foreach ($values as $value) {
+			$row = array();
+			$row[0] = $value->ID;
+			$row[1] = $value->FN;
+			$row[2] = $value->MN;
+			$data2[] = $row;
+		}
+		
+		echo json_encode($data2);
 	}
 
 	public function updateNewRecords()
@@ -626,11 +666,12 @@ class Template extends CI_Controller {
 
 		if($pinfo==null)
 		{
-			$output = array(
-			"data" => $data,
-			);
-
-			echo json_encode($output);
+			echo '{
+			"sEcho": 1,
+			"iTotalRecords": "0",
+			"iTotalDisplayRecords": "0",
+			"aaData": []
+			}';
 		}
 		else
 		{
@@ -657,6 +698,17 @@ class Template extends CI_Controller {
 	{
 		$finfo=$this->m->finfo();
 
+		if($finfo==null)
+		{
+			echo '{
+			"sEcho": 1,
+			"iTotalRecords": "0",
+			"iTotalDisplayRecords": "0",
+			"aaData": []
+			}';
+		}
+		else
+		{
 		foreach ($finfo as $value)
 		{
 		$row = array();
@@ -674,17 +726,52 @@ class Template extends CI_Controller {
 
 		echo json_encode($output);
 	}
+	}
 
 	public function getallLogs()
 	{
 	$getdata = $this->m->getallLogs();
 	$data = array();
+
+	if($getdata==null)
+		{
+			echo '{
+			"sEcho": 1,
+			"iTotalRecords": "0",
+			"iTotalDisplayRecords": "0",
+			"aaData": []
+			}';
+		}
+	else
+	{
 	foreach ($getdata as $value)
 	{
 		$row = array();
 		$row[] = $value->code;
 		$row[] = $value->activity;
 		$row[] = $value->date;
+		$data[] = $row;
+	}
+
+	$output = array(
+		"data" => $data,
+	);
+
+	echo json_encode($output);
+	}
+	}
+
+	public function getallReports()
+	{
+	$getdata = $this->m->getallReports();
+	$data = array();
+
+	foreach ($getdata as $value)
+	{
+		$row = array();
+		$row[] = $value->reportno;
+		$row[] = $value->ID;
+		$row[] = $value->Title;
 		$data[] = $row;
 	}
 
@@ -833,6 +920,6 @@ class Template extends CI_Controller {
 		$data['data'] = array($brgylist,$userlist,$hname);
 
 		$this->load->view('template/family',$data);		
-		}	
+	}
 	}
 }

@@ -5,7 +5,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="../index.html">
+      <a class="navbar-brand pt-0" href="logged">
         <img src="../assets/img/brand/a.png" width="150" height="150" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->

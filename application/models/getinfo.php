@@ -275,6 +275,21 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getMessage($reportno)
+	{
+		$this->db->select("Message");
+		$this->db->where('Report',$reportno);
+		$query = $this->db->get('reports');
+		return $query->result();
+	}
+
+	public function getallReports()
+	{
+		$this->db->select("*");
+		$query = $this->db->get('reports');
+		return $query->result();
+	}
+
 	public function getadminLogs()
 	{
 		$this->db->select("*");
@@ -530,6 +545,30 @@ class getinfo extends CI_Model
 	else
 	{
 		return false;
+	}
+	}
+
+	public function addReport()
+	{
+		$_POST['inputTitle'] = strtoupper($_POST['inputTitle']);
+		$_POST['inputMsg'] = strtoupper($_POST['inputMsg']);
+
+		$reports = array(
+			'ID'=>$this->input->post('inputID'),
+			'Title'=>$this->input->post('inputTitle'),	
+			'Message'=>$this->input->post('inputMsg')
+		);
+
+	$this->db->insert('reports', $reports);
+	
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;	
 	}
 	}
 

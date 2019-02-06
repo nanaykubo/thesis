@@ -36,7 +36,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="../index.html">
+      <a class="navbar-brand pt-0" href="logged">
         <img src="../assets/img/brand/a.png" width="150" height="150" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
@@ -94,7 +94,7 @@
         <div class="navbar-collapse-header d-md-none">
           <div class="row">
             <div class="col-6 collapse-brand">
-              <a href="../index.html">
+              <a href="logged">
                 <img src="../assets/img/brand/a.png" width="150" height="150" class="navbar-brand-img" alt="...">
               </a>
             </div>
@@ -174,7 +174,7 @@
                   <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+                <span class="mb-0 text-sm  font-weight-bold"><?php echo strtoupper($userlist[0]->FN) ?> <?php echo strtoupper($userlist[0]->LN) ?></span>                                        
                 </div>
               </div>
             </a>

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Argon </title>
+  <title>MedRec Tracking System</title>
   <!-- Favicon -->
   <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
   <!-- Fonts -->
@@ -28,7 +28,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="../index.html">
+      <a class="navbar-brand pt-0" href="logged">
         <img src="../assets/img/brand/a.png" width="150" height="150" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
@@ -87,7 +87,7 @@
         <div class="navbar-collapse-header d-md-none">
           <div class="row">
             <div class="col-6 collapse-brand">
-              <a href="../index.html">
+              <a href="logged">
                 <img src="../assets/img/brand/a.png">
               </a>
             </div>
@@ -140,6 +140,13 @@
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
+        <!-- Navigation -->
+        <ul class="navbar-nav mb-md-3">
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="nav">
+              <i class="fas fa-phone"></i> Contact Support
+            </a>
+          </li>
       </div>
     </div>
   </nav>
@@ -502,6 +509,39 @@
     </div>
   </div>
 
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Report</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="<?php echo base_url('template/submitReport')?>" method="POST">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">ID:</label>
+            <input type="text" name="inputID" id="inputID" class="form-control" value="<?php echo $data[0]['userlist'][0]->code?>" readonly>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" name="inputTitle" id="inputTitle">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" rows="3" name="inputMsg" id="inputMsg"></textarea>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Send Report</button>
+             </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
  <!-- Argon Scripts -->
   <!-- Core -->
   <script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
@@ -533,7 +573,11 @@
                 {"className": "dt-center", "targets": "_all"}
                         ]
     });
-  });
+
+    $("#nav").click(function(){
+      $("#exampleModal").modal('show')
+    }); 
+    });
   </script>
 </body>
 

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
+   <title>MedRec Tracking System</title>
   <!-- Favicon -->
   <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
   <!-- Fonts -->
@@ -35,7 +35,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="../index.html">
+      <a class="navbar-brand pt-0" href="admin">
         <img src="../assets/img/brand/a.png" width="150" height="150" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
@@ -93,7 +93,7 @@
         <div class="navbar-collapse-header d-md-none">
           <div class="row">
             <div class="col-6 collapse-brand">
-              <a href="../index.html">
+              <a href="admin">
                 <img src="../assets/img/brand/a.png" width="150" height="150" class="navbar-brand-img" alt="...">
               </a>
             </div>
@@ -174,7 +174,7 @@
                   <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+                  <span class="mb-0 text-sm  font-weight-bold"><?php echo strtoupper($data[0]->FN) ?> <?php echo strtoupper($data[0]->LN) ?></span>
                 </div>
               </div>
             </a>
@@ -307,6 +307,7 @@ $(document).ready(function() {
       table = $('#myTable').DataTable( {
       "ajax": '<?php echo base_url('template/pinfo/'); ?>',
       "type": 'POST',
+      
       "columns": [
                 { "title": "ID"},
                 { "title": "First Name"},

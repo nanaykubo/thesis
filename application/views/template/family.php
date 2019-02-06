@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-
+    <title>MedRec Tracking System</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link type="text/css" href="../assets/css/argon.css?v=1.0.0" rel="stylesheet">
@@ -38,7 +38,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="../index.html">
+      <a class="navbar-brand pt-0" href="logged">
         <img src="../assets/img/brand/a.png" width="150" height="150" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
@@ -177,7 +177,7 @@
                   <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+                  <span class="mb-0 text-sm  font-weight-bold"><?php echo strtoupper($data[1]['userlist'][0]->FN) ?> <?php echo strtoupper($data[1]['userlist'][0]->LN) ?></span>
                 </div>
               </div>
             </a>
@@ -335,11 +335,10 @@
     </div>
   </div>
 </div>
-
 <script>
 $(document).ready( function () {
     var table = $('#example').DataTable({
-      "ajax": '<?php echo base_url('template/getFamilyCode/'.$data[0]['brgylist'][0]->HCID); ?>',
+      "ajax": '<?php echo base_url('template/getFamilyCode/'.$data[2]['hname'][0]->HCID); ?>',
       "type": 'POST',
       "columnDefs": [
                 {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="viewBtn" class="dropdown-item"><i class="fas fa-users"></i>View Family Members</button><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Edit</button><button id="deleteBtn" class="dropdown-item"><i class="fas fa-trash-alt"></i>Delete</button></div></div>'},
