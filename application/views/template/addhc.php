@@ -139,7 +139,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login">
+            <a class="nav-link" href="logout">
               <i class="fas fa-sign-out-alt text-danger"></i> Log Out
             </a>
           </li>

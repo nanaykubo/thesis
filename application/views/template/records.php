@@ -136,7 +136,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('template/login') ?>">
+            <a class="nav-link" href="<?php echo base_url('template/logout') ?>">
               <i class="fas fa-sign-out-alt text-danger"></i> Log Out
             </a>
           </li>

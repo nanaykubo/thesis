@@ -27,7 +27,7 @@
 <script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
 </head>
 
-<body>
+<body style="background: linear-gradient(to bottom, #ffffff 14%, #ffffff 108%);">
 <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
       <!-- Toggler -->
@@ -139,30 +139,49 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login">
+            <a class="nav-link" href="logout">
               <i class="fas fa-sign-out-alt text-danger"></i> Log Out
             </a>
           </li>
         </ul>
          <!-- Divider -->
         <hr class="my-3">
+        <!-- Heading -->
+        <!-- Navigation -->
+        <ul class="navbar-nav mb-md-3">
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="nav">
+              <i class="fas fa-phone"></i> Contact Support
+            </a>
+          </li>
       </div>
     </div>
   </nav>
-
+</ul>
 </div>
   <!-- Main content -->
   <div class="main-content">
-<!-- Top navbar -->
+    <!-- Top navbar -->
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">Add Patient</a>
+        <a class="h4 text-white text-uppercase d-none d-lg-inline-block">Add Patient</a>
         <!-- Form -->
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+        <form style="margin-left: 320px;">
           <div class="form-group mb-0">
-             
+            <div class="input-group input-group-alternative mr-8">
+              <div class="input-group-prepend">
+                <span class="input-group-text "><i class="fas fa-search"></i></span>
+              </div>
+              <input class="form-control " placeholder="Search" type="text">
+            </div>
           </div>
+        </form>
+        <form class="navbar-search mr-4 d-none d-md-flex ml-lg-auto">
+          <a href="" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
+        </form>
+        <form class="navbar-search mr-3 d-none d-md-flex">
+          <a href="" data-toggle="tooltip" data-placement="top" title="Activities"><i class="fas fa-clipboard-list fa-lg text-white"></i></a>
         </form>
 
         <!-- User -->
@@ -210,17 +229,10 @@
     </nav>
 
     <!-- Header -->
-    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+<div class="header pb-8 pt-5 pt-md-8" style="background: linear-gradient(to bottom, #0099ff -8%, #ffffff 91%);">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-
-          <!-- Button -->
-     <button class="btn btn-icon btn-3 btn-secondary" data-toggle="modal" data-target="#exampleModalLong" type="button">
-      <span class="btn-inner--icon"><i class="fas fa-user-plus fa-lg text-default"></i></span>
-      
-      <span class="btn-inner--text">Add Patient</span>
-        </button>
 
             </div>
           </div>
@@ -228,14 +240,25 @@
       
     <!-- Page content -->
       
-      <div class="container mt--7">
+      <div class="container mt--8">
       <!-- Table -->
       <div class="row">
         <div class="col">
           <div class="card shadow">
             <div class="card-header border-0">
-              <h1 class="mb-0">Patients</h1>
-              <br/>
+              <h1 style="text-align: center;"><?php echo $data[0]['hname'][0]->Name?> PATIENTS</h1>
+              <hr class="my-3">
+              <!-- Button -->
+
+     <button class="btn btn-icon btn-3 btn-secondary" style="margin-left: 10px;" data-toggle="modal" data-target="#exampleModalLong" type="button">
+      <span class="btn-inner--icon"><i class="fas fa-user-plus fa-lg text-default"></i></span>
+      <span class="btn-inner--text">Add Patient</span>
+        </button>
+        <small id="passwordHelpBlock" class="form-text text-muted">
+(Click the button to Add Patient)
+</small>
+
+<br>
             <table class="table align-items-center table-flush" id="myTable">
   <thead class="thead-light">
     <tr>
@@ -255,6 +278,39 @@
   </tr>
   </tbody>
 </table>
+
+ <!-- Core -->
+<div class="modal fade" id="report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Report</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="<?php echo base_url('template/submitReport')?>" method="POST">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">ID:</label>
+            <input type="text" name="inputID" id="inputID" class="form-control" value="<?php echo $data[3]['userlist'][0]->code?>" readonly>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" name="inputTitle" id="inputTitle">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" rows="3" name="inputMsg" id="inputMsg"></textarea>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Send Report</button>
+             </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -486,17 +542,15 @@
 
   </div>
 </div>
-  
-      <!-- body -->
-      </div>
-      <div class="modal-footer">
-        <div class="form-group">
-  </div>
-  <button class="btn btn-primary" type="submit">Submit</button>
+
+   
+  <button class="btn btn-primary" style="margin-left: 580px;" type="submit">Add New Patient</button>
       </div>
     </div>
   </div>
 </div>
+
+
 
 
   <script>
@@ -536,11 +590,9 @@
       "orderable": false}
             ]
     });
-
     $('#exampleModalLong').on('hidden.bs.modal', function () {
     $(this).find('form').trigger('reset');
     })
-
     $('#myTable tbody').on( 'click', 'button', function (e) {
             var data = table.row($(this).parents('tr') ).data();
             var action=this.id;
@@ -611,10 +663,8 @@
             }
             });
   });
-
   function validate(evt) {
   var theEvent = evt || window.event;
-
   // Handle paste
   if (theEvent.type === 'paste') {
       key = event.clipboardData.getData('text/plain');
@@ -630,7 +680,6 @@
     if(theEvent.preventDefault) theEvent.preventDefault();
   }
 };
-
 $("#inputFam").change(function() 
   {    
     if($(this).val()=="New")
@@ -642,6 +691,11 @@ $("#inputFam").change(function()
       
     }
   });
+
+$("#nav").click(function(){
+      $("#report").modal('show')
+    }); 
+
 
  $("#inputBD").change(function() 
   {    
@@ -675,7 +729,6 @@ $("#inputFam").change(function()
      document.getElementById("inputPN").disabled = true; 
     }
   });
-
 $('#inputID').change(function(){
    var username = $('#inputID').val();
    if(username != ''){

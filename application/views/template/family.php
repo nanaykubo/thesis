@@ -28,8 +28,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 
   </head>
-
-<body>
+<body style="background: linear-gradient(to bottom, #ffffff 14%, #ffffff 108%);">
   <!-- Sidenav -->
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
@@ -142,19 +141,27 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login">
+            <a class="nav-link" href="logout">
               <i class="fas fa-sign-out-alt text-danger"></i> Log Out
             </a>
           </li>
         </ul>
         <!-- Divider -->
         <hr class="my-3">
+        <!-- Heading -->
+        <!-- Navigation -->
+        <ul class="navbar-nav mb-md-3">
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="nav">
+              <i class="fas fa-phone"></i> Contact Support
+            </a>
+          </li>
         
       </div>
     </div>
   </nav>
 </div>
-  <!-- Main content -->
+   <!-- Main content -->
   <div class="main-content">
     <!-- Top navbar -->
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
@@ -162,12 +169,23 @@
         <!-- Brand -->
         <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">List of Families</a>
         <!-- Form -->
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+        <form style="margin-left: 320px;">
           <div class="form-group mb-0">
+            <div class="input-group input-group-alternative mr-8">
               <div class="input-group-prepend">
+                <span class="input-group-text "><i class="fas fa-search"></i></span>
+              </div>
+              <input class="form-control " placeholder="Search" type="text">
             </div>
           </div>
         </form>
+        <form class="navbar-search mr-4 d-none d-md-flex ml-lg-auto">
+          <a href="" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
+        </form>
+        <form class="navbar-search mr-3 d-none d-md-flex">
+          <a href="" data-toggle="tooltip" data-placement="top" title="Activities"><i class="fas fa-clipboard-list fa-lg text-white"></i></a>
+        </form>
+
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
@@ -213,28 +231,33 @@
       </div>
     </nav>
     <!-- Header -->
-    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="header pb-8 pt-5 pt-md-8" style="background: linear-gradient(to bottom, #0099ff -8%, #ffffff 91%);">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
-      <button class="btn btn-icon btn-3 btn-secondary" id="addfamily" data-toggle="modal" data-target="#exampleModal" type="button">
-      <span class="btn-inner--icon" ><i class="fas fa-folder-plus"></i></span>
-      
-      <span class="btn-inner--text">Add New Family</span>
-        </button>
-
             </div>
           </div>
     </div>
       
     <!-- Page content -->
       
-      <div class="container mt--7">
+      <div class="container mt--8">
       <!-- Table -->
       <div class="row">
         <div class="col">
           <div class="card shadow">
-            <div class="card-header border-2">
+            <div class="card-header border-0">
+               <h1 style="text-align: center;"><?php echo $data[2]['hname'][0]->Name?> LIST OF FAMILIES</h1>
+              <hr class="my-3">
+              <button class="btn btn-icon btn-3 btn-secondary" id="addfamily" data-toggle="modal" data-target="#exampleModal" type="button">
+      <span class="btn-inner--icon" ><i class="fas fa-folder-plus"></i></span>
+      
+      <span class="btn-inner--text">Add New Family</span>
+        </button>
+         <small id="passwordHelpBlock" class="form-text text-muted">
+(Click the button to Add Family)
+</small>  
+
               <h1 class="mb-0">Families</h1>
               <br/>
     <table id="example" class="table align-items-center table-flush" cellspacing="0" width="100%">
@@ -314,6 +337,39 @@
   </div>
 </div>
 
+ <!-- Core -->
+<div class="modal fade" id="report" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Report</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="<?php echo base_url('template/submitReport')?>" method="POST">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">ID:</label>
+            <input type="text" name="inputID" id="inputID" class="form-control" value="<?php echo $data[1]['userlist'][0]->code?>" readonly>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" name="inputTitle" id="inputTitle">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" rows="3" name="inputMsg" id="inputMsg"></textarea>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Send Report</button>
+             </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -356,6 +412,11 @@ $(document).ready( function () {
         $(".modal-body #buttonAdd").html('Add Family');
      });
 
+     $("#nav").click(function(){
+      $("#report").modal('show')
+    }); 
+
+
     $('#example tbody').on( 'click', 'button', function (e) {
             var data = table.row($(this).parents('tr') ).data();
             var action=this.id;
@@ -371,7 +432,6 @@ $(document).ready( function () {
                 data:{'FNo': FNo},
                 success: function(data){
                 var parsed= JSON.parse(data);
-                alert(parsed)
                  $.each(parsed,function(index,value)
                   {
                      $("#friendsList").append('<li>'+value[0]+":"+" " +value[1]+" "+value[2]+" "+ value[3]+" "

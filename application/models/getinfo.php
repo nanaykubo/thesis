@@ -518,7 +518,7 @@ class getinfo extends CI_Model
 			'Assist'=>$this->input->post('inputassist'),
 			'Remarks'=>$this->input->post('inputR'),
 			'is_delete'=>("1")	
-	);
+			);
 
 	$_POST['inputnote'] = "ADDED PATIENT ID" ."(". $_POST['inputID'].")"." ".$_POST['inputLN'] ." " .$_POST['inputFN'];
 	
@@ -748,7 +748,6 @@ class getinfo extends CI_Model
 			'FN'=>$this->input->post('inputFN'),
 			'MN'=>$this->input->post('inputMN'),
 			'Brgy'=>$this->input->post('inputBrgy'),	
-			'St'=>$this->input->post('inputSt'),
 			'City'=>$this->input->post('inputC'),
 			'is_delete'=>("1")
 		);

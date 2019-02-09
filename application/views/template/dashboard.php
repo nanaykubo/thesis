@@ -19,7 +19,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 </head>
 
-<body>
+<body style="background: white;">
   <!-- Sidenav -->
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
@@ -98,17 +98,7 @@
             </div>
           </div>
         </div>
-        <!-- Form -->
-        <form class="mt-4 mb-3 d-md-none">
-          <div class="input-group input-group-rounded input-group-merge">
-            <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
-            <div class="input-group-prepend">
-              <div class="input-group-text">
-                <span class="fa fa-search"></span>
-              </div>
-            </div>
-          </div>
-        </form>
+        
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -132,7 +122,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login">
+            <a class="nav-link" href="logout">
               <i class="fas fa-sign-out-alt text-danger"></i> Log Out
             </a>
           </li>
@@ -160,7 +150,21 @@
         <!-- Brand -->
         <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">DashBoard</a>
         <!-- Form -->
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+        <form style="margin-left: 320px;">
+          <div class="form-group mb-0">
+            <div class="input-group input-group-alternative mr-8">
+              <div class="input-group-prepend">
+                <span class="input-group-text "><i class="fas fa-search"></i></span>
+              </div>
+              <input class="form-control " placeholder="Search" type="text">
+            </div>
+          </div>
+        </form>
+        <form class="navbar-search mr-4 d-none d-md-flex ml-lg-auto">
+          <a href="" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
+        </form>
+        <form class="navbar-search mr-3 d-none d-md-flex">
+          <a href="" data-toggle="tooltip" data-placement="top" title="Activities"><i class="fas fa-clipboard-list fa-lg text-white"></i></a>
         </form>
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
@@ -207,7 +211,7 @@
     </nav>
 
     <!-- Header -->
-    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="header pb-8 pt-5 pt-md-8" style="background: linear-gradient(to bottom, #0099ff -8%, #ffffff 91%);">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
@@ -227,8 +231,8 @@
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-muted text-sm">
-                    <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span>
-                    <span class="text-nowrap">Since last week</span>
+                    <span class="text-nowrap" id="username_result"></span>
+                    <span >Checked 50 mins ago</span>
                   </p>
                 </div>
               </div>
@@ -248,8 +252,8 @@
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-muted text-sm">
-                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                    <span class="text-nowrap">Since last month</span>
+                    <span class="text-nowrap" id="username_result"></span>
+                    <span >Added Patient 20 mins ago</span>
                   </p>
                 </div>
               </div>
@@ -269,8 +273,8 @@
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-muted text-sm">
-                    <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
-                    <span class="text-nowrap">Since yesterday</span>
+                    <span class="text-nowrap" id="username_result"></span>
+                    <span >Added Family 10 mins ago</span>
                   </p>
                 </div>
               </div>
@@ -283,93 +287,41 @@
     <!-- Page content -->
     <div class="container-fluid mt--7">
       <div class="row">
-             <div class="col-xl-7 mb-5 mb-xl-0">
-          <div class="card shadow">
+             <div class="col-xl-12 mb-5 mb-xl-0">
+          <div class="card bg-gradient-white shadow">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
-                  <h6 class="text-uppercase text-muted ls-1 mb-1">Diseases</h6>
-                  <h2 class="mb-0">Cases of Diseases</h2>
+                  <h6 class="text-uppercase text-black ls-1 mb-1">Overview</h6>
+                  <h2 class="text-black mb-0">Sales value</h2>
+                </div>
+                <div class="col">
+                  <ul class="nav nav-pills justify-content-end">
+                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
+                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
+                        <span class="d-none d-md-block">Month</span>
+                        <span class="d-md-none">M</span>
+                      </a>
+                    </li>
+                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
+                      <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
+                        <span class="d-none d-md-block">Week</span>
+                        <span class="d-md-none">W</span>
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
             <div class="card-body">
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawStuff);
-
-      function drawStuff() {
-        var data = new google.visualization.arrayToDataTable([
-          ['Diseases', 'Cases'],
-          ["Upper Respitory Infection", 44],
-          ["Tuberculosis", 31],
-          ["Diabetis", 12],
-          ["Hypertension", 10],
-          ["Diarrhea", 10],
-          ["Dengue", 10],
-          ["Measels", 10],
-          ["Pnuemonia", 10],
-          ['Other', 3]
-        ]);
-
-        var options = {
-          title: '',
-          width: 500,
-          legend: { position: 'none' },
-          chart: { title: '' },
-          bars: 'horizontal', // Required for Material Bar Charts.
-          axes: {
-            x: {
-              0: { side: 'top', label: 'Cases'} // Top x-axis.
-            }
-          },
-          bar: { groupWidth: "420%" }
-        };
-
-        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
-        chart.draw(data, options);
-      };
-    </script>
-  </head>
-  <body>
-    <div id="top_x_div" style="width: 10px; height: 412px;"></div>
-  </body>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-xl-5">
-        <div class="card" style="height: 34.4rem;">
-          <div class="card shadow">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h3 class="mb-0">User Activity</h3>
-                </div>
-                <div class="col text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">See all</a>
-                </div>
+              <!-- Chart -->
+              <div class="chart">
+                <!-- Chart wrapper -->
+                <canvas id="chart-sales" class="chart-canvas"></canvas>
               </div>
             </div>
-            <div class="table-responsive">
-            <table class="table" id="myTable">
-            <thead class="thead-light text-center">
-            <tr>
-            <th scope="col">Activity</th>
-            <th scope="col">Date</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-            </table>
           </div>
-            </div>
-          </div>
-        </div>
-        </div>
+        </div>  
 
       <div class="row mt-5">
         <div class="col-xl-6 mb-5 mb-xl-0">
@@ -576,7 +528,12 @@
 
     $("#nav").click(function(){
       $("#exampleModal").modal('show')
-    }); 
+    });
+
+          $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
+
     });
   </script>
 </body>

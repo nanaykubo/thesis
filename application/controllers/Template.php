@@ -27,12 +27,18 @@ class Template extends CI_Controller {
 
 	function login()
 	{
-		$this->load->view('template/login');	
+		$this->load->view('Template/login');	
 	}
 
 	function index()
 	{
-		$this->load->view('template/try');	
+		$this->load->view('Template/login');	
+	}
+
+	public function logout()
+	{
+            $this->session->unset_userdata('username','password','logged_in');
+            redirect(base_url('Template/index'));
 	}
 
 	public function addhc()
@@ -45,7 +51,7 @@ class Template extends CI_Controller {
 
 			$userlist = $get;
 
-			$this->load->view('template/addhc',$userlist);	
+			$this->load->view('Template/addhc',$userlist);	
 
 		}
 	}
@@ -60,7 +66,7 @@ class Template extends CI_Controller {
 
 			$data['data']=$get;
 
-			$this->load->view('template/admindb',$data);	
+			$this->load->view('Template/admindb',$data);	
 		}
 	}
 
@@ -76,7 +82,7 @@ class Template extends CI_Controller {
 			$hcid['hcid']=$this->m->getallHCID();
 			$data['data']=array($hcid,$admincode);
 
-			$this->load->view('template/adduser',$data);	
+			$this->load->view('Template/adduser',$data);	
 		}
 	}
 
@@ -90,14 +96,14 @@ class Template extends CI_Controller {
 
 			$data['data']=$get;
 
-			$this->load->view('template/viewlogs',$data);	
+			$this->load->view('Template/viewlogs',$data);	
 		}
 	}
 
 	public function insertlogs()
 	{
 		$result = $this->m->insertLogs();
-		redirect(base_url('template/adduser'));
+		redirect(base_url('Template/adduser'));
 	}
 
 	public function getallUsers()
@@ -160,18 +166,18 @@ class Template extends CI_Controller {
 				$myvars = $get[0]->POSITION;
 				if($myvars == 'ADMIN')
 				{
-					redirect('template/admin');	
+					redirect('Template/admin');	
 				}
 				else
 				{
-					redirect('template/logged');	
+					redirect('Template/logged');	
 				}
 
 			}
 			else
 			{
 			$this->session->set_flashdata('error_msg', 'Incorrect Username and Password');
-			redirect('template/login');
+			redirect('Template/login');
 			}
 		}
 
@@ -193,13 +199,13 @@ class Template extends CI_Controller {
 
 			$data['data'] = array($userlist,$totalpatients,$totalfamily);
 
-			$this->load-> view('template/dashboard',$data);
+			$this->load-> view('Template/dashboard',$data);
 		}	
 	}
 
 	public function test()
 	{
-		$this->load-> view('template/try');
+		$this->load-> view('Template/try');
 	}
 
 	public function getpie($HCID)
@@ -253,7 +259,7 @@ class Template extends CI_Controller {
 
 			$data['data'] = array($hname,$brgylist,$familylist,$userlist);
 
-			$this->load-> view('template/addpatient',$data);
+			$this->load-> view('Template/addpatient',$data);
 		}	
 	}
 
@@ -315,14 +321,14 @@ class Template extends CI_Controller {
 
 			$data['data'] = array($patientinfo,$userlist,$precords);
 
-			$this->load-> view('template/records',$data);
+			$this->load-> view('Template/records',$data);
 		}	
 	}
 
 	public function testsubmit()
 	{
 		$result = $this->m->testsubmit();
-		redirect(base_url('template/test'));
+		redirect(base_url('Template/test'));
 	}
 
 	public function deletePInfo()
@@ -333,7 +339,7 @@ class Template extends CI_Controller {
 		$note2 = urldecode($note);
 		$date = $this->uri->segment(6);
 		$result = $this->m->delete($portid,$code,$note2,$date);
-		redirect(base_url('template/addpatient'));
+		redirect(base_url('Template/addpatient'));
 	}
 
 	public function deleteFam()
@@ -343,7 +349,7 @@ class Template extends CI_Controller {
 		$note = $this->uri->segment(5);
 		$date = $this->uri->segment(6);
 		$result = $this->m->deletefam($portid,$code,$note,$date);
-		redirect(base_url('template/family'));
+		redirect(base_url('Template/family'));
 	}
 
 	
@@ -368,7 +374,7 @@ class Template extends CI_Controller {
 
 			$userlist['userlist'] = $get;
 
-			$this->load-> view('template/reports',$userlist);
+			$this->load-> view('Template/reports',$userlist);
 		}	
 	}
 
@@ -394,20 +400,20 @@ class Template extends CI_Controller {
 		$arr_image = $this->upload->data('full_path');
 		echo($arr_image);
 		$result = $this->m->addPRecords($arr_image);
-		redirect(base_url('template/getRecords/'.$something));
+		redirect(base_url('Template/getRecords/'.$something));
 		}
 	}
 
 	public function submitNewRecords()
 	{
 		$result = $this->m->addNewRecords();
-		redirect(base_url('template/addpatient'));
+		redirect(base_url('Template/addpatient'));
 	}
 
 	public function submitUser()
 	{
 		$result = $this->m->addNewUsers();
-		redirect(base_url('template/adduser'));
+		redirect(base_url('Template/adduser'));
 	}
 
 	public function create()
@@ -421,7 +427,7 @@ class Template extends CI_Controller {
 		}
 
 		$this->m->create($data);
-		redirect(base_url('template/addhc'));
+		redirect(base_url('Template/addhc'));
 	}
 
 	public function activateuser()
@@ -432,7 +438,7 @@ class Template extends CI_Controller {
 		$date = $this->uri->segment(6);
 		$note = urldecode($FN);
 		$result = $this->m->activateuser($portid,$assist,$note,$date);
-		redirect(base_url('template/viewlogs'));
+		redirect(base_url('Template/viewlogs'));
 	}
 
 	public function activatefam()
@@ -443,25 +449,25 @@ class Template extends CI_Controller {
 		$date = $this->uri->segment(6);
 		$note = urldecode($FN);
 		$result = $this->m->activatefamily($portid,$assist,$note,$date);
-		redirect(base_url('template/viewlogs'));
+		redirect(base_url('Template/viewlogs'));
 	}
 
 	public function submitFamilyRecords()
 	{
 		$result = $this->m->addNewFamilyRecords();
-		redirect(base_url('template/family'));
+		redirect(base_url('Template/family'));
 	}
 
 	public function submitReport()
 	{
 		$result = $this->m->addReport();
-		redirect(base_url('template/logged'));
+		redirect(base_url('Template/logged'));
 	}
 
 	public function editFam()
 	{
 		$result = $this->m->editFam();
-		redirect(base_url('template/family'));
+		redirect(base_url('Template/family'));
 	}
 
 	public function getMessage()
@@ -484,13 +490,13 @@ class Template extends CI_Controller {
 	public function updateNewRecords()
 	{
 		$result = $this->m->update();
-		redirect(base_url('template/addpatient'));
+		redirect(base_url('Template/addpatient'));
 	}
 
 	public function updateUser()
 	{
 		$result = $this->m->updateUser();
-		redirect(base_url('template/adduser'));
+		redirect(base_url('Template/adduser'));
 	}
 
 	public function updateHC()
@@ -504,7 +510,7 @@ class Template extends CI_Controller {
 		}
 
 		$this->m->updateHC($data);
-		redirect(base_url('template/addhc'));
+		redirect(base_url('Template/addhc'));
 	}
 
 	public function checkUsername()
@@ -888,7 +894,6 @@ class Template extends CI_Controller {
 		$row[] = $value->MN;
 		$row[] = array(
                     $value->Brgy,
-                    $value->St,
                     $value->City               
                );
 		$data[] = $row;
@@ -919,7 +924,7 @@ class Template extends CI_Controller {
 
 		$data['data'] = array($brgylist,$userlist,$hname);
 
-		$this->load->view('template/family',$data);		
+		$this->load->view('Template/family',$data);		
 	}
 	}
 }

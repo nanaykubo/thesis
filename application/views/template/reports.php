@@ -147,6 +147,14 @@
         </ul>
         <!-- Divider -->
         <hr class="my-3">
+        <!-- Heading -->
+        <!-- Navigation -->
+        <ul class="navbar-nav mb-md-3">
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="nav">
+              <i class="fas fa-phone"></i> Contact Support
+            </a>
+          </li>
         
       </div>
     </div>
@@ -209,7 +217,7 @@
       </div>
     </nav>
     <!-- Header -->
-    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="header pb-8 pt-5 pt-md-8" style="background: linear-gradient(to bottom, #0099ff -8%, #ffffff 91%);">
       <div class="container-fluid">
         <div class="header-body">
 
@@ -365,6 +373,38 @@
     </div>
   </div>
 
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Report</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="<?php echo base_url('template/submitReport')?>" method="POST">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">ID:</label>
+            <input type="text" name="inputID" id="inputID" class="form-control" value="<?php echo $userlist[0]->code?>" readonly>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" name="inputTitle" id="inputTitle">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" rows="3" name="inputMsg" id="inputMsg"></textarea>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Send Report</button>
+             </form>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- Argon Scripts -->
   <!-- Core -->
 
@@ -372,6 +412,10 @@
 $(document).ready( function () {
 
 });
+
+$("#nav").click(function(){
+      $("#exampleModal").modal('show')
+    }); 
 
       $("#inputQuarter").prop("disabled",true);
       $("#inputMonth").prop("disabled",true);
