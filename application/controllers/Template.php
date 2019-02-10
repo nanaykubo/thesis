@@ -32,7 +32,7 @@ class Template extends CI_Controller {
 
 	function index()
 	{
-		$this->load->view('Template/login');	
+		$this->load->view('Template/try');	
 	}
 
 	public function logout()
@@ -211,35 +211,16 @@ class Template extends CI_Controller {
 	public function getpie($HCID)
 	{
 			$charts=$this->m->getPieChart($HCID);
+			
+			foreach ($charts as $value) 
+			{
+			$row = array();	
+			$row[0] = $value->BRGY;
+			$row[1] = $value->total;
+			$data2[] = $row;
+			}
 
-			$responce->cols[] = array( 
-			"id" => "", 
-			"label" => "BRGY", 
-			"pattern" => "", 
-			"type" => "string" 
-			); 
-			$responce->cols[] = array( 
-			"id" => "", 
-			"label" => "No of Families", 
-			"pattern" => "", 
-			"type" => "number" 
-			); 
-
-			foreach($charts as $cd) 
-			{ 
-			$responce->rows[]["c"] = array( 
-			array( 
-			    "v" => "$cd->BRGY", 
-			    "f" => null 
-			) , 
-			array( 
-			    "v" => (int)$cd->total, 
-			    "f" => null 	
-			) 
-			); 
-			} 
-
-			echo json_encode($responce); 
+			echo json_encode($data2); 
 	} 
 
 	public function addpatient()

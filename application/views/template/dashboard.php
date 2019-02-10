@@ -221,7 +221,7 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Top Diseases</h5>
+                      <h5 class="card-title text-uppercase text-muted mb-0">Top Disease of the Month</h5>
                       <span class="h2 font-weight-bold mb-0">Malaria</span>
                     </div>
                     <div class="col-auto">
@@ -284,170 +284,50 @@
       </div>
     </div>
 
-    <!-- Page content -->
+    <!-- Disease -->
     <div class="container-fluid mt--7">
+      <div class="card text-center">
+        <div class="card-header">
+       <h1>Top Infectious Disease News of the Month Chart<h1>
+  </div>
+        <div class="card-body">
       <div class="row">
-             <div class="col-xl-12 mb-5 mb-xl-0">
-          <div class="card bg-gradient-white shadow">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-uppercase text-black ls-1 mb-1">Overview</h6>
-                  <h2 class="text-black mb-0">Sales value</h2>
-                </div>
-                <div class="col">
-                  <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}' data-prefix="$" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                        <span class="d-none d-md-block">Month</span>
-                        <span class="d-md-none">M</span>
-                      </a>
-                    </li>
-                    <li class="nav-item" data-toggle="chart" data-target="#chart-sales" data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}' data-prefix="$" data-suffix="k">
-                      <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                        <span class="d-none d-md-block">Week</span>
-                        <span class="d-md-none">W</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <!-- Chart -->
-              <div class="chart">
-                <!-- Chart wrapper -->
-                <canvas id="chart-sales" class="chart-canvas"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>  
+<div id="lineChart" style="width: 100%; height: 300px;"></div>
+     </div>
+   </div>
+ </div>
+ <br>
 
-      <div class="row mt-5">
-        <div class="col-xl-6 mb-5 mb-xl-0">
-          <div class="card shadow">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-uppercase text-muted ls-1 mb-1">Patients</h6>
-                  <h2 class="mb-0">New Patients</h2>
-                </div>
-              </div>
-              </div>
-              <ul class="nav nav-pills justify-content-end">
-                    <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-orders" data-update='{"data":{"datasets":[{"data":[2,4,6,8,10,12,14,16,18,20,22,24]}]}}'>
-                      <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                        <span class="d-none d-md-block">Month</span>
-                        <span class="d-md-none">M</span>
-                      </a>
-                    </li>
-                    <li class="nav-item" data-toggle="chart" data-target="#chart-orders" data-update='{"data":{"datasets":[{"data":[2,4,6,8,10,12,14,16,18,20,22,11]}]}}'>
-                      <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                        <span class="d-none d-md-block">Week</span>
-                        <span class="d-md-none">W</span>
-                      </a>
-                    </li>
-                  </ul>
-                        <div class="card-body">
-              <!-- Chart -->
-              <div class="chart">
-                <canvas id="chart-orders" class="chart-canvas"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-xl-6 mb-5 mb-xl-0">
-          <div class="card shadow">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-uppercase text-muted ls-1 mb-1">Families</h6>
-                  <h2 class="mb-0">No of Families in the Brgy</h2>
-                </div>
-              </div>
-            </div>
-             
-            <div class="card-body">
-              <!-- Chart -->
-               <!--Load the AJAX API-->
-    <head>
-    <!--Load the AJAX API-->
-     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript">
-
-      // Load the Visualization API and the controls package.
-      google.charts.load('current', {'packages':['corechart', 'controls']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawDashboard);
-
-      // Callback that creates and populates a data table,
-      // instantiates a dashboard, a range slider and a pie chart,
-      // passes in the data and draws it.
-      function drawDashboard() {
-        var jsonData = $.ajax({
-          url: "<?php echo base_url('template/getpie/'.$data[0]['userlist'][0]->HCID) ?>",
-          dataType: "json",
-          async: false
-          }).responseText;
-
-        // Create our data table.
-        var data = new google.visualization.DataTable(jsonData);
-
-        // Create a dashboard.
-        var dashboard = new google.visualization.Dashboard(
-            document.getElementById('dashboard_div'));
-
-        // Create a range slider, passing some options
-        var donutRangeSlider = new google.visualization.ControlWrapper({
-          'controlType': 'NumberRangeFilter',
-          'containerId': 'filter_div',
-          'options': {
-            'filterColumnLabel': 'No of Families'
-          }
-        });
-
-        // Create a pie chart, passing some options
-        var pieChart = new google.visualization.ChartWrapper({
-          'chartType': 'PieChart',
-          'containerId': 'chart_div',
-          'options': {
-            'is3D': true,
-            'width': 470,
-            'height': 350,
-            'legend': 'right',
-            'sliceVisibilityThreshold': 0
-          }
-        });
-
-        // Establish dependencies, declaring that 'filter' drives 'pieChart',
-        // so that the pie chart will only display entries that are let through
-        // given the chosen slider range.
-        dashboard.bind(donutRangeSlider, pieChart);
-
-        // Draw the dashboard.
-        dashboard.draw(data);
-      }
-    </script>
-  </head>
-
-  <body>
-    <!--Div that will hold the dashboard-->
-    <div id="dashboard_div">
-      <!--Divs that will hold each control and chart-->
-      <div id="filter_div"></div>
-      <div id="chart_div"></div>
+    <!-- No of Families in the Barangay -->
+     <div class="row">
+  <div class="col-xl-6">
+   <div class="card text-center">
+    <div class="card-header">
+    <h3>Families</h3>
     </div>
-  </body>
-</html>
-</body>
-</html>
+      <div class="card-body">
+      <div class="row">
+<div id="pieChart" style="width: 100%; height: 300px;"></div>
+     </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-6">
+    <div class="card text-center">
+    <div class="card-header">
+       <h3>Patients</h3>
+    </div>
+      <div class="card-body">
+       <div class="row">
+<div id="barChart" style="width: 100%; height: 300px;"></div>
+     </div>
+      </div>
+  </div>
 </div>
-</div>
-</div>
-      <footer class="footer">
+
+<!-- FOOTER -->
+      <footer class="footer" style="background-color: white;">
         <div class="row align-items-center justify-content-xl-between">
           <div class="col-xl-6">
             <div class="copyright text-center text-xl-left text-muted">
@@ -508,6 +388,69 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+window.onload = function() {
+
+var families = new Array();
+
+var chart = new CanvasJS.Chart("barChart", {
+  animationEnabled: true,
+  theme: "light2", // "light1", "light2", "dark1", "dark2"
+  title:{
+    text: "No. of Patients per Month"
+  },
+  data: [{        
+    type: "column",  
+    dataPoints: [      
+      { y: 2, label: "Jan" },
+      { y: 6,  label: "Feb" },
+      { y: 2,  label: "Mar" },
+      { y: 6,  label: "Apr" },
+      { y: 10,  label: "May" },
+      { y: 5, label: "Jun" },
+      { y: 15,  label: "Jul" },
+      { y: 28,  label: "Aug" },
+      { y: 5,  label: "Sept" },
+      { y: 1,  label: "Oct" },
+      { y: 13,  label: "Nov" },
+      { y: 18,  label: "Dec" }
+    ]
+  }]
+});
+chart.render();
+
+var chart = new CanvasJS.Chart("pieChart", {
+  animationEnabled: true,
+  theme: "light2",
+  title: {
+    text: "No. of Families in the Barangay"
+  },
+  axisY: {
+    title: "UnidataPointsts",
+    titleFontSize: 24
+  },
+  data: [{
+    type: "pie",
+    showInLegend: true,
+    indexLabelFontSize: 18,
+    radius: 80,
+    toolTipContent: "{name}:<strong>{y}</strong>",
+    indexLabel: "BRGY "+"{name} - {y}",
+    dataPoints: families
+  }]
+});
+
+function addData(data) {
+  $.each(data, function(key, value){
+        families.push({name: value[0], y: parseInt(value[1])});
+    });
+  chart.render();
+}
+
+$.getJSON("<?php echo base_url('template/getpie/'.$data[0]['userlist'][0]->HCID) ?>", addData);
+}
+</script>
   <script>
   $(document).ready(function() {
     $('#myTable').DataTable({
