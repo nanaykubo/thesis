@@ -140,7 +140,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login">
+            <a class="nav-link" href="logout">
               <i class="fas fa-sign-out-alt text-danger"></i> Log Out
             </a>
           </li>
@@ -336,7 +336,6 @@
         <div class="card">
         <div class="card-body">
           <table id="example" class="table">
-          <h3>REPORTS</h3>
       <thead>
       <tr>
       <th scope="col">#</th>
@@ -410,12 +409,12 @@
 
  <script>
 $(document).ready( function () {
-
+ $('#example').hide();
 });
 
 $("#nav").click(function(){
-      $("#exampleModal").modal('show')
-    }); 
+$("#exampleModal").modal('show')
+}); 
 
       $("#inputQuarter").prop("disabled",true);
       $("#inputMonth").prop("disabled",true);
@@ -456,19 +455,27 @@ $("#nav").click(function(){
       $("#txtEndDate").prop("disabled",false);
       } 
       });
+
+      $('#collapseOne').on("shown.bs.collapse", function(){
+       $('#example').parents('div.dataTables_wrapper').first().hide();
+      });
+
       $("#linkButton").click(function(){
         $("#collapseOne").collapse('hide');
+        $('#example').show();
         var table = $('#example').DataTable();
         table.destroy();
         $('#example').empty();
+        var HCID= <?php echo $userlist[0]->HCID?>;
         if($("#inputSelect").val() == "3" && $("#inputReport").val() == "Annual")
         {
                 var txtYear = ($("#inputYear").val());
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 table = $('#example').DataTable({
                 "ajax": {
                 "url": '<?php echo base_url('template/getAnnual/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear}
+                "data": {'Year': txtYear,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -486,13 +493,14 @@ $("#nav").click(function(){
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
                  $("#inputQuarter").val() == "1" )
         {
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtYear = ($("#inputYear").val());
                 var txtQuarter = ($("#inputQuarter").val());
                 table = $('#example').DataTable({
                 "ajax": {
                 "url": '<?php echo base_url('template/getQuarter/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Quarter':txtQuarter}
+                "data": {'Year': txtYear,'Quarter':txtQuarter,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -510,13 +518,14 @@ $("#nav").click(function(){
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
                  $("#inputQuarter").val() == "2" )
         {
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtYear = ($("#inputYear").val());
                 var txtQuarter = ($("#inputQuarter").val());
                 table = $('#example').DataTable({
                 "ajax": {
                 "url": '<?php echo base_url('template/getQuarter/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Quarter':txtQuarter}
+                "data": {'Year': txtYear,'Quarter':txtQuarter,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -534,13 +543,14 @@ $("#nav").click(function(){
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
                  $("#inputQuarter").val() == "3" )
         {
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtYear = ($("#inputYear").val());
                 var txtQuarter = ($("#inputQuarter").val());
                 table = $('#example').DataTable({
                 "ajax": {
                 "url": '<?php echo base_url('template/getQuarter/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Quarter':txtQuarter}
+                "data": {'Year': txtYear,'Quarter':txtQuarter,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -558,13 +568,14 @@ $("#nav").click(function(){
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
                  $("#inputQuarter").val() == "4" )
         {
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtYear = ($("#inputYear").val());
                 var txtQuarter = ($("#inputQuarter").val());
                 table = $('#example').DataTable({
                 "ajax": {
                 "url": '<?php echo base_url('template/getQuarter/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Quarter':txtQuarter}
+                "data": {'Year': txtYear,'Quarter':txtQuarter,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -582,6 +593,7 @@ $("#nav").click(function(){
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "1" )
         {
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
 
@@ -589,7 +601,7 @@ $("#nav").click(function(){
                 "ajax": {
                 "url": '<?php echo base_url('template/getMonth/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Month':txtMonth}
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -607,13 +619,14 @@ $("#nav").click(function(){
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "2" )
         {
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
                 "ajax": {
                 "url": '<?php echo base_url('template/getMonth/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Month':txtMonth}
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -631,13 +644,14 @@ $("#nav").click(function(){
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "3" )
         {
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
                 "ajax": {
                 "url": '<?php echo base_url('template/getMonth/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Month':txtMonth}
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -655,13 +669,14 @@ $("#nav").click(function(){
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "4" )
         {
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
                 "ajax": {
                 "url": '<?php echo base_url('template/getMonth/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Month':txtMonth}
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -679,13 +694,14 @@ $("#nav").click(function(){
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "5" )
         {
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
                 "ajax": {
                 "url": '<?php echo base_url('template/getMonth/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Month':txtMonth}
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -703,13 +719,14 @@ $("#nav").click(function(){
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "6" )
         {
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
                 "ajax": {
                 "url": '<?php echo base_url('template/getMonth/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Month':txtMonth}
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -727,13 +744,14 @@ $("#nav").click(function(){
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "7" )
         {
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
                 "ajax": {
                 "url": '<?php echo base_url('template/getMonth/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Month':txtMonth}
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -751,13 +769,14 @@ $("#nav").click(function(){
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "8" )
         {
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
                 "ajax": {
                 "url": '<?php echo base_url('template/getMonth/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Month':txtMonth}
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -781,7 +800,7 @@ $("#nav").click(function(){
                 "ajax": {
                 "url": '<?php echo base_url('template/getMonth/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Month':txtMonth}
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -805,7 +824,7 @@ $("#nav").click(function(){
                 "ajax": {
                 "url": '<?php echo base_url('template/getMonth/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Month':txtMonth}
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -829,7 +848,7 @@ $("#nav").click(function(){
                 "ajax": {
                 "url": '<?php echo base_url('template/getMonth/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Month':txtMonth}
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -853,7 +872,7 @@ $("#nav").click(function(){
                 "ajax": {
                 "url": '<?php echo base_url('template/getMonth/'); ?>',
                 "type": "POST",
-                "data": {'Year': txtYear,'Month':txtMonth}
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},
@@ -876,7 +895,7 @@ $("#nav").click(function(){
                 "ajax": {
                 "url": '<?php echo base_url('template/getCustom/'); ?>',
                 "type": "POST",
-                "data": {'Start': txtStart,'End':txtEnd}
+                "data": {'Start': txtStart,'End':txtEnd,'HCID' : HCID}
                 },
                 "columns": [
                 { "title": "ID", "data" : "ID"},

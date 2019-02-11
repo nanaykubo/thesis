@@ -27,7 +27,7 @@
 <script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
 </head>
 
-<body>
+<body style="background: white;">
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
       <!-- Toggler -->
@@ -210,7 +210,7 @@
     </nav>
 
     <!-- Header -->
-    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+       <div class="header pb-8 pt-5 pt-md-8" style="background: linear-gradient(to bottom, #0099ff -8%, #ffffff 91%);">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->

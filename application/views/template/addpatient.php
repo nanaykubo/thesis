@@ -178,13 +178,13 @@
           </div>
         </form>
         <form class="navbar-search mr-4 d-none d-md-flex ml-lg-auto">
-          <a href="" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
+          <a href="profile" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
         </form>
         <form class="navbar-search mr-3 d-none d-md-flex">
           <a href="" data-toggle="tooltip" data-placement="top" title="Activities"><i class="fas fa-clipboard-list fa-lg text-white"></i></a>
         </form>
 
-        <!-- User -->
+         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -193,7 +193,7 @@
                   <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-    <span class="mb-0 text-sm  font-weight-bold"><?php echo strtoupper($data[3]['userlist'][0]->FN) ?> <?php echo strtoupper($data[3]['userlist'][0]->LN) ?></span>
+                  <span class="mb-0 text-sm  font-weight-bold"><?php echo strtoupper($data[3]['userlist'][0]->FN) ?> <?php echo strtoupper($data[3]['userlist'][0]->LN) ?></span>
                 </div>
               </div>
             </a>
@@ -336,7 +336,7 @@
   <!-- patient tab -->
    <input type="hidden" name="txtHCID" id="txtHCID" value="<?php echo $data['0']['hname'][0]->HCID?>"/>
    <input type="hidden" name="inputassist" id="inputassist" value="<?php echo $data[3]['userlist'][0]->code?>"/>
-   <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
+   <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d H:i:s'); ?>"/>
    <input type="hidden" name="inputnote" id="inputnote"/>
    <input type="hidden" name="inputDel" id="inputDel" value="1"/>
   <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">

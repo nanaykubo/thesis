@@ -161,7 +161,7 @@
           </div>
         </form>
         <form class="navbar-search mr-4 d-none d-md-flex ml-lg-auto">
-          <a href="" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
+          <a href="profile" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
         </form>
         <form class="navbar-search mr-3 d-none d-md-flex">
           <a href="" data-toggle="tooltip" data-placement="top" title="Activities"><i class="fas fa-clipboard-list fa-lg text-white"></i></a>
@@ -393,34 +393,25 @@
 window.onload = function() {
 
 var families = new Array();
+var patients = new Array();
 
-var chart = new CanvasJS.Chart("barChart", {
+var chart2 = new CanvasJS.Chart("barChart",{
   animationEnabled: true,
-  theme: "light2", // "light1", "light2", "dark1", "dark2"
-  title:{
-    text: "No. of Patients per Month"
+      theme: "light2",
+    title :{
+  text: "Total Patients"
+    },
+      axisY: {
+    title: "No of Patients",
+    titleFontSize: 24
   },
-  data: [{        
-    type: "column",  
-    dataPoints: [      
-      { y: 2, label: "Jan" },
-      { y: 6,  label: "Feb" },
-      { y: 2,  label: "Mar" },
-      { y: 6,  label: "Apr" },
-      { y: 10,  label: "May" },
-      { y: 5, label: "Jun" },
-      { y: 15,  label: "Jul" },
-      { y: 28,  label: "Aug" },
-      { y: 5,  label: "Sept" },
-      { y: 1,  label: "Oct" },
-      { y: 13,  label: "Nov" },
-      { y: 18,  label: "Dec" }
-    ]
-  }]
+    data: [{
+  type: "column",
+  dataPoints : patients
+    }]
 });
-chart.render();
 
-var chart = new CanvasJS.Chart("pieChart", {
+var chart1  = new CanvasJS.Chart("pieChart", {
   animationEnabled: true,
   theme: "light2",
   title: {
@@ -441,14 +432,23 @@ var chart = new CanvasJS.Chart("pieChart", {
   }]
 });
 
-function addData(data) {
-  $.each(data, function(key, value){
+function Data1(data) {
+   $.each(data, function(key, value){
         families.push({name: value[0], y: parseInt(value[1])});
     });
-  chart.render();
+     chart1.render();
 }
 
-$.getJSON("<?php echo base_url('template/getpie/'.$data[0]['userlist'][0]->HCID) ?>", addData);
+function Data2(data) {
+  $.each(data, function(key, value){
+        patients.push({label: value[0], y: parseInt(value[1])});
+    });
+  chart2.render();
+}
+
+$.getJSON("<?php echo base_url('template/getpie/'.$data[0]['userlist'][0]->HCID) ?>", Data1);
+$.getJSON("<?php echo base_url('template/getBarChart/') ?>", Data2);
+
 }
 </script>
   <script>

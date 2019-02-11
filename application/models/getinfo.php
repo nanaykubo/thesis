@@ -163,40 +163,44 @@ class getinfo extends CI_Model
 		return $query->result_array();
 	}
 
-	public function getAnnual($txtYear)
+	public function getAnnual($txtYear,$HCID)
 	{
 		$this->db->select("*");
 		$this->db->where('YEAR(dateinsert)',$txtYear);
 		$this->db->where('is_delete',"1");
+		$this->db->where('HCID',$HCID);
 		$query = $this->db->get('tabletest');
 		return $query->result_array();
 	}
 
-	public function getQuarter($txtYear,$txtQuarter)
+	public function getQuarter($txtYear,$txtQuarter,$HCID)
 	{
 		$this->db->select("*");
 		$this->db->where('QUARTER(dateinsert)',$txtQuarter);
 		$this->db->where('YEAR(dateinsert)',$txtYear);
 		$this->db->where('is_delete',"1");
+		$this->db->where('HCID',$HCID);
 		$query = $this->db->get('tabletest');
 		return $query->result_array();
 	}
 
-	public function getMonth($txtMonth,$txtYear)
+	public function getMonth($txtMonth,$txtYear,$HCID)
 	{
 		$this->db->select("*");
 		$this->db->where('MONTH(dateinsert)',$txtMonth);
 		$this->db->where('YEAR(dateinsert)',$txtYear);
 		$this->db->where('is_delete',"1");
+		$this->db->where('HCID',$HCID);
 		$query = $this->db->get('tabletest');
 		return $query->result_array();
 	}
 
-	public function getCustom($txtStart,$txtEnd)
+	public function getCustom($txtStart,$txtEnd,$HCID)
 	{
 		$this->db->select("*");
 		$this->db->where('dateinsert >=', $txtStart);
 		$this->db->where('dateinsert <=', $txtEnd);
+		$this->db->where('HCID',$HCID);	
 		$query = $this->db->get('tabletest');
 		return $query->result_array();
 	}
@@ -304,6 +308,30 @@ class getinfo extends CI_Model
 		$this->db->join('family', 'brgy.BRGY = family.Brgy','left')
          ->group_by('brgy.Brgy');	
         $this->db->having('brgy.HCID=',$HCID);
+        $query = $this->db->get();
+		return $query->result();
+	}
+
+	public function getBarChart()
+	{
+		$this->db->select('MONTHNAME(CONCAT("2019-", Months.m, "-01")) as month, COUNT(`dateinsert`) AS total')
+		->from('(
+		SELECT 1 as m
+		UNION SELECT 2 as m 
+		UNION SELECT 3 as m 
+		UNION SELECT 4 as m 
+		UNION SELECT 5 as m 
+		UNION SELECT 6 as m 
+		UNION SELECT 7 as m 
+		UNION SELECT 8 as m 
+		UNION SELECT 9 as m 
+		UNION SELECT 10 as m 
+		UNION SELECT 11 as m 
+		UNION SELECT 12 as m
+		) as Months');
+		$this->db->join('tabletest', 'Months.m = MONTH(`dateinsert`)  
+		AND YEAR(`dateinsert`) = "2019" and HCID = "1"','left')
+         ->group_by('Months.m');	
         $query = $this->db->get();
 		return $query->result();
 	}

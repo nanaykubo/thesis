@@ -25,19 +25,45 @@ class Template extends CI_Controller {
 		$this -> load -> model('getinfo','m');
 	}	
 
-	function login()
+	function index()
 	{
 		$this->load->view('Template/login');	
 	}
 
-	function index()
+	public function getBarChart()
 	{
-		$this->load->view('Template/try');	
+		$result = $this->m->getBarChart();
+
+		foreach ($result as $value) 
+			{
+			$row = array();
+			$row[0] = $value->month;
+			$row[1] = $value->total;
+			$data2[] = $row;
+			}
+
+			echo json_encode($data2);
 	}
+
+	public function profile()
+	{
+		if($this->session->userdata('logged_in')){
+			$get['userlist']= $this->m->getUser(
+				$this->session->userdata('username')
+			   ,$this->session->userdata('password')
+			);
+
+			$userlist = $get;
+
+			$this->load->view('Template/profile',$userlist);	
+		}
+	}
+
 
 	public function logout()
 	{
             $this->session->unset_userdata('username','password','logged_in');
+            session_destroy();
             redirect(base_url('Template/index'));
 	}
 
@@ -177,7 +203,7 @@ class Template extends CI_Controller {
 			else
 			{
 			$this->session->set_flashdata('error_msg', 'Incorrect Username and Password');
-			redirect('Template/login');
+			redirect('Template/index');
 			}
 		}
 
@@ -361,29 +387,45 @@ class Template extends CI_Controller {
 
 	public function pRecords()
 	{
-		$something = $this->input->post('txtID');
-		$blob = $this->input->post('inputBlob');
+		$this->load->library('upload');
 
-		$config['upload_path'] = '/xampp/htdocs/medrec/assets/uploads';
+        $files = $_FILES;
+        $filesCount = count($_FILES['userfile']['name']);
+        for($i=0; $i<$filesCount; $i++)
+        {           
+            $_FILES['userfile']['name']= $files['userfile']['name'][$i];
+            $_FILES['userfile']['type']= $files['userfile']['type'][$i];
+            $_FILES['userfile']['tmp_name']= $files['userfile']['tmp_name'][$i];
+            $_FILES['userfile']['error']= $files['userfile']['error'][$i];
+            $_FILES['userfile']['size']= $files['userfile']['size'][$i];    
+
+            $this->upload->initialize($this->set_upload_options());
+
+			if (!$this->upload->do_upload()) {
+			$error = array('error' => $this->upload->display_errors());
+			print_r($error);
+			} 
+			else 
+			{
+			$arr_image= $this->upload->data('file_name');
+
+			print_r($arr_image);
+			}
+			}
+	}
+
+	private function set_upload_options()
+    {   
+        $config = array();
+        $config['upload_path'] = '/xampp/htdocs/medrec/assets/uploads';
 		$config['allowed_types'] = 'gif|jpg|jpeg|png';
 		$config['max_size'] = '1000';
 		$config['max_width'] = '1920';
 		$config['max_height'] = '1280';                     
+        $config['overwrite']     = FALSE;
 
-		$this->load->library('upload', $config);
-
-		if (!$this->upload->do_upload('inputBlob')) {
-		$error = array('error' => $this->upload->display_errors());
-		print_r($error);
-		} 
-		else 
-		{
-		$arr_image = $this->upload->data('full_path');
-		echo($arr_image);
-		$result = $this->m->addPRecords($arr_image);
-		redirect(base_url('Template/getRecords/'.$something));
-		}
-	}
+        return $config;
+    }
 
 	public function submitNewRecords()
 	{
@@ -590,7 +632,7 @@ class Template extends CI_Controller {
 	{
 	$data = $this->input->post();
 
-	$Year = $this->m->getAnnual($data['Year']);
+	$Year = $this->m->getAnnual($data['Year'],$data['HCID']);
 
 	$output = array(
 		"data" => $Year,
@@ -605,8 +647,9 @@ class Template extends CI_Controller {
 
 	$Year = $data['Year'];
 	$Quarter = $data['Quarter'];
+	$HCID = $data['HCID'];
 
-	$result = $this->m->getQuarter($Year,$Quarter);
+	$result = $this->m->getQuarter($Year,$Quarter,$HCID);
 
 	$output = array(
 		"data" => $result,
@@ -621,8 +664,9 @@ class Template extends CI_Controller {
 
 	$Month = $data['Month'];
 	$Year = $data['Year'];
+	$HCID = $data['HCID'];
 
-	$result = $this->m->getMonth($Month,$Year);
+	$result = $this->m->getMonth($Month,$Year,$HCID);
 
 	$output = array(
 		"data" => $result,
@@ -637,8 +681,10 @@ class Template extends CI_Controller {
 
 	$start = $data['Start'];
 	$end = $data['End'];
+	$HCID = $data['HCID'];
 
-	$result = $this->m->getCustom($start,$end);
+
+	$result = $this->m->getCustom($start,$end,$HCID);
 
 	$output = array(
 		"data" => $result,

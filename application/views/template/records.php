@@ -33,7 +33,7 @@
       </button>
       <!-- Brand -->
       <a class="navbar-brand pt-0" href="../index.html">
-        <img src="../../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+        <img src="../../assets/img/brand/a.png"  width="150" height="150" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
@@ -91,7 +91,7 @@
           <div class="row">
             <div class="col-6 collapse-brand">
               <a href="../index.html">
-                <img src="../../assets/img/brand/blue.png">
+                <<img src="../../assets/img/brand/a.png">
               </a>
             </div>
             <div class="col-6 collapse-close">
@@ -116,56 +116,67 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('template/logged') ?>">
+            <a class="nav-link" href="<?php echo base_url('Template/logged') ?>">
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="<?php echo base_url('template/addpatient') ?>">
+            <a class="nav-link active" href="<?php echo base_url('Template/addpatient') ?>">
               <i class="fas fa-plus-circle text-green"></i> Add Patient
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('template/family') ?>">
+            <a class="nav-link" href="<?php echo base_url('Template/family') ?>">
               <i class="fas fa-users text-blue"></i> List of Families
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('template/reports') ?>">
+            <a class="nav-link" href="<?php echo base_url('Template/reports') ?>">
               <i class="fas fa-file-signature text-info"></i> Reports
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('template/logout') ?>">
+            <a class="nav-link" href="<?php echo base_url('Template/logout') ?>">
               <i class="fas fa-sign-out-alt text-danger"></i> Log Out
             </a>
           </li>
         </ul>
-        <!-- Divider -->
+       <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
-       
+        <!-- Navigation -->
+        <ul class="navbar-nav mb-md-3">
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="nav">
+              <i class="fas fa-phone"></i> Contact Support
+            </a>
+          </li>
       </div>
     </div>
   </nav>
 </div>
-  <!-- Main content -->
   <div class="main-content">
     <!-- Top navbar -->
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?php echo base_url('template/addpatient') ?>">Add Patient</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Medical Records</li>
-      </ol>
-      </nav>
+        <a class="h4 text-white" href="<?php echo base_url('template/addpatient') ?>"> BACK</a>
         <!-- Form -->
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+        <form style="margin-left: 375px;">
           <div class="form-group mb-0">
-            
+            <div class="input-group input-group-alternative mr-8">
+              <div class="input-group-prepend">
+                <span class="input-group-text "><i class="fas fa-search"></i></span>
+              </div>
+              <input class="form-control " placeholder="Search" type="text">
+            </div>
           </div>
+        </form>
+        <form class="navbar-search mr-4 d-none d-md-flex ml-lg-auto">
+          <a href="" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
+        </form>
+        <form class="navbar-search mr-3 d-none d-md-flex">
+          <a href="" data-toggle="tooltip" data-placement="top" title="Activities"><i class="fas fa-clipboard-list fa-lg text-white"></i></a>
         </form>
 
         <!-- User -->
@@ -177,7 +188,7 @@
                   <img alt="Image placeholder" src="../../assets/img/theme/team-4-800x800.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+                  <span class="mb-0 text-sm  font-weight-bold"><?php echo $data[1]['userlist'][0]->FN?> <?php echo $data[1]['userlist'][0]->LN?></span>
                 </div>
               </div>
             </a>
@@ -215,7 +226,7 @@
     <!-- Header -->
 
 
-    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+   <div class="header pb-8 pt-5 pt-md-8" style="background: linear-gradient(to bottom, #0099ff -8%, #ffffff 91%);">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
@@ -301,20 +312,22 @@
     </div>
 
 <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title" id="exampleModalLongTitle">Uploaded Image</h5>
       </div>
       <div class="modal-body">
-       <img id="myImage" src="http://localhost/medrec/assets/uploads/11112.png">
+      <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img id="myImage"class="d-block w-100"  alt="No Attached Files">
+    </div>  
+  </div>
+</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -367,7 +380,7 @@
     </div>
     <div class="form-group col-md-12">
     <label for="inputEmail4">Attached (Optional)</label>
-    <input type="file" class="form-control" name="inputBlob" id="inputBlob">
+    <input type="file" class="form-control" name="userfile[]" id="userfile" multiple>
     <small id="passwordHelpBlock" class="form-text text-muted">
     </small>
     </div>
@@ -381,20 +394,55 @@
   </div>
 </div>
 
+ <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Report</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="<?php echo base_url('template/submitReport')?>" method="POST">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">ID:</label>
+            <input type="text" name="inputID" id="inputID" class="form-control" value="<?php echo $data[1]['userlist'][0]->code?>" readonly>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" name="inputTitle" id="inputTitle">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" rows="3" name="inputMsg" id="inputMsg"></textarea>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Send Report</button>
+             </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
  $(document).ready(function() {
+   $("#nav").click(function(){
+      $("#exampleModal").modal('show')
+    });
+
    $(".use-address").click(function() {
     var $row = $(this).closest("tr");    // Find the row
     var $text = $row.find(".nr").text(); // Find the text
 
-    alert($text)
     $.ajax({
           url: '<?php echo base_url('template/viewRecord/'); ?>',  
           type: 'POST',
           data: {'RNo': $text},
           success: function (result) 
                   {
-                    alert(result)
+                    $("#myImage").attr('src', '<?php echo base_url('/assets/uploads/');?>'+result);
                     $("#viewModal").modal('show')
                   }
         });

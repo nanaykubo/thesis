@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2019 at 12:10 PM
+-- Generation Time: Feb 11, 2019 at 02:25 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `thesis`
+-- Database: `medrec`
 --
 
 -- --------------------------------------------------------
@@ -76,7 +76,20 @@ INSERT INTO `adminlogs` (`auto`, `code`, `activity`, `date`) VALUES
 (32, 1212, 'RESTORED USER ANGELICA CHUA', '2019-02-02'),
 (33, 1212, 'RESTORED FAMILY 6', '2019-02-02'),
 (34, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-04'),
-(35, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-04');
+(35, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-04'),
+(36, 1212, 'VIEW ACCOUNT DETAILS MERLYN CHUA', '2019-02-07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attached`
+--
+
+CREATE TABLE `attached` (
+  `no` int(11) NOT NULL,
+  `recordno` int(11) NOT NULL,
+  `images` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -109,7 +122,9 @@ INSERT INTO `brgy` (`HCID`, `BRGY`) VALUES
 (4, 288),
 (4, 290),
 (4, 291),
-(4, 296);
+(4, 296),
+(2, 804),
+(2, 841);
 
 -- --------------------------------------------------------
 
@@ -139,8 +154,7 @@ CREATE TABLE `family` (
   `FN` varchar(50) NOT NULL,
   `MN` varchar(50) NOT NULL,
   `Brgy` int(11) NOT NULL,
-  `St` varchar(50) NOT NULL,
-  `City` varchar(50) NOT NULL,
+  `City` varchar(20) NOT NULL,
   `is_delete` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -148,11 +162,11 @@ CREATE TABLE `family` (
 -- Dumping data for table `family`
 --
 
-INSERT INTO `family` (`familyno`, `HCID`, `LN`, `FN`, `MN`, `Brgy`, `St`, `City`, `is_delete`) VALUES
-(5, 1, 'JUSAY', 'ALLEN', 'DE  TORRES', 808, 'MANILA', 'MANILA', 0),
-(8, 1, 'STINSTON', 'BARNEY', '', 813, 'MANILA', 'MANILA', 1),
-(9, 2, 'BASCO', 'KAREN', 'LUGAY', 823, 'MAKATI', 'MANILA', 1),
-(10, 2, 'CHUA', 'MICHAEL', 'WONG', 823, 'MAKATI', 'MANILA', 1);
+INSERT INTO `family` (`familyno`, `HCID`, `LN`, `FN`, `MN`, `Brgy`, `City`, `is_delete`) VALUES
+(5, 1, 'JUSAY', 'ALLEN', 'DE  TORRES', 808, '', 0),
+(8, 1, 'STINSTON', 'BARNEY', '', 813, '', 1),
+(9, 2, 'BASCO', 'KAREN', 'LUGAY', 841, 'TAGUIG', 1),
+(10, 2, 'CHUA', 'MICHAEL', 'WONG', 804, 'MANILA', 1);
 
 -- --------------------------------------------------------
 
@@ -171,7 +185,12 @@ CREATE TABLE `fdesc` (
 --
 
 INSERT INTO `fdesc` (`ID`, `familyno`, `is_delete`) VALUES
+(23, 9, 0),
+(1001, 9, 0),
+(3123123, 9, 0),
 (12312312, 10, 0),
+(12313123, 9, 0),
+(215123123, 9, 0),
 (2147483647, 5, 1);
 
 -- --------------------------------------------------------
@@ -218,7 +237,19 @@ INSERT INTO `logs` (`auto`, `code`, `activity`, `date`, `POSITION`) VALUES
 (76, 1001, 'UPDATED FAMILY NO(9) BASCO KAREN', '2019-02-04', ''),
 (77, 1001, 'ADDED PATIENT BASCO KAREN', '2019-02-04', ''),
 (80, 1001, 'EDITED PATIENT NO(12312312) BASCO KAREN', '2019-02-04', ''),
-(81, 1001, 'UPDATED FAMILY NO(9) BASCO KAREN', '2019-02-04', '');
+(81, 1001, 'UPDATED FAMILY NO(9) BASCO KAREN', '2019-02-04', ''),
+(82, 1001, 'UPDATED FAMILY NO(9) BASCO KAREN', '2019-02-08', ''),
+(83, 1001, 'UPDATED FAMILY NO(10) CHUA MICHAEL', '2019-02-08', ''),
+(84, 1001, 'EDITED PATIENT NO(12312312) BASCO KAREN', '0000-00-00', ''),
+(85, 1001, 'EDITED PATIENT NO(2147483647) CHUA ANGELICA', '0000-00-00', ''),
+(86, 1001, 'ADDED PATIENT ID(23) 123 123', '2019-02-08', ''),
+(87, 1001, 'ADDED PATIENT ID(1001) STINSTON ASD', '2019-02-08', ''),
+(88, 1001, 'ADDED RECORD 123 123', '2019-02-11', ''),
+(89, 1001, 'ADDED RECORD 123 123', '2019-02-11', ''),
+(90, 1001, 'ADDED RECORD 123 123', '2019-02-11', ''),
+(91, 1001, 'ADDED PATIENT ID(215123123) THE GET', '2019-02-11', ''),
+(92, 1001, 'ADDED PATIENT ID(12313123) 313 123', '2019-02-11', ''),
+(93, 1001, 'ADDED PATIENT ID(3123123) 3 123', '2019-02-11', '');
 
 -- --------------------------------------------------------
 
@@ -269,19 +300,29 @@ CREATE TABLE `precords` (
   `RETURNDATE` date NOT NULL,
   `RESULT` varchar(50) NOT NULL,
   `PRESCRIPTION` varchar(50) NOT NULL,
-  `Attached` varchar(100) NOT NULL,
   `is_delete` smallint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `precords`
+-- Table structure for table `reports`
 --
 
-INSERT INTO `precords` (`recordno`, `ID`, `HCID`, `RecordType`, `DATE`, `RETURNDATE`, `RESULT`, `PRESCRIPTION`, `Attached`, `is_delete`) VALUES
-(6, 2147483647, 1, 'Checkup', '2019-01-29', '0000-00-00', '', '', 'C:/xampp/htdocs/medrec/assets/uploads/', 1),
-(7, 2147483647, 1, 'Checkup', '2019-01-29', '0000-00-00', '', '', 'C:/xampp/htdocs/medrec/assets/uploads/', 1),
-(8, 2147483647, 1, 'Checkup', '2019-01-29', '0000-00-00', '', '', 'C:/xampp/htdocs/medrec/assets/uploads/11112.png', 1),
-(9, 2147483647, 1, 'Checkup', '2019-01-29', '0000-00-00', '', '', 'C:/xampp/htdocs/medrec/assets/uploads/11113.png', 1);
+CREATE TABLE `reports` (
+  `reportno` int(11) NOT NULL,
+  `ID` int(11) NOT NULL,
+  `Title` varchar(50) NOT NULL,
+  `Message` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `reports`
+--
+
+INSERT INTO `reports` (`reportno`, `ID`, `Title`, `Message`) VALUES
+(1, 1001, 'Error', '\r\nadd patient wqeqweqwxeqwexqwexwqe'),
+(2, 1001, 'dasd', 'asd');
 
 -- --------------------------------------------------------
 
@@ -332,7 +373,7 @@ CREATE TABLE `tabletest` (
   `Sex` varchar(6) DEFAULT NULL,
   `Age` int(3) NOT NULL,
   `Assist` int(20) NOT NULL,
-  `dateinsert` date NOT NULL,
+  `dateinsert` datetime NOT NULL,
   `Nationality` varchar(20) NOT NULL,
   `Religion` varchar(20) NOT NULL,
   `Address` varchar(40) NOT NULL,
@@ -347,9 +388,14 @@ CREATE TABLE `tabletest` (
 --
 
 INSERT INTO `tabletest` (`ID`, `HCID`, `Status`, `Type`, `LN`, `FN`, `MN`, `Brgy`, `St`, `City`, `BirthDate`, `CivilStatus`, `familyno`, `Philhealth`, `Remarks`, `Sex`, `Age`, `Assist`, `dateinsert`, `Nationality`, `Religion`, `Address`, `Zipcode`, `Landline`, `Relation`, `is_delete`) VALUES
-(12312312, 2, 'ACTIVE', 'CHILD', 'BASCO', 'KAREN', 'DE GUIA', '823', 'MANILA', 'MANILA', '2019-02-05', 'WIDOW', 10, NULL, '', 'FEMALE', 0, 1001, '2019-02-04', 'ALGERIAN', 'BORN AGAIN', '2347 onyx st', 0, 5629270, 'NEPHEW', 1),
-(150380212, 1, 'ACTIVE', 'CHILD', 'CHUA', 'ASDASD', 'ASD', '810', 'MANILA', 'MANILA', '2019-01-27', 'SINGLE', 9, NULL, '12', 'FEMALE', 0, 1001, '2019-02-01', 'FILIPINO', 'CHRISTIAN', '2347 onyx st', 0, 0, 'DAUGHTER', 1),
-(2147483647, 2, 'ACTIVE', 'CHILD', 'CHUA', 'ANGELICA', 'DE GUIA', '813', 'TAGUIG', 'TAGUIG', '2019-01-20', 'SINGLE', 9, NULL, '1', 'MALE', 0, 1001, '2019-02-01', 'FILIPINO', 'BORN AGAIN', '2347 onyx st', 0, 0, 'SON', 1);
+(23, 2, 'ACTIVE', 'CHILD', '123', '123', '123', '841', 'TAGUIG', 'TAGUIG', '2019-02-08', 'SINGLE', 9, NULL, '3', 'MALE', 0, 1001, '2019-02-08 00:00:00', 'FILIPINO', '', '3', 0, NULL, '', 1),
+(1001, 1, 'ACTIVE', 'CHILD', 'STINSTON', 'ASD', 'LUGAY', '804', 'MAKATI', 'MANILA', '2019-02-08', 'SINGLE', 9, NULL, '3', 'FEMALE', 0, 1001, '2019-02-08 00:00:00', 'FILIPINO', '', 'd312', 0, NULL, '', 1),
+(3123123, 2, 'NOT ACTIVE', 'CHILD', '3', '123', '12', '804', 'MAKATI', 'MANILA', '2019-02-11', 'SINGLE', 9, NULL, '3', 'MALE', 0, 1001, '2019-02-11 14:16:56', 'FILIPINO', '', '123', 0, NULL, '', 1),
+(12312312, 2, 'ACTIVE', 'CHILD', 'BASCO', 'KAREN', 'DE GUIA', '804', 'MANILA', 'MANILA', '2019-02-05', 'WIDOW', 10, NULL, '', 'FEMALE', 0, 1001, '0000-00-00 00:00:00', 'ALGERIAN', 'BORN AGAIN', '2347 onyx st', 0, 5629270, 'NEPHEW', 1),
+(12313123, 2, 'ACTIVE', 'CHILD', '313', '123', '12', '804', 'MANILA', 'MANILA', '2019-02-11', 'WIDOW', 9, NULL, '123', 'MALE', 0, 1001, '2019-02-11 00:00:00', 'MARRIED', '', '123', 0, NULL, '', 1),
+(150380212, 2, 'ACTIVE', 'CHILD', 'CHUA', 'ASDASD', 'ASD', '810', 'MANILA', 'MANILA', '2019-01-27', 'SINGLE', 9, NULL, '12', 'FEMALE', 0, 1001, '2019-02-01 00:00:00', 'FILIPINO', 'CHRISTIAN', '2347 onyx st', 0, 0, 'DAUGHTER', 1),
+(215123123, 2, 'ACTIVE', 'CHILD', 'THE', 'GET', 'ON', '804', 'TAGUIG', 'TAGUIG', '2019-02-11', 'SINGLE', 9, NULL, '123', 'FEMALE', 0, 1001, '2019-02-11 00:00:00', 'FILIPINO', '', '123213', 0, NULL, '', 1),
+(2147483647, 1, 'ACTIVE', 'CHILD', 'CHUA', 'ANGELICA', 'DE GUIA', '841', 'TAGUIG', 'TAGUIG', '2019-01-20', 'SINGLE', 9, NULL, '1', 'MALE', 0, 1001, '2019-04-26 00:00:00', 'FILIPINO', 'BORN AGAIN', '2347 onyx st', 0, 0, 'SON', 1);
 
 -- --------------------------------------------------------
 
@@ -396,6 +442,12 @@ ALTER TABLE `admin`
 ALTER TABLE `adminlogs`
   ADD PRIMARY KEY (`auto`),
   ADD KEY `code` (`code`);
+
+--
+-- Indexes for table `attached`
+--
+ALTER TABLE `attached`
+  ADD PRIMARY KEY (`no`);
 
 --
 -- Indexes for table `brgy`
@@ -446,6 +498,13 @@ ALTER TABLE `precords`
   ADD KEY `HCID_2` (`HCID`);
 
 --
+-- Indexes for table `reports`
+--
+ALTER TABLE `reports`
+  ADD PRIMARY KEY (`reportno`),
+  ADD KEY `ID` (`ID`);
+
+--
 -- Indexes for table `sample`
 --
 ALTER TABLE `sample`
@@ -482,7 +541,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `adminlogs`
 --
 ALTER TABLE `adminlogs`
-  MODIFY `auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT for table `attached`
+--
+ALTER TABLE `attached`
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `family`
@@ -500,13 +565,19 @@ ALTER TABLE `fdesc`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `auto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT for table `precords`
 --
 ALTER TABLE `precords`
-  MODIFY `recordno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `recordno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `reports`
+--
+ALTER TABLE `reports`
+  MODIFY `reportno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sample`
@@ -531,48 +602,16 @@ ALTER TABLE `adminlogs`
   ADD CONSTRAINT `adminlogs_ibfk_1` FOREIGN KEY (`code`) REFERENCES `users` (`code`);
 
 --
--- Constraints for table `brgy`
---
-ALTER TABLE `brgy`
-  ADD CONSTRAINT `brgy_ibfk_1` FOREIGN KEY (`HCID`) REFERENCES `healthcenters` (`HCID`);
-
---
 -- Constraints for table `checkup`
 --
 ALTER TABLE `checkup`
   ADD CONSTRAINT `checkup_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `tabletest` (`ID`);
 
 --
--- Constraints for table `family`
+-- Constraints for table `reports`
 --
-ALTER TABLE `family`
-  ADD CONSTRAINT `family_ibfk_1` FOREIGN KEY (`HCID`) REFERENCES `healthcenters` (`HCID`);
-
---
--- Constraints for table `fdesc`
---
-ALTER TABLE `fdesc`
-  ADD CONSTRAINT `fdesc_ibfk_1` FOREIGN KEY (`familyno`) REFERENCES `family` (`familyno`),
-  ADD CONSTRAINT `fdesc_ibfk_3` FOREIGN KEY (`ID`) REFERENCES `tabletest` (`ID`);
-
---
--- Constraints for table `logs`
---
-ALTER TABLE `logs`
-  ADD CONSTRAINT `logs_ibfk_1` FOREIGN KEY (`code`) REFERENCES `users` (`code`);
-
---
--- Constraints for table `precords`
---
-ALTER TABLE `precords`
-  ADD CONSTRAINT `precords_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `tabletest` (`ID`),
-  ADD CONSTRAINT `precords_ibfk_2` FOREIGN KEY (`HCID`) REFERENCES `healthcenters` (`HCID`);
-
---
--- Constraints for table `tabletest`
---
-ALTER TABLE `tabletest`
-  ADD CONSTRAINT `tabletest_ibfk_1` FOREIGN KEY (`Assist`) REFERENCES `users` (`code`);
+ALTER TABLE `reports`
+  ADD CONSTRAINT `reports_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `users` (`code`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
