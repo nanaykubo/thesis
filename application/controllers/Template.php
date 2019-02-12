@@ -514,8 +514,23 @@ class Template extends CI_Controller {
 		$data = $this->input->post();
 
 		$values = $this->m->getMessage($data['Rno']);
+
+		foreach ($values as $value) {
+			$row = array();
+			$row[]= $value->Message;
+			$data2[] = $row;
+		}
 		
-		echo json_encode($values);
+		echo json_encode($data2);
+	}
+
+	public function Resolve()
+	{
+		$data = $this->input->post();
+
+		$result = $this->m->Resolve($data['Rno'],$data['Code']);
+
+		redirect(base_url('Template/admin'));
 	}
 
 	public function updateNewRecords()

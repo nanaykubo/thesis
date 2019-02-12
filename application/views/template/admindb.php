@@ -241,8 +241,8 @@
               <td class="nr"><?php echo $test->reportno; ?></td>
               <td><?php echo $test->ID; ?></td>
               <td><?php echo $test->Title; ?></td>
-              <td><a href="#" class="message"><i class="fas fa-envelope fa-lg text-orange"></i></a>
-                <a href="" class="resolve" style="margin-left: 20px;"><i class="fas fa-check-double fa-lg text-green"></i></a></td>
+              <td><a href="#" class="message" data-toggle="tooltip" data-placement="top" title="Message"><i class="fas fa-envelope fa-lg text-orange"></i></a>
+              <a href="" class="resolve" style="margin-left: 20px;" data-toggle="tooltip" data-placement="top" title="Resolve"><i class="fas fa-check-double fa-lg text-green"></i></a></td>
               </tbody>
               <?php
               //continuation to loop all in the dataset to the body
@@ -261,7 +261,24 @@
 </div>
 
 
-
+<div class="modal" id="ViewMessage" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea class="form-control" rows="5" id="comment"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
               
 
     <!-- Page content -->
@@ -285,14 +302,14 @@
 $(".message").click(function() {
     var $row = $(this).closest("tr");    
     var $text = $row.find(".nr").text(); 
-
-    alert($text)
     $.ajax({
     url: '<?php echo base_url('template/getMessage/'); ?>', 
     type: 'POST',
     data: {'Rno': $text},
     success: function (result) {  
-    alert(result);
+    var value = JSON.parse(result);
+    $(".modal-body #comment").val(value);
+    $("#ViewMessage").modal('show')
     }
     }); 
   
@@ -301,8 +318,14 @@ $(".message").click(function() {
 $(".resolve").click(function() {
     var $row = $(this).closest("tr");    // Find the row
     var $text = $row.find(".nr").text(); // Find the text
-    
-    
+    var code = <?php echo $data[0]['user'][0]->code?>;
+    alert(code)
+    alert(date)
+    $.ajax({
+    url: '<?php echo base_url('template/getMessage/'); ?>', 
+    type: 'POST',
+    data: {'Rno': $text,'Code':code}
+    }); 
 });  
 
 });

@@ -324,8 +324,26 @@ class getinfo extends CI_Model
 	public function getMessage($reportno)
 	{
 		$this->db->select("Message");
-		$this->db->where('reportno',$reportno);
+		$this->db->where('reportno',$reportno);	
 		$query = $this->db->get('reports');
+		return $query->result();
+	}
+
+	public function Resolve($reportno,$code)
+	{
+		$resolve = array(
+		'is_resolve' => 0,
+		);    
+
+		$this->db->insert('reports', $resolve);
+
+		$logs = array(
+			'code'=>$code,
+			'activity'=>"Resolve ".$reportno,
+			'date'=>$this->input->post('inputinsert')
+			);
+
+		$this->db->insert('adminlogs', $logs);
 		return $query->result();
 	}
 
