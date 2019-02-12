@@ -122,6 +122,16 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getAI()
+	{
+		$this->db->select('*');
+		$this->db->from('INFORMATION_SCHEMA.TABLES');
+		$this->db->where('TABLE_SCHEMA','medrec');
+		$this->db->where('TABLE_NAME','precords');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	public function getHCInfo($HCID)
 	{
 		$this->db->where('HCID',$HCID);
@@ -173,6 +183,27 @@ class getinfo extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getBrgyAnnual($txtYear,$HCID)
+	{
+		$this->db->select("*");
+		$this->db->where('YEAR(dateinsert)',$txtYear);
+		$this->db->where('is_delete',"1");
+		$this->db->where('HCID',$HCID);
+		$query = $this->db->get('family');
+		return $query->result_array();
+	}
+
+	public function getBrgyQuarter($txtYear,$txtQuarter,$HCID)
+	{
+		$this->db->select("*");
+		$this->db->where('QUARTER(dateinsert)',$txtQuarter);
+		$this->db->where('YEAR(dateinsert)',$txtYear);
+		$this->db->where('is_delete',"1");
+		$this->db->where('HCID',$HCID);
+		$query = $this->db->get('family');
+		return $query->result_array();
+	}
+
 	public function getQuarter($txtYear,$txtQuarter,$HCID)
 	{
 		$this->db->select("*");
@@ -192,6 +223,17 @@ class getinfo extends CI_Model
 		$this->db->where('is_delete',"1");
 		$this->db->where('HCID',$HCID);
 		$query = $this->db->get('tabletest');
+		return $query->result_array();
+	}
+
+	public function getBrgyMonth($txtMonth,$txtYear,$HCID)
+	{
+		$this->db->select("*");
+		$this->db->where('MONTH(dateinsert)',$txtMonth);
+		$this->db->where('YEAR(dateinsert)',$txtYear);
+		$this->db->where('is_delete',"1");
+		$this->db->where('HCID',$HCID);
+		$query = $this->db->get('family');
 		return $query->result_array();
 	}
 
@@ -282,16 +324,22 @@ class getinfo extends CI_Model
 	public function getMessage($reportno)
 	{
 		$this->db->select("Message");
-		$this->db->where('Report',$reportno);
+		$this->db->where('reportno',$reportno);
 		$query = $this->db->get('reports');
 		return $query->result();
 	}
 
 	public function getallReports()
 	{
-		$this->db->select("*");
-		$query = $this->db->get('reports');
-		return $query->result();
+		$query = $this -> db -> get('reports');
+		if ($query -> num_rows() > 0)
+		{
+			return $query -> result();
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public function getadminLogs()
@@ -312,7 +360,7 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
-	public function getBarChart()
+	public function getBarChart($HCID)
 	{
 		$this->db->select('MONTHNAME(CONCAT("2019-", Months.m, "-01")) as month, COUNT(`dateinsert`) AS total')
 		->from('(
@@ -330,8 +378,8 @@ class getinfo extends CI_Model
 		UNION SELECT 12 as m
 		) as Months');
 		$this->db->join('tabletest', 'Months.m = MONTH(`dateinsert`)  
-		AND YEAR(`dateinsert`) = "2019" and HCID = "1"','left')
-         ->group_by('Months.m');	
+		AND YEAR(`dateinsert`) = "2019" and HCID = '.$HCID,'left')
+         ->group_by('Months.m');
         $query = $this->db->get();
 		return $query->result();
 	}
@@ -499,13 +547,12 @@ class getinfo extends CI_Model
 	}
 
 	public function getImage($RNo)
-	{
-		$this->db->select("Attached");
+	{	
+		$this->db->select("images");
 		$this->db->where('recordno', $RNo);
-		$query = $this->db->get('precords');
+		$query = $this->db->get('attached');	
 		$data = $query->row_array();
-		$value = $data['Attached'];
-		return $value;
+		return $query->result();
 	}
 
 	public function addNewRecords()
@@ -838,9 +885,8 @@ class getinfo extends CI_Model
 	}
 
 
-	public function addPRecords($image)
+	public function addPRecords()
 	{
-
 	$records = array(
 			'ID'=>$this->input->post('txtID'),	
 			'HCID'=>$this->input->post('txtHCID'),
@@ -849,7 +895,6 @@ class getinfo extends CI_Model
 			'RETURNDATE'=>$this->input->post('inputReturn'),	
 			'RESULT'=>$this->input->post('inputResult'),
 			'PRESCRIPTION'=>$this->input->post('inputPrescripton'),
-			'Attached'=> $image,
 			'is_delete'=> "1"
 		);
 

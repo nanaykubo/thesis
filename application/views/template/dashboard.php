@@ -447,7 +447,7 @@ function Data2(data) {
 }
 
 $.getJSON("<?php echo base_url('template/getpie/'.$data[0]['userlist'][0]->HCID) ?>", Data1);
-$.getJSON("<?php echo base_url('template/getBarChart/') ?>", Data2);
+$.getJSON("<?php echo base_url('template/getBarChart/'.$data[0]['userlist'][0]->HCID) ?>", Data2);
 
 }
 </script>

@@ -470,7 +470,6 @@ $("#exampleModal").modal('show')
         if($("#inputSelect").val() == "3" && $("#inputReport").val() == "Annual")
         {
                 var txtYear = ($("#inputYear").val());
-                var HCID= <?php echo $userlist[0]->HCID?>;
                 table = $('#example').DataTable({
                 "ajax": {
                 "url": '<?php echo base_url('template/getAnnual/'); ?>',
@@ -493,7 +492,6 @@ $("#exampleModal").modal('show')
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
                  $("#inputQuarter").val() == "1" )
         {
-                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtYear = ($("#inputYear").val());
                 var txtQuarter = ($("#inputQuarter").val());
                 table = $('#example').DataTable({
@@ -518,7 +516,6 @@ $("#exampleModal").modal('show')
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
                  $("#inputQuarter").val() == "2" )
         {
-                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtYear = ($("#inputYear").val());
                 var txtQuarter = ($("#inputQuarter").val());
                 table = $('#example').DataTable({
@@ -543,7 +540,6 @@ $("#exampleModal").modal('show')
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
                  $("#inputQuarter").val() == "3" )
         {
-                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtYear = ($("#inputYear").val());
                 var txtQuarter = ($("#inputQuarter").val());
                 table = $('#example').DataTable({
@@ -568,7 +564,6 @@ $("#exampleModal").modal('show')
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
                  $("#inputQuarter").val() == "4" )
         {
-                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtYear = ($("#inputYear").val());
                 var txtQuarter = ($("#inputQuarter").val());
                 table = $('#example').DataTable({
@@ -593,7 +588,6 @@ $("#exampleModal").modal('show')
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "1" )
         {
-                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
 
@@ -619,7 +613,6 @@ $("#exampleModal").modal('show')
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "2" )
         {
-                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
@@ -644,7 +637,6 @@ $("#exampleModal").modal('show')
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "3" )
         {
-                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
@@ -669,7 +661,6 @@ $("#exampleModal").modal('show')
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "4" )
         {
-                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
@@ -694,7 +685,6 @@ $("#exampleModal").modal('show')
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "5" )
         {
-                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
@@ -719,7 +709,6 @@ $("#exampleModal").modal('show')
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "6" )
         {
-                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
@@ -744,7 +733,6 @@ $("#exampleModal").modal('show')
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "7" )
         {
-                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
@@ -769,7 +757,6 @@ $("#exampleModal").modal('show')
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Monthly" && 
                  $("#inputMonth").val() == "8" )
         {
-                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtMonth = ($("#inputMonth").val());
                 var txtYear = ($("#inputYear").val());
                 table = $('#example').DataTable({
@@ -904,6 +891,447 @@ $("#exampleModal").modal('show')
                 { "title": "Last Name", "data": "LN" }
                 ],
                 "columnDefs": [{"targets": [1,2,3], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Annual")
+        {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyAnnual/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Quarter':txtQuarter,'HCID' : HCID}
+                },
+                "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}]
+                ,dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Quarterly" && 
+                 $("#inputQuarter").val() == "1" )
+        {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyQuarter/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Quarter':txtQuarter,'HCID' : HCID}
+                },
+                "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}]
+                ,dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Quarterly" && 
+                 $("#inputQuarter").val() == "2" )
+        {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyQuarter/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Quarter':txtQuarter,'HCID' : HCID}
+                },
+                "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}]
+                ,dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Quarterly" && 
+                 $("#inputQuarter").val() == "3" )
+        {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyQuarter/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Quarter':txtQuarter,'HCID' : HCID}
+                },
+                "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}]
+                ,dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Quarterly" && 
+                 $("#inputQuarter").val() == "4" )
+        {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyQuarter/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Quarter':txtQuarter,'HCID' : HCID}
+                },
+                "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}]
+                ,dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "1" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "2" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "3" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "4" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "5" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "6" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "7" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "8" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "9" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "10" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "11" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "12" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getBrgyMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
                 dom: 'Bfrtip',
                 buttons: [
                 'print'

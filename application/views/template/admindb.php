@@ -174,7 +174,7 @@
                   <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                   <span class="mb-0 text-sm  font-weight-bold"><?php echo strtoupper($data[0]->FN) ?> <?php echo strtoupper($data[0]->LN) ?></span>
+                   <span class="mb-0 text-sm  font-weight-bold"><?php echo strtoupper($data[0]['user'][0]->FN) ?> <?php echo strtoupper($data[0]['user'][0]->LN) ?></span>
                 </div>
               </div>
             </a>
@@ -215,111 +215,52 @@
         <div class="header-body">
           <!-- Card stats -->
           <div class="row">
-            <div class="col-xl-6 col-lg-6">
+            <div class="col-xl-8 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Total Users</h5>
-                      <span class="h2 font-weight-bold mb-0"> A </span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                       <i class="fas fa-users"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-muted text-sm">
+                <div class="card-header">
+                  <h5>List of Reports</h5>
+                </div>
+                <div class="card-body text-center">
+              <table id="table" class="table table-hover">
+              <thead>
+              <th scope="col" width="10px">Report No</th>
+              <th scope="col" width="10px">ID</th>
+              <th scope="col" >Title</th>
+              <th scope="col" width="10px">Actions</th>
+              </thead>
+              <tbody>
+              <?php
+              //retrive parameters from Test.php controller
+              if($data[1]['reports'][0])
+              {
+              //set dataset info to variable test
+              foreach ($data[1]['reports'] as $test) 
+              //get header ID and print out each
+              {
+              ?>
+              <td class="nr"><?php echo $test->reportno; ?></td>
+              <td><?php echo $test->ID; ?></td>
+              <td><?php echo $test->Title; ?></td>
+              <td><a href="#" class="message"><i class="fas fa-envelope fa-lg text-orange"></i></a>
+                <a href="" class="resolve" style="margin-left: 20px;"><i class="fas fa-check-double fa-lg text-green"></i></a></td>
+              </tbody>
+              <?php
+              //continuation to loop all in the dataset to the body
 
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-6 col-lg-6">
-              <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">No of Unresolved Reports</h5>
-                      <span class="h2 font-weight-bold mb-0"> A </span>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-red text-white rounded-circle shadow">
-                        <i class="fas fa-bell"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-muted text-sm">
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-<!-- Page content -->
-    <div class="container-fluid mt--7">
-      <div class="row">
-             <div class="col-xl-7 mb-5 mb-xl-0">
-          <div class="card shadow">
-            <div class="card-header bg-transparent">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h6 class="text-uppercase text-muted ls-1 mb-1">Reports</h6>
-                  <h2 class="mb-0">Unresolved Reports</h2>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-            <table class="table text-center" id="reports">
-            <thead class="thead-light text-center">
-            <tr>
-            <th scope="col">Report No</th>
-            <th scope="col">ID</th>
-            <th scope="col">Title</th>
-            <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
+              }
 
-            </tbody>
-            </table>
-          </div>
-  </body>
-        </div>
-      </div>
-      <div class="col-xl-5">
-        <div class="card" style="height: 34.4rem;">
-          <div class="card shadow">
-            <div class="card-header border-0">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h3 class="mb-0">Admin Activity</h3>
-                </div>
-                <div class="col text-right">
-                </div>
-              </div>
-            </div>
-            <table class="table" id="myTable">
-            <thead class="thead-light text-center">
-            <tr>
-            <th scope="col">Activity</th>
-            <th scope="col">Date</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-            </table>
-            </div>
-          </div>
-        </div>
-        </div>
-
-  </div>
+              }
+              ?>
 </div>
-</body>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
 
               
 
@@ -341,60 +282,32 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script>
   $(document).ready(function() {
-    var table=$('#reports').DataTable({
-      "ajax": '<?php echo base_url('template/getallReports'); ?>',
-      "type": 'POST',
-      "searching":false,
-      "info":false,
-      "bLengthChange": false,
-      "pageLength": 8,
-      "columnDefs": [
-                {"targets":-1,"className": 'dt-body-center',"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="viewBtn" class="dropdown-item"><i class="far fa-envelope"></i>View Message</button><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Resolve</button></div></div>'},
-                {
-      "targets": [1,2,3],
-      "orderable": false}
-            ]
-    });
+$(".message").click(function() {
+    var $row = $(this).closest("tr");    
+    var $text = $row.find(".nr").text(); 
 
-      $('#reports tbody').on( 'click', 'button', function () {
-        var data = table.row( $(this).parents('tr') ).data();
-        var action=this.id;
-        var reportno = data[0];
-        if (action=='viewBtn')
-          {
-          $.ajax({
-          url: '<?php echo base_url('template/getMessage/'); ?>', 
-          type: 'POST',
-          data: {'reportno': code},
-          success: function (result) {
-          var parsed= JSON.parse(result);        
-          $.each(parsed,function(index,value)
-                {
-                  $(".modal-body #logs tbody").append("<tr><td>"+value[0]+"</td>+<td>"+value[1]+"</td></tr>");
-                  $("#exampleModalCenter").modal('show')
-                });
-          }
+    alert($text)
+    $.ajax({
+    url: '<?php echo base_url('template/getMessage/'); ?>', 
+    type: 'POST',
+    data: {'Rno': $text},
+    success: function (result) {  
+    alert(result);
+    }
+    }); 
+  
+});  
 
-          });
-          }
-    });
+$(".resolve").click(function() {
+    var $row = $(this).closest("tr");    // Find the row
+    var $text = $row.find(".nr").text(); // Find the text
+    
+    
+});  
 
-          $('#myTable').DataTable({
-      "ajax": '<?php echo base_url('template/getadminLogs'); ?>',
-      "type": 'POST',
-      "searching":false,
-      "info":false,
-      "bLengthChange": false,
-      "pageLength": 11,
-       order: [[1, 'desc']],
-    //Set column definition initialisation properties.
-            "columnDefs": [
-                { "width": "40%", "targets": [1]},
-                { "width": "60%", "targets": [0], "orderable":false },
-                {"className": "dt-center", "targets": "_all"}
-                        ]
-    });
-  });
+});
+
+     
   </script>
 </body>
 

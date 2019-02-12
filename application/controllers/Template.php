@@ -30,21 +30,6 @@ class Template extends CI_Controller {
 		$this->load->view('Template/login');	
 	}
 
-	public function getBarChart()
-	{
-		$result = $this->m->getBarChart();
-
-		foreach ($result as $value) 
-			{
-			$row = array();
-			$row[0] = $value->month;
-			$row[1] = $value->total;
-			$data2[] = $row;
-			}
-
-			echo json_encode($data2);
-	}
-
 	public function profile()
 	{
 		if($this->session->userdata('logged_in')){
@@ -90,7 +75,9 @@ class Template extends CI_Controller {
 			   ,$this->session->userdata('password')
 			);
 
-			$data['data']=$get;
+			$user['user']=$get;
+			$reports['reports']=$this->m->getallReports();
+			$data['data']=array($user,$reports);
 
 			$this->load->view('Template/admindb',$data);	
 		}
@@ -234,6 +221,22 @@ class Template extends CI_Controller {
 		$this->load-> view('Template/try');
 	}
 
+	public function getBarChart($HCID)
+	{
+		$result = $this->m->getBarChart($HCID);
+
+		foreach ($result as $value) 
+			{
+			$row = array();
+			$row[0] = $value->month;
+			$row[1] = $value->total;
+			$data2[] = $row;
+			}
+
+			echo json_encode($data2);
+	}
+
+
 	public function getpie($HCID)
 	{
 			$charts=$this->m->getPieChart($HCID);
@@ -324,9 +327,10 @@ class Template extends CI_Controller {
 			$portid = $this->uri->segment(3);
 			$patientinfo['pinfo'] = $this->m->getInfoID($portid);
 			$userlist['userlist'] = $get;
+			$ai['ai']= $this->m->getAI();
 			$precords['precords'] =	$this->m->getallRecords($portid);
 
-			$data['data'] = array($patientinfo,$userlist,$precords);
+			$data['data'] = array($patientinfo,$userlist,$precords,$ai);
 
 			$this->load-> view('Template/records',$data);
 		}	
@@ -366,7 +370,13 @@ class Template extends CI_Controller {
 
 		$values = $this->m->getImage($data['RNo']);
 
-		echo $values;
+		foreach ($values as $value) {
+			$row = array();
+			$row[0] = $value->images;
+			$data2[] = $row;
+		}
+		
+		echo json_encode($data2);
 	}
 
 	public function reports()
@@ -387,41 +397,47 @@ class Template extends CI_Controller {
 
 	public function pRecords()
 	{
+		$something = $this->input->post('txtID');
 		$this->load->library('upload');
-
+		// Write code below to save $this->input->post() to record table
         $files = $_FILES;
         $filesCount = count($_FILES['userfile']['name']);
         for($i=0; $i<$filesCount; $i++)
-        {           
+        {                   	
             $_FILES['userfile']['name']= $files['userfile']['name'][$i];
             $_FILES['userfile']['type']= $files['userfile']['type'][$i];
             $_FILES['userfile']['tmp_name']= $files['userfile']['tmp_name'][$i];
             $_FILES['userfile']['error']= $files['userfile']['error'][$i];
             $_FILES['userfile']['size']= $files['userfile']['size'][$i];    
-
             $this->upload->initialize($this->set_upload_options());
-
 			if (!$this->upload->do_upload()) {
-			$error = array('error' => $this->upload->display_errors());
-			print_r($error);
+				$error = array('error' => $this->upload->display_errors());
+				print_r($error);
 			} 
 			else 
 			{
-			$arr_image= $this->upload->data('file_name');
+				$error = array('error' => $this->upload->display_errors());
+				print_r($error);
+				$arr_image= $this->upload->data();
 
-			print_r($arr_image);
+	        	// FILE DATA 
+	        	$fileData = array(
+	        		'recordno' => $this->input->post('inputRecordNo'),
+	        		'images' => $files['userfile']['name'][$i]
+	        	);
+
+	        	print_r($fileData);  		
+    			$this->db->insert('attached', $fileData);	
 			}
-			}
+		}
+
 	}
 
 	private function set_upload_options()
     {   
         $config = array();
         $config['upload_path'] = '/xampp/htdocs/medrec/assets/uploads';
-		$config['allowed_types'] = 'gif|jpg|jpeg|png';
-		$config['max_size'] = '1000';
-		$config['max_width'] = '1920';
-		$config['max_height'] = '1280';                     
+		$config['allowed_types'] = 'gif|jpg|jpeg|png';                
         $config['overwrite']     = FALSE;
 
         return $config;
@@ -497,17 +513,9 @@ class Template extends CI_Controller {
 	{
 		$data = $this->input->post();
 
-		$values = $this->m->getInfoID($data['reportno']);
-
-		foreach ($values as $value) {
-			$row = array();
-			$row[0] = $value->ID;
-			$row[1] = $value->FN;
-			$row[2] = $value->MN;
-			$data2[] = $row;
-		}
+		$values = $this->m->getMessage($data['Rno']);
 		
-		echo json_encode($data2);
+		echo json_encode($values);
 	}
 
 	public function updateNewRecords()
@@ -641,6 +649,19 @@ class Template extends CI_Controller {
 	echo json_encode($output);
 	}
 
+	public function getBrgyAnnual()
+	{
+	$data = $this->input->post();
+
+	$Year = $this->m->getBrgyAnnual($data['Year'],$data['HCID']);
+
+	$output = array(
+		"data" => $Year,
+	);
+
+	echo json_encode($output);
+	}
+
 	public function getQuarter()
 	{
 	$data = $this->input->post();
@@ -650,6 +671,23 @@ class Template extends CI_Controller {
 	$HCID = $data['HCID'];
 
 	$result = $this->m->getQuarter($Year,$Quarter,$HCID);
+
+	$output = array(
+		"data" => $result,
+	);
+
+	echo json_encode($output);
+	}
+
+	public function getBrgyQuarter()
+	{
+	$data = $this->input->post();
+
+	$Year = $data['Year'];
+	$Quarter = $data['Quarter'];
+	$HCID = $data['HCID'];
+
+	$result = $this->m->getBrgyQuarter($Year,$Quarter,$HCID);
 
 	$output = array(
 		"data" => $result,
@@ -674,6 +712,24 @@ class Template extends CI_Controller {
 
 	echo json_encode($output);
 	}
+
+	public function getBrgyMonth()
+	{
+	$data = $this->input->post();
+
+	$Month = $data['Month'];
+	$Year = $data['Year'];
+	$HCID = $data['HCID'];
+
+	$result = $this->m->getBrgyMonth($Month,$Year,$HCID);
+
+	$output = array(
+		"data" => $result,
+	);
+
+	echo json_encode($output);
+	}
+
 
 	public function getCustom()
 	{

@@ -222,7 +222,7 @@
       </div>
 
     <!-- Disease -->
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt--9">
       <div class="card text-center">
         <div class="card-header">
        <h1>Users Profile<h1>
@@ -230,20 +230,40 @@
 
         <div class="card-body">
      <div class="row">
-  <div class="col-xl-4">
+  <div class="col-xl-6">
    <div class="card text-center">
     <div class="card-header">
-    <h3>Users Profile</h3>
+      <img alt="Image placeholder" style="border-radius: 50%; height: 180px;"src="../assets/img/theme/team-4-800x800.jpg">
+    <button type="button" class="btn btn-primary btn-sm" style="width: 120px; margin-left:300px;">Edit Profile</button>
     </div>
+   
       <div class="card-body">
       <div class="row">
 <form>
+      <input type="text" class="form-control" placeholder="Code">
+    <br>
   <div class="row">
     <div class="col">
       <input type="text" class="form-control" placeholder="First name">
     </div>
     <div class="col">
+      <input type="text" class="form-control" placeholder="Middle name">
+    </div>
+    <div class="col">
       <input type="text" class="form-control" placeholder="Last name">
+    </div>
+  </div>
+  <br>
+      <input type="text" class="form-control" placeholder="Position">
+      <br>
+      <input type="text" class="form-control" placeholder="Health Center">
+      <br>
+      <div class="row">
+    <div class="col">
+      <input type="text" class="form-control" placeholder="Username">
+    </div>
+    <div class="col">
+      <input type="text" class="form-control" placeholder="Password">
     </div>
   </div>
 </form>
@@ -252,7 +272,7 @@
     </div>
   </div>
 
-  <div class="col-xl-4">
+  <div class="col-xl-6">
     <div class="card text-center">
     <div class="card-header">
        <h3>Activities</h3>
@@ -264,20 +284,8 @@
       </div>
   </div>
 </div>
-    <div class="col-xl-4">
-    <div class="card text-center">
-    <div class="card-header">
-       <h3>Activities</h3>
-    </div>
-      <div class="card-body">
-       <div class="row">
-<div id="barChart" style="width: 100%; height: 300px;"></div>
-     </div>
-      </div>
-  </div>
 </div>
-    </div>
-  </div>
+</div>
 </div>
 
 

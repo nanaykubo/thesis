@@ -250,7 +250,7 @@
               <hr class="my-3">
               <!-- Button -->
 
-     <button class="btn btn-icon btn-3 btn-secondary" style="margin-left: 10px;" data-toggle="modal" data-target="#exampleModalLong" type="button">
+     <button class="btn btn-icon btn-3 btn-secondary" id="addpatient"style="margin-left: 10px;" data-toggle="modal" data-target="#exampleModalLong" type="button">
       <span class="btn-inner--icon"><i class="fas fa-user-plus fa-lg text-default"></i></span>
       <span class="btn-inner--text">Add Patient</span>
         </button>
@@ -544,7 +544,7 @@
 </div>
 
    
-  <button class="btn btn-primary" style="margin-left: 580px;" type="submit">Add New Patient</button>
+  <button class="btn btn-primary" id="add" style="margin-left: 580px;" type="submit">Add New Patient</button>
       </div>
     </div>
   </div>
@@ -590,9 +590,12 @@
       "orderable": false}
             ]
     });
+
     $('#exampleModalLong').on('hidden.bs.modal', function () {
     $(this).find('form').trigger('reset');
+     $(".modal-title").html('Edit User');
     })
+
     $('#myTable tbody').on( 'click', 'button', function (e) {
             var data = table.row($(this).parents('tr') ).data();
             var action=this.id;
@@ -618,7 +621,6 @@
                   data: {'ID': ID},
                   success: function (result) 
                   {
-                    alert(result)
                   var parsed= JSON.parse(result);
                   $.each(parsed,function(index,value)
                   {
@@ -657,6 +659,8 @@
                     }
                     $("#exampleModalLong").modal('show')
                     $("#testform").attr("action",'<?php echo base_url('template/updateNewRecords') ?>');
+                    $(".modal-body #add").html('Edit User');
+                    $(".modal-title").html('Edit User');
                   });
                   } 
                   });
@@ -696,6 +700,10 @@ $("#nav").click(function(){
       $("#report").modal('show')
     }); 
 
+$("#addpatient").click(function(){
+       $(".modal-body #add").html('Add Patient');
+      $(".modal-title").html('Add New Patient');
+    }); 
 
  $("#inputBD").change(function() 
   {    

@@ -318,14 +318,21 @@
         <h5 class="modal-title" id="exampleModalLongTitle">Uploaded Image</h5>
       </div>
       <div class="modal-body">
-      <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img id="myImage"class="d-block w-100"  alt="No Attached Files">
-    </div>  
-  </div>
+   
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
 </div>
       </div>
+      
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
@@ -355,6 +362,10 @@
    <input type="hidden" name="inputnote" id="inputnote"/>
 
   <div class="form-row">
+     <div class="form-group col-md-12">
+      <label for="inputState">Record No:</label>
+      <input type="text" class="form-control" id="inputRecordNo" name="inputRecordNo" value="<?php echo $data[3]['ai'][0]->AUTO_INCREMENT; ?>" readonly>
+    </div>
     <div class="form-group col-md-12">
       <label for="inputState">Record Type</label>
       <select id="inputType" name="inputType" class="form-control">
@@ -441,10 +452,17 @@
           type: 'POST',
           data: {'RNo': $text},
           success: function (result) 
-                  {
-                    $("#myImage").attr('src', '<?php echo base_url('/assets/uploads/');?>'+result);
-                    $("#viewModal").modal('show')
-                  }
+          {
+          var parsed=JSON.parse(result);
+            $.each(parsed,function(index,value)
+            {
+            $('.carousel-inner').append($('<div class="item"><img src="' + '<?php echo base_url('/assets/uploads/');?>' + value[0] + '" alt="image description" width="100%" height="250" /><div class="carousel-caption"></div></div>'));
+
+
+            $("#myImage").attr('src', '<?php echo base_url('/assets/uploads/');?>'+result);
+            $("#viewModal").modal('show')
+            });
+          }
         });
 });
 
