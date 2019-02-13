@@ -193,6 +193,31 @@ class getinfo extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getCaseAnnual($txtYear,$HCID)
+	{
+		$this->db->select("tabletest.ID,tabletest.FN,tabletest.LN,tabletest.MN,`Diag`,recordno")
+		->from('tabletest');
+		$this->db->join('precords', 'tabletest.ID = precords.id and tabletest.HCID=precords.HCID');
+		$this->db->where('YEAR(DATE)',$txtYear);
+		$this->db->where('tabletest.HCID',$HCID);
+		$this->db->where('r_delete',"1");
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+	public function getCaseQuarter($txtYear,$txtQuarter,$HCID)
+	{
+		$this->db->select("tabletest.ID,tabletest.FN,tabletest.LN,tabletest.MN,`Diag`,recordno")
+		->from('tabletest');
+		$this->db->join('precords', 'tabletest.ID = precords.id and tabletest.HCID=precords.HCID');
+		$this->db->where('YEAR(DATE)',$txtYear);
+		$this->db->where('QUARTER(DATE)',$txtQuarter);
+		$this->db->where('tabletest.HCID',$HCID);
+		$this->db->where('r_delete',"1");
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
 	public function getBrgyQuarter($txtYear,$txtQuarter,$HCID)
 	{
 		$this->db->select("*");
@@ -212,6 +237,19 @@ class getinfo extends CI_Model
 		$this->db->where('is_delete',"1");
 		$this->db->where('HCID',$HCID);
 		$query = $this->db->get('tabletest');
+		return $query->result_array();
+	}
+
+		public function getCaseMonth($txtMonth,$txtYear,$HCID)
+	{
+		$this->db->select("tabletest.ID,tabletest.FN,tabletest.LN,tabletest.MN,`Diag`,recordno")
+		->from('tabletest');
+		$this->db->join('precords', 'tabletest.ID = precords.id and tabletest.HCID=precords.HCID');
+		$this->db->where('MONTH(DATE)',$txtMonth);
+		$this->db->where('YEAR(DATE)',$txtYear);
+		$this->db->where('tabletest.HCID',$HCID);
+		$this->db->where('r_delete',"1");
+		$query = $this->db->get();
 		return $query->result_array();
 	}
 
@@ -244,6 +282,29 @@ class getinfo extends CI_Model
 		$this->db->where('dateinsert <=', $txtEnd);
 		$this->db->where('HCID',$HCID);	
 		$query = $this->db->get('tabletest');
+		return $query->result_array();
+	}
+
+	public function getBrgyCustom($txtStart,$txtEnd,$HCID)
+	{
+		$this->db->select("*");
+		$this->db->where('dateinsert >=', $txtStart);
+		$this->db->where('dateinsert <=', $txtEnd);
+		$this->db->where('HCID',$HCID);	
+		$query = $this->db->get('family');
+		return $query->result_array();
+	}
+
+	public function getCaseCustom($txtStart,$txtEnd,$HCID)
+	{
+		$this->db->select("tabletest.ID,tabletest.FN,tabletest.LN,tabletest.MN,`Diag`,recordno")
+		->from('tabletest');
+		$this->db->join('precords', 'tabletest.ID = precords.id and tabletest.HCID=precords.HCID');
+		$this->db->where('dateinsert >=', $txtStart);
+		$this->db->where('dateinsert <=', $txtEnd);
+		$this->db->where('tabletest.HCID',$HCID);
+		$this->db->where('r_delete',"1");
+		$query = $this->db->get();
 		return $query->result_array();
 	}
 
@@ -329,26 +390,27 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
-	public function Resolve($reportno,$code)
+	public function Resolve($reportno,$code,$date)
 	{
 		$resolve = array(
 		'is_resolve' => 0,
 		);    
 
-		$this->db->insert('reports', $resolve);
-
 		$logs = array(
 			'code'=>$code,
-			'activity'=>"Resolve ".$reportno,
-			'date'=>$this->input->post('inputinsert')
+			'activity'=>"Resolve Report No. ".$reportno,
+			'date'=>$date
 			);
 
+		$this->db->where('reportno',$reportno);	
+		$this->db->update('reports', $resolve);
 		$this->db->insert('adminlogs', $logs);
 		return $query->result();
 	}
 
 	public function getallReports()
 	{
+		$this->db->where('is_resolve','1');	
 		$query = $this -> db -> get('reports');
 		if ($query -> num_rows() > 0)
 		{
@@ -402,6 +464,40 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getLineChart($HCID)
+	{
+		$this->db->select('MONTHNAME(CONCAT("2019-", Months.m, "-01")) as month, 
+		sum(case when Diag = "Conjuctivitis(Diagnosis)" then 1 else 0 end) Conjuctivitis,
+        sum(case when Diag = "Pnuemonia (Diagnosis)" then 1 else 0 end) Pnuemonia,
+        sum(case when Diag = "Hypentesion(Diagnosis)" then 1 else 0 end) Hypertension,
+        sum(case when Diag = "Vaginitis(Diagnosis)" then 1 else 0 end) Vaginitis,
+        sum(case when Diag = "Diabetis(Diagnosis)" then 1 else 0 end) Diabetis,
+        sum(case when Diag = "Upper Respiratory Tract Infection(Diagnosis)" then 1 else 0 end) URTI,
+        sum(case when Diag = "Diarrehea(Diagnosis)" then 1 else 0 end) Diarrehea,
+        sum(case when Diag = "Arthritis(Diagnosis)" then 1 else 0 end) Arthritis,
+        sum(case when Diag = "Sore Throat(Diagnosis)" then 1 else 0 end) SoreThroat,
+        sum(case when Diag = "UTI(Diagnosis)" then 1 else 0 end) UTI,
+        sum(case when Diag = "Primary Tuberculosis(Diagnosis)" then 1 else 0 end) PrimaryTB')
+		->from('(
+		SELECT 1 as m
+		UNION SELECT 2 as m 
+		UNION SELECT 3 as m 
+		UNION SELECT 4 as m 
+		UNION SELECT 5 as m 
+		UNION SELECT 6 as m 
+		UNION SELECT 7 as m 
+		UNION SELECT 8 as m 
+		UNION SELECT 9 as m 
+		UNION SELECT 10 as m 
+		UNION SELECT 11 as m 
+		UNION SELECT 12 as m
+		) as Months');
+		$this->db->join('precords', 'Months.m = MONTH(`DATE`) AND HCID = '.$HCID,'left')
+         ->group_by('Months.m');
+        $query = $this->db->get();
+		return $query->result();
+	}
+
 	public function create($data)
 	{
 	$records = array(
@@ -433,6 +529,22 @@ class getinfo extends CI_Model
 		{
 		$row = $query->row();
 		return $row->count;
+		}
+		return 0;
+	}
+
+	public function getDiseaseMax($HCID)
+	{
+		$this->db->select('DIAG,MAX(counted)')
+		->from('(
+		SELECT DIAG, HCID, COUNT(*) AS counted
+		FROM precords
+		where HCID='.$HCID.' GROUP BY Diag) as count');
+		$query = $this->db->get();
+		if ($query->num_rows() > 0 )
+		{
+		$row = $query->row();
+		return $row->DIAG;
 		}
 		return 0;
 	}
@@ -649,7 +761,8 @@ class getinfo extends CI_Model
 		$reports = array(
 			'ID'=>$this->input->post('inputID'),
 			'Title'=>$this->input->post('inputTitle'),	
-			'Message'=>$this->input->post('inputMsg')
+			'Message'=>$this->input->post('inputMsg'),
+			'is_resolve'=>'1'
 		);
 
 	$this->db->insert('reports', $reports);
@@ -911,7 +1024,8 @@ class getinfo extends CI_Model
 			'RecordType'=>$this->input->post('inputType'),
 			'DATE'=>$this->input->post('inputDate'),
 			'RETURNDATE'=>$this->input->post('inputReturn'),	
-			'RESULT'=>$this->input->post('inputResult'),
+			'Diag'=>$this->input->post('inputDiagnosis'),
+			'OUTCOME'=>$this->input->post('inputResult'),
 			'PRESCRIPTION'=>$this->input->post('inputPrescripton'),
 			'is_delete'=> "1"
 		);

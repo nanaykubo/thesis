@@ -338,9 +338,8 @@
      <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
   </div>
-  <button class="btn btn-primary" id="buttonuser" style="float:right;"type="submit">Add User</button>
+  <button class="btn btn-primary" id="Add" style="float:right;" type="submit">Add User</button>
 </form>
-
         </div>
       </div>
     </div>
@@ -453,6 +452,8 @@ aria-labelledby="myModalLabel">
     $("#editUser").on("click",function(){
 
             $("#inputCode").prop("readonly",false);
+             $(".modal-title").html('Add New User');
+            $(".modal-body #Add").html('Add User');
      });
 
     $('#myTable tbody').on( 'click', 'button', function (e) {
@@ -523,6 +524,8 @@ aria-labelledby="myModalLabel">
                     
                     $("#exampleModalLong").modal('show')
 
+                    $(".modal-title").html('Edit User');
+                    $(".modal-body #Add").html('Edit User');
                     $("#testform").attr("action",'<?php echo base_url('template/updateUser') ?>');
                   });
             },

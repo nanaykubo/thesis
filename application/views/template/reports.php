@@ -27,7 +27,7 @@
 
 </head>
 
-<body>
+<body style="background-color: white;">
   <!-- Sidenav -->
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
@@ -537,6 +537,7 @@ $("#exampleModal").modal('show')
                 ]
                 });
         }
+
         else if ($("#inputSelect").val() == "3" && $("#inputReport").val() == "Quarterly" && 
                  $("#inputQuarter").val() == "3" )
         {
@@ -1332,6 +1333,497 @@ $("#exampleModal").modal('show')
                 { "title": "City", "data": "City" }
                 ],
                 "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Custom")
+        {
+                var txtStart = ($("#txtStartDate").val());
+                var txtEnd = ($("#txtEndDate").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCustom/'); ?>',
+                "type": "POST",
+                "data": {'Start': txtStart,'End':txtEnd,'HCID' : HCID}
+                },
+                "columns": [
+                { "title": "Family No", "data" : "familyno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Brgy", "data": "Brgy" },
+                { "title": "City", "data": "City" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Annual")
+        {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseAnnual/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'HCID' : HCID}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}]
+                ,dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Quarterly" && 
+                 $("#inputQuarter").val() == "1" )
+        {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseQuarter/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Quarter':txtQuarter,'HCID' : HCID}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}]
+                ,dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Quarterly" && 
+                 $("#inputQuarter").val() == "2" )
+        {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseQuarter/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Quarter':txtQuarter,'HCID' : HCID}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}]
+                ,dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Quarterly" && 
+                 $("#inputQuarter").val() == "3" )
+        {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseQuarter/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Quarter':txtQuarter,'HCID' : HCID}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}]
+                ,dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Quarterly" && 
+                 $("#inputQuarter").val() == "4" )
+        {
+                var txtYear = ($("#inputYear").val());
+                var txtQuarter = ($("#inputQuarter").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseQuarter/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Quarter':txtQuarter,'HCID' : HCID}
+                },
+                "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}]
+                ,dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "1" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "2" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                  "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "3" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                  "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "4" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                  "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "5" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                  "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "6" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                  "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "7" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                  "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "8" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                  "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "9" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                  "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "10" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                  "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "11" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                  "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Monthly" && 
+                 $("#inputMonth").val() == "12" )
+        {
+                var txtMonth = ($("#inputMonth").val());
+                var txtYear = ($("#inputYear").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseMonth/'); ?>',
+                "type": "POST",
+                "data": {'Year': txtYear,'Month':txtMonth,'HCID' : HCID}
+                },
+                  "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3,4,5], "orderable": false}],
+                dom: 'Bfrtip',
+                buttons: [
+                'print'
+                ]
+                });
+        }
+        else if ($("#inputSelect").val() == "1" && $("#inputReport").val() == "Custom")
+        {
+                var txtStart = ($("#txtStartDate").val());
+                var txtEnd = ($("#txtEndDate").val());
+                table = $('#example').DataTable({
+                "ajax": {
+                "url": '<?php echo base_url('template/getCaseCustom/'); ?>',
+                "type": "POST",
+                "data": {'Start': txtStart,'End':txtEnd,'HCID' : HCID}
+                },
+                 "columns": [
+                { "title": "ID", "data" : "ID"},
+                { "title": "Record No", "data" : "recordno"},
+                { "title": "First Name",  "data": "FN" },
+                { "title": "Middle Name", "data": "MN" },
+                { "title": "Last Name", "data": "LN" },
+                { "title": "Diagnosis", "data": "Diag" }
+                ],
+                "columnDefs": [{"targets": [1,2,3], "orderable": false}],
                 dom: 'Bfrtip',
                 buttons: [
                 'print'

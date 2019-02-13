@@ -262,7 +262,19 @@
           <div class="card shadow">
             <div class="card-header border-0">
                <!-- header -->
-
+            <?php 
+            if($this-> session->flashdata('error_msg'))
+            {
+            ?>
+            <div class="alert alert-dismissible alert-warning fade show text-center"><i class="fas fa-exclamation-triangle fa-lg"></i>
+            <?php echo $this->session->flashdata('error_msg');?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+            </div>
+            <?php
+            } 
+            ?>  
             </div>
             <!-- body -->
 
@@ -273,9 +285,9 @@
       <th scope="col">Record Type</th>
       <th scope="col">Date Inserted</th>
       <th scope="col">Return Date</th>
-      <th scope="col">Result</th>
+      <th scope="col">Diagnosis/Services</th>
       <th scope="col">Prescription</th>
-      <th scope="col">Attached (View)</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -293,9 +305,10 @@
       <td><?php echo $test->RecordType; ?></td>
       <td><?php echo $test->DATE; ?></td>
       <td><?php echo $test->RETURNDATE; ?></td>
-      <td><?php echo $test->RESULT; ?></td>
+      <td><?php echo $test->Diag; ?></td>
       <td><?php echo $test->PRESCRIPTION; ?></td>
-      <td><button type="button" class="use-address" /></td>
+      <td><a href="#" class="message" data-toggle="tooltip" data-placement="top" title="Patient Record"><i class="fas fa-file-medical-alt fa-lg text-red"></i></a>
+      <a href="#" id="actbutton" class="resolve" style="margin-left: 20px;" data-toggle="tooltip" data-placement="top" title=" Attached Record"><i class="fas fa-paperclip fa-lg text-yellow"></i></a></td>
     </tr>
    </tbody> 
     <?php
@@ -329,8 +342,8 @@
 </div>
 </div>
 
-<div class="modal" id="myModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+<div class="modal" id="myModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" role="dialog">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Add Records</h5>
@@ -348,6 +361,7 @@
    <input type="hidden" name="inputassist" id="inputassist" value="<?php echo $data[1]['userlist'][0]->code?>"/>
    <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
    <input type="hidden" name="inputnote" id="inputnote"/>
+   <input type="hidden" name="inputDiagnosis" id="inputDiagnosis" value=""/>
 
   <div class="form-row">
      <div class="form-group col-md-12">
@@ -357,8 +371,9 @@
     <div class="form-group col-md-12">
       <label for="inputState">Record Type</label>
       <select id="inputType" name="inputType" class="form-control">
-        <option value="Checkup">Checkup</option>
-        <option value="Service">Service</option>
+        <option value="1">Checkup</option>
+        <option value="2">Follow Up Check Up</option>
+        <option value="3">Services</option>
       </select>
     </div>
     <div class="form-group col-md-6">
@@ -369,13 +384,47 @@
       <label for="inputPassword4">Return Date</label>
       <input type="date" class="form-control" name="inputReturn" id="inputReturn">
     </div>
+     <div class="form-group col-md-6">
+      <label for="Diagnosis">Diagnosis</label>
+      <select id="Diagnosis" name="Diagnosis" class="form-control" required="">
+        <option value="1">Pnuemonia </option>
+        <option value="2">Hypentesion</option>
+        <option value="3">Diabetis</option>
+        <option value="4">Upper Respiratory Tract Infection</option>
+        <option value="5">Primary Tuberculosis</option>
+        <option value="6">UTI</option>
+        <option value="7">Diarrehea</option>
+        <option value="8">Arthritis</option>
+        <option value="9">Conjuctivitis</option>
+        <option value="10">Sore Throat</option>
+        <option value="11">Vaginitis</option>
+      </select>
+    </div>
+     <div class="form-group col-md-6">
+      <label for="Diagnosis">Services</label>
+      <select id="Services" name="Services" class="form-control" required="">
+        <option value="1">Family Planning</option>
+        <option value="2">Maternal and Child</option>
+        <option value="3">Tubercolosis</option>
+        <option value="4">Dental</option>
+        <option value="5">Well Baby Immunization</option>
+        <option value="6">Adolescence </option>
+        <option value="7">Pre Natal</option>
+        <option value="8">Post Natal</option>
+        <option value="9">Nutrition</option>
+        <option value="10">Cardiovascular Disease</option>
+        <option value="11">Diabetis</option>
+      </select>
+    </div>
      <div class="form-group col-md-12">
-    <label for="exampleFormControlTextarea1">Result</label>
-    <textarea class="form-control" name="inputResult" id="inputResult" rows="3"></textarea>
+    <label for="exampleFormControlTextarea1">Outcome</label>
+    <textarea class="form-control" name="inputResult" id="inputResult" rows="3"
+    placeholder="Patient Status (Recovery/Still Sick/Death)"></textarea>
     </div>
     <div class="form-group col-md-12">
     <label for="exampleFormControlTextarea1">Prescription</label>
-    <textarea class="form-control" name="inputPrescripton" id="inputPrescripton" rows="3"></textarea>
+    <textarea class="form-control" name="inputPrescripton" id="inputPrescripton" rows="3"
+     placeholder="Prescribed Medicine"></textarea>
     </div>
     <div class="form-group col-md-12">
     <label for="inputEmail4">Attached (Optional)</label>
@@ -427,14 +476,53 @@
 
 <script>
  $(document).ready(function() {
+    $("#Services").prop("disabled",true);
+    var val = $("#Diagnosis option:selected").text();
+      $("#inputDiagnosis").val(val+"(Diagnosis)");
+  });
 
-    });
+$("#inputType").change(function() 
+  {    
+    if($(this).val()=="1")
+    {
+       $("#Diagnosis").prop("disabled",false);
+       $("#Services").prop("disabled",true);
+      var val = $("#Diagnosis option:selected").text();
+      $("#inputDiagnosis").val(val+"(Diagnosis)");
+    }
+    if($(this).val()=="2")
+    {
+       $("#Diagnosis").prop("disabled",false);
+       $("#Services").prop("disabled",true);
+      var val = $("#Diagnosis option:selected").text();
+      $("#inputDiagnosis").val(val+"(Diagnosis)");
+    }
+    if($(this).val()=="3")
+    {
+       $("#Diagnosis").prop("disabled",true);
+       $("#Services").prop("disabled",false);
+      var val = $("#Services option:selected").text();
+      $("#inputDiagnosis").val(val+"(Services)");
+    }
+  });
+
+  $("#Services").change(function() 
+  {    
+    var val = $("#Services option:selected").text();
+    $("#inputDiagnosis").val(val+"(Services)");
+  });
+
+  $("#Diagnosis").change(function() 
+  {    
+    var val = $("#Diagnosis option:selected").text();
+    $("#inputDiagnosis").val(val+"(Diagnosis)");
+  });
 
     $("#nav").click(function(){
       $("#exampleModal").modal('show')
-    }
+    });
 
-   $(".use-address").click(function() {
+   $("#actbutton").click(function() {
     var $row = $(this).closest("tr");    // Find the row
     var $text = $row.find(".nr").text(); // Find the text
 
@@ -444,6 +532,7 @@
           data: {'RNo': $text},
           success: function (result) 
           {
+            alert(result)
           var parsed=JSON.parse(result);
             $.each(parsed,function(index,value)
             {
@@ -455,9 +544,8 @@
             });
           }
         });
-});
+    });
 
-});
 </script>
 
 

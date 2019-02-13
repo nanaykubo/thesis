@@ -222,7 +222,7 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Top Disease of the Month</h5>
-                      <span class="h2 font-weight-bold mb-0">Malaria</span>
+                      <span class="h2 font-weight-bold mb-0"><?php echo$data[3]?></span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
@@ -394,6 +394,113 @@ window.onload = function() {
 
 var families = new Array();
 var patients = new Array();
+var a = new Array();
+var b = new Array();
+var c = new Array();
+var d = new Array();
+var e = new Array();
+var f = new Array();
+var g = new Array();
+var h = new Array();
+var i = new Array();
+var j = new Array();
+var k = new Array();
+
+var chart3 = new CanvasJS.Chart("lineChart", {
+  theme:"light2",
+  animationEnabled: true,
+  title:{
+    
+  },
+  axisY :{
+    includeZero: false,
+    title: "Number of Viewers",
+    suffix: "mn"
+  },
+  toolTip: {
+    shared: "true"
+  },
+  legend:{
+    cursor:"pointer",
+    itemclick : toggleDataSeries
+  },
+  data: [{
+    type: "spline",
+    showInLegend: true,
+    name: "Conjuctivitis",
+    dataPoints: a
+  },
+  {
+    type: "spline", 
+    showInLegend: true,
+    name: "Pnuemonia",
+    dataPoints: b
+  },
+  {
+    type: "spline", 
+    showInLegend: true,
+    name: "Hypertension",
+    dataPoints: c
+  },
+  {
+    type: "spline", 
+    showInLegend: true,
+    name: "Vaginitis",
+    dataPoints: d
+  },
+  {
+    type: "spline", 
+    showInLegend: true,
+    name: "Diabetis",
+    dataPoints: e
+  },
+  {
+    type: "spline", 
+    showInLegend: true,
+    name: "URTI",
+    dataPoints: f
+  },
+  {
+    type: "spline", 
+    showInLegend: true,
+    name: "Diarrehea",
+    dataPoints: g
+  },
+  {
+    type: "spline", 
+    showInLegend: true,
+    name: "Arthritis",
+    dataPoints: h
+  },
+  {
+    type: "spline", 
+    showInLegend: true,
+    name: "SoreThroat",
+    dataPoints: i
+  },
+  {
+    type: "spline", 
+    showInLegend: true,
+    name: "UTI",
+    dataPoints: j
+  },
+  {
+    type: "spline", 
+    showInLegend: true,
+    name: "PrimaryTB",
+    dataPoints: k
+  }
+  ]
+});
+
+function toggleDataSeries(e) {
+  if (typeof(e.dataSeries.visible) === "0" || e.dataSeries.visible ){
+    e.dataSeries.visible = false;
+  } else {
+    e.dataSeries.visible = true;
+  }
+  chart3.render();
+}
 
 var chart2 = new CanvasJS.Chart("barChart",{
   animationEnabled: true,
@@ -446,8 +553,26 @@ function Data2(data) {
   chart2.render();
 }
 
-$.getJSON("<?php echo base_url('template/getpie/'.$data[0]['userlist'][0]->HCID) ?>", Data1);
-$.getJSON("<?php echo base_url('template/getBarChart/'.$data[0]['userlist'][0]->HCID) ?>", Data2);
+function Data3(data) {
+  $.each(data, function(key, value){
+        a.push({label: value[0], y: parseInt(value[1])});
+        b.push({label: value[0], y: parseInt(value[2])});
+        c.push({label: value[0], y: parseInt(value[3])});
+        d.push({label: value[0], y: parseInt(value[4])});
+        e.push({label: value[0], y: parseInt(value[5])});
+        f.push({label: value[0], y: parseInt(value[6])});
+        g.push({label: value[0], y: parseInt(value[7])});
+        h.push({label: value[0], y: parseInt(value[8])});
+        i.push({label: value[0], y: parseInt(value[9])});
+        j.push({label: value[0], y: parseInt(value[10])});
+        k.push({label: value[0], y: parseInt(value[11])});
+    });
+  chart3.render();
+}
+
+$.getJSON("<?php echo base_url('Template/getpie/'.$data[0]['userlist'][0]->HCID) ?>", Data1);
+$.getJSON("<?php echo base_url('Template/getBarChart/'.$data[0]['userlist'][0]->HCID) ?>", Data2);
+$.getJSON("<?php echo base_url('Template/getline/'.$data[0]['userlist'][0]->HCID) ?>", Data3);
 
 }
 </script>

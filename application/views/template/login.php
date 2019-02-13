@@ -74,7 +74,7 @@
 </form>
         <br/>
         <div align="center">
-            <a href="#" >Register Account</a> || <a href="#" >Forgot Password?</a>
+            <a href="#" >Register Account</a> 
       </div>
     </div>
 

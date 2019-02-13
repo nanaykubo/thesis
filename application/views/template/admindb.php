@@ -213,15 +213,98 @@
     <div class="header pb-8 pt-5 pt-md-8" style="background: linear-gradient(to bottom, #0099ff -8%, #ffffff 91%);">
       <div class="container-fluid">
         <div class="header-body">
+        </div>
           <!-- Card stats -->
           <div class="row">
-            <div class="col-xl-8 col-lg-6">
+             <div class="col-xl-4 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-header">
-                  <h5>List of Reports</h5>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Total Users</h5>
+                      <span class="h2 font-weight-bold mb-0">Malaria</span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                        <i class="fas fa-chart-pie"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="mt-3 mb-0 text-muted text-sm">
+                    <span class="text-nowrap" id="username_result"></span>
+                    <span >Checked 50 mins ago</span>
+                  </p>
                 </div>
-                <div class="card-body text-center">
-              <table id="table" class="table table-hover">
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6">
+              <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Total Info Deleted</h5>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
+                        <i class="fas fa-chart-bar"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="mt-3 mb-0 text-muted text-sm">
+                    <span class="text-nowrap" id="username_result"></span>
+                    <span >Added Patient 20 mins ago</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6">
+              <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Total Reports</h5>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                        <i class="fas fa-users"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="mt-3 mb-0 text-muted text-sm">
+                    <span class="text-nowrap" id="username_result"></span>
+                    <span >Added Family 10 mins ago</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  <!-- Disease -->
+    <div class="container-fluid mt--7">
+      <div class="card text-center">
+        <div class="card-header">
+       <h1>Top Infectious Disease News of the Month Chart<h1>
+  </div>
+        <div class="card-body">
+      <div class="row">
+<div id="lineChart" style="width: 100%; height: 300px;"></div>
+     </div>
+   </div>
+ </div>
+ <br>
+
+  <div class="row">
+  <div class="col-xl-6">
+   <div class="card text-center">
+    <div class="card-header">
+    <h3>List of Reports</h3>
+    </div>
+      <div class="card-body text-center">
+      <div class="row">
+<table id="table" class="table table-hover">
               <thead>
               <th scope="col" width="10px">Report No</th>
               <th scope="col" width="10px">ID</th>
@@ -250,15 +333,42 @@
               }
 
               }
-              ?>
+              ?>    
+            </table>
+     </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-6">
+    <div class="card text-center">
+    <div class="card-header">
+       <h3>Admin Activity</h3>
+    </div>
+      <div class="card-body">
+       <div class="row">
+<div id="barChart" style="width: 100%; height: 300px;"></div>
+     </div>
+      </div>
+  </div>
 </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+
+  <!-- FOOTER -->
+      <footer class="footer" style="background-color: white;">
+        <div class="row align-items-center justify-content-xl-between">
+          <div class="col-xl-6">
+            <div class="copyright text-center text-xl-left text-muted">
+              &copy; 2018-2019 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">MEDRECTrackingSystem</a>
+            </div>
+          </div>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+
 
 
 <div class="modal" id="ViewMessage" tabindex="-1" role="dialog">
@@ -272,6 +382,7 @@
       </div>
       <div class="modal-body">
         <textarea class="form-control" rows="5" id="comment"></textarea>
+        <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d H:i:s'); ?>"/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -316,15 +427,14 @@ $(".message").click(function() {
 });  
 
 $(".resolve").click(function() {
-    var $row = $(this).closest("tr");    // Find the row
-    var $text = $row.find(".nr").text(); // Find the text
+    var $row = $(this).closest("tr");    
+    var $text = $row.find(".nr").text(); 
     var code = <?php echo $data[0]['user'][0]->code?>;
-    alert(code)
-    alert(date)
+    var date = $('#inputinsert').val();
     $.ajax({
-    url: '<?php echo base_url('template/getMessage/'); ?>', 
+    url: '<?php echo base_url('template/Resolve/'); ?>', 
     type: 'POST',
-    data: {'Rno': $text,'Code':code}
+    data: {'Rno': $text,'Code':code,'Date':date}
     }); 
 });  
 

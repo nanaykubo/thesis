@@ -33,14 +33,18 @@ class Template extends CI_Controller {
 	public function profile()
 	{
 		if($this->session->userdata('logged_in')){
-			$get['userlist']= $this->m->getUser(
+			$get= $this->m->getUser(
 				$this->session->userdata('username')
 			   ,$this->session->userdata('password')
 			);
 
-			$userlist = $get;
+			$myvars = $get[0]->HCID;
 
-			$this->load->view('Template/profile',$userlist);	
+			$hname['hname'] = $this->m->getHCName($myvars);
+			$userlist['userlist'] = $get;
+			$data['data']=array($userlist ,$hname);
+
+			$this->load->view('Template/profile',$data);	
 		}
 	}
 
@@ -175,7 +179,7 @@ class Template extends CI_Controller {
 				$this->session->set_userdata("username", $username);
 				$this->session->set_userdata("password", $password);
 				$this->session->set_userdata("logged_in", true);
-				$get= $this->m->getAdmin($username,$password);
+				$get= $this->m->getUser($username,$password);
 				$myvars = $get[0]->POSITION;
 				if($myvars == 'ADMIN')
 				{
@@ -208,17 +212,19 @@ class Template extends CI_Controller {
 
 			$totalpatients= $this->m->getTotalPatients($myvars);
 			$totalfamily= $this->m->getTotalFamily($myvars);
+			$MAXDISEASE= $this->m->getDiseaseMax($myvars);
 			$userlist['userlist'] = $get;
 
-			$data['data'] = array($userlist,$totalpatients,$totalfamily);
+			$data['data'] = array($userlist,$totalpatients,$totalfamily,$MAXDISEASE);
 
 			$this->load-> view('Template/dashboard',$data);
 		}	
 	}
 
-	public function test()
+	public function test($HCID)
 	{
-		$this->load-> view('Template/try');
+		$totalfamily= $this->m->getDiseaseMax($HCID);
+		print_r($totalfamily);
 	}
 
 	public function getBarChart($HCID)
@@ -249,6 +255,30 @@ class Template extends CI_Controller {
 			$data2[] = $row;
 			}
 
+			echo json_encode($data2); 
+	} 
+
+		public function getline($HCID)
+	{
+			$charts=$this->m->getLineChart($HCID);
+
+			foreach ($charts as $value) 
+			{
+			$row = array();	
+			$row[0] = $value->month;
+			$row[1] = $value->Conjuctivitis;
+			$row[2] = $value->Pnuemonia;
+			$row[3] = $value->Hypertension;
+			$row[4] = $value->Vaginitis;
+			$row[5] = $value->Diabetis;
+			$row[6] = $value->URTI;
+			$row[7] = $value->Diarrehea;
+			$row[8] = $value->Arthritis;
+			$row[9] = $value->SoreThroat;
+			$row[10] = $value->UTI;
+			$row[11] = $value->PrimaryTB;
+			$data2[] = $row;
+			}
 			echo json_encode($data2); 
 	} 
 
@@ -399,7 +429,7 @@ class Template extends CI_Controller {
 	{
 		$something = $this->input->post('txtID');
 		$this->load->library('upload');
-		// Write code below to save $this->input->post() to record table
+		$
         $files = $_FILES;
         $filesCount = count($_FILES['userfile']['name']);
         for($i=0; $i<$filesCount; $i++)
@@ -412,12 +442,12 @@ class Template extends CI_Controller {
             $this->upload->initialize($this->set_upload_options());
 			if (!$this->upload->do_upload()) {
 				$error = array('error' => $this->upload->display_errors());
-				print_r($error);
+				$result=$this->m->addPRecords();
+				$this->session->set_flashdata('error_msg', 'No Attached Image is uploaded, but the Record is successfully saved');
+    			redirect(base_url('Template/getRecords/').$something);
 			} 
 			else 
 			{
-				$error = array('error' => $this->upload->display_errors());
-				print_r($error);
 				$arr_image= $this->upload->data();
 
 	        	// FILE DATA 
@@ -428,6 +458,9 @@ class Template extends CI_Controller {
 
 	        	print_r($fileData);  		
     			$this->db->insert('attached', $fileData);	
+    			$result=$this->m->addPRecords();
+    			$this->session->set_flashdata('success_msg', 'Record is successfully save with an Attached Image');
+    			redirect(base_url('Template/getRecords/').$something);
 			}
 		}
 
@@ -499,7 +532,7 @@ class Template extends CI_Controller {
 
 	public function submitReport()
 	{
-		$result = $this->m->addReport();
+		$result = $this->m->pRecords();
 		redirect(base_url('Template/logged'));
 	}
 
@@ -528,7 +561,7 @@ class Template extends CI_Controller {
 	{
 		$data = $this->input->post();
 
-		$result = $this->m->Resolve($data['Rno'],$data['Code']);
+		$result = $this->m->Resolve($data['Rno'],$data['Code'],$data['Date']);
 
 		redirect(base_url('Template/admin'));
 	}
@@ -677,6 +710,19 @@ class Template extends CI_Controller {
 	echo json_encode($output);
 	}
 
+	public function getCaseAnnual()
+	{
+	$data = $this->input->post();
+
+	$Year = $this->m->getCaseAnnual($data['Year'],$data['HCID']);
+
+	$output = array(
+		"data" => $Year,
+	);
+
+	echo json_encode($output);
+	}
+
 	public function getQuarter()
 	{
 	$data = $this->input->post();
@@ -686,6 +732,23 @@ class Template extends CI_Controller {
 	$HCID = $data['HCID'];
 
 	$result = $this->m->getQuarter($Year,$Quarter,$HCID);
+
+	$output = array(
+		"data" => $result,
+	);
+
+	echo json_encode($output);
+	}
+
+	public function getCaseQuarter()
+	{
+	$data = $this->input->post();
+
+	$Year = $data['Year'];
+	$Quarter = $data['Quarter'];
+	$HCID = $data['HCID'];
+
+	$result = $this->m->getCaseQuarter($Year,$Quarter,$HCID);
 
 	$output = array(
 		"data" => $result,
@@ -710,6 +773,24 @@ class Template extends CI_Controller {
 
 	echo json_encode($output);
 	}
+
+	public function getCaseMonth()
+	{
+	$data = $this->input->post();
+
+	$Month = $data['Month'];
+	$Year = $data['Year'];
+	$HCID = $data['HCID'];
+
+	$result = $this->m->getCaseMonth($Month,$Year,$HCID);
+
+	$output = array(
+		"data" => $result,
+	);
+
+	echo json_encode($output);
+	}
+
 
 	public function getMonth()
 	{
@@ -745,6 +826,41 @@ class Template extends CI_Controller {
 	echo json_encode($output);
 	}
 
+	public function getCaseCustom()
+	{
+	$data = $this->input->post();
+
+	$start = $data['Start'];
+	$end = $data['End'];
+	$HCID = $data['HCID'];
+
+
+	$result = $this->m->getCaseCustom($start,$end,$HCID);
+
+	$output = array(
+		"data" => $result,
+	);
+
+	echo json_encode($output);
+	}
+
+	public function getBrgyCustom()
+	{
+	$data = $this->input->post();
+
+	$start = $data['Start'];
+	$end = $data['End'];
+	$HCID = $data['HCID'];
+
+
+	$result = $this->m->getBrgyCustom($start,$end,$HCID);
+
+	$output = array(
+		"data" => $result,
+	);
+
+	echo json_encode($output);
+	}
 
 	public function getCustom()
 	{

@@ -175,7 +175,7 @@
                   <img alt="Image placeholder" src="../assets/img/theme/team-4-800x800.jpg">
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold"><?php echo strtoupper($userlist[0]->FN) ?> <?php echo strtoupper($userlist[0]->LN) ?></span>
+                  <span class="mb-0 text-sm  font-weight-bold"><?php echo strtoupper($data[0]['userlist'][0]->FN) ?> <?php echo strtoupper($data[0]['userlist'][0]->LN) ?></span>
                 </div>
               </div>
             </a>
@@ -234,38 +234,41 @@
    <div class="card text-center">
     <div class="card-header">
       <img alt="Image placeholder" style="border-radius: 50%; height: 180px;"src="../assets/img/theme/team-4-800x800.jpg">
-    <button type="button" class="btn btn-primary btn-sm" style="width: 120px; margin-left:300px;">Edit Profile</button>
+    <button type="button" id="edit" class="btn btn-primary btn-sm" style="width: 120px; margin-left:300px;">Edit Profile</button>
     </div>
    
       <div class="card-body">
       <div class="row">
 <form>
-      <input type="text" class="form-control" placeholder="Code">
+      <input type="text" id="code" name="code" class="form-control" placeholder="Code" value="<?php echo strtoupper($data[0]['userlist'][0]->code) ?>" readonly>
     <br>
   <div class="row">
     <div class="col">
-      <input type="text" class="form-control" placeholder="First name">
+      <input type="text" id="inputFN" name="inputFN" class="form-control" placeholder="First name"
+      value="<?php echo strtoupper($data[0]['userlist'][0]->FN) ?>" readonly>
     </div>
     <div class="col">
-      <input type="text" class="form-control" placeholder="Middle name">
+      <input type="text" id="inputMN" name="inputMN" class="form-control" value="<?php echo strtoupper($data[0]['userlist'][0]->MN) ?>" placeholder="Middle name" readonly>
     </div>
     <div class="col">
-      <input type="text" class="form-control" placeholder="Last name">
+      <input type="text" id="inputLN" name="inputLN"  class="form-control" value="<?php echo strtoupper($data[0]['userlist'][0]->LN) ?>" placeholder="Last name" readonly>
     </div>
   </div>
   <br>
-      <input type="text" class="form-control" placeholder="Position">
+      <input type="text" id="Position" name="Position" class="form-control" value="<?php echo strtoupper($data[0]['userlist'][0]->POSITION) ?>" placeholder="Position" readonly>
       <br>
-      <input type="text" class="form-control" placeholder="Health Center">
+      <input type="text" id="HC" name="HC" class="form-control" placeholder="Health Center" 
+      value="<?php echo strtoupper($data[1]['hname'][0]->Name) ?>"readonly>
       <br>
       <div class="row">
     <div class="col">
-      <input type="text" class="form-control" placeholder="Username">
+      <input type="text" class="form-control" id="user" name="user" placeholder="Username" readonly>
     </div>
     <div class="col">
-      <input type="text" class="form-control" placeholder="Password">
+      <input type="password" class="form-control" placeholder="Password" readonly>
     </div>
   </div>
+   <button type="submit" id="save" class="btn btn-primary" style="width: 120px; margin-top:20px;">Save Profile</button>
 </form>
      </div>
       </div>
@@ -353,90 +356,23 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script>
-window.onload = function() {
-
-var families = new Array();
-var patients = new Array();
-
-var chart2 = new CanvasJS.Chart("barChart",{
-  animationEnabled: true,
-      theme: "light1",
-    title :{
-  text: "Total Patients"
-    },
-    data: [{
-  type: "column",
-  dataPoints : patients
-    }]
-});
-
-var chart1  = new CanvasJS.Chart("pieChart", {
-  animationEnabled: true,
-  theme: "light2",
-  title: {
-    text: "No. of Families in the Barangay"
-  },
-  axisY: {
-    title: "UnidataPointsts",
-    titleFontSize: 24
-  },
-  data: [{
-    type: "pie",
-    showInLegend: true,
-    indexLabelFontSize: 18,
-    radius: 80,
-    toolTipContent: "{name}:<strong>{y}</strong>",
-    indexLabel: "BRGY "+"{name} - {y}",
-    dataPoints: families
-  }]
-});
-
-function Data1(data) {
-   $.each(data, function(key, value){
-        families.push({name: value[0], y: parseInt(value[1])});
-    });
-     chart1.render();
-}
-
-function Data2(data) {
-  $.each(data, function(key, value){
-        patients.push({name: value[0], y: parseInt(value[1])});
-    });
-  chart2.render();
-}
-
-$.getJSON("<?php echo base_url('template/getpie/'.$data[0]['userlist'][0]->HCID) ?>", Data1);
-$.getJSON("<?php echo base_url('template/getBarChart/') ?>", Data2);
-
-}
-</script>
   <script>
   $(document).ready(function() {
-    $('#myTable').DataTable({
-      "ajax": '<?php echo base_url('template/getLogs/'.$data[0]['userlist'][0]->code); ?>',
-      "type": 'POST',
-      "searching":false,
-      "info":false,
-      "bLengthChange": false,
-      "pageLength": 11,
-       order: [[1, 'desc']],
-    //Set column definition initialisation properties.
-            "columnDefs": [
-                { "width": "40%", "targets": [1]},
-                { "width": "60%", "targets": [0], "orderable":false },
-                {"className": "dt-center", "targets": "_all"}
-                        ]
-    });
+    $("#save").hide();
 
     $("#nav").click(function(){
       $("#exampleModal").modal('show')
     });
 
+    $("#edit").click(function(){ 
+       $("#inputFN").attr("readonly", false); 
+       $("#inputMN").attr("readonly", false); 
+       $("#inputLN").attr("readonly", false); 
+       $("#save").show();
+    });
           $(function () {
         $('[data-toggle="tooltip"]').tooltip()
       })
-
     });
   </script>
 </body>
