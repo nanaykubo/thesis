@@ -414,8 +414,7 @@ var chart3 = new CanvasJS.Chart("lineChart", {
   },
   axisY :{
     includeZero: false,
-    title: "Number of Viewers",
-    suffix: "mn"
+    title: "Number of Viewers"
   },
   toolTip: {
     shared: "true"

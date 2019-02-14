@@ -22,6 +22,24 @@ class getinfo extends CI_Model
 		}
 	}
 
+	public function admin_login($username,$password)
+	{
+		$this->db->select('*');
+		$this->db->where('username',$username);
+		$this->db->where('password',$password);
+
+		$query =  $this->db->get('admin');
+
+		if ($query -> num_rows() > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	public function getAdmin($username,$password)
 	{
 		$this->db->select('*');
@@ -581,11 +599,13 @@ class getinfo extends CI_Model
 
 	public function getDiseaseMax($HCID)
 	{
-		$this->db->select('DIAG,MAX(counted)')
-		->from('(
-		SELECT DIAG, HCID, COUNT(*) AS counted
-		FROM precords
-		where HCID='.$HCID.' GROUP BY Diag) as count');
+		$this->db->select('DIAG')
+		->from('precords')
+		->WHERE('HCID',$HCID)
+		->group_by('diag')
+		->having('count("Diag")=
+			(SELECT MAX(patientcount) FROM (SELECT `HCID`,`Diag`,COUNT(*) AS patientcount FROM precords
+			WHERE HCID='.$HCID.' GROUP BY Diag) t1)');
 		$query = $this->db->get();
 		if ($query->num_rows() > 0 )
 		{
@@ -648,6 +668,14 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function viewHCBrgy($HCID)
+	{
+		$this->db->select('BRGY');
+		$this->db->where('HCID',$HCID);
+		$query = $this->db->get('brgy');
+		return $query->result();
+	}
+
 	public function getBrgyInfo($HCID)
 	{
 		$this->db->where('HCID',$HCID);
@@ -688,6 +716,19 @@ class getinfo extends CI_Model
   	}
  	}
 
+ 	public function getCode($code)
+ 	{
+ 	$this->db->where('code' , $code);
+  	$query = $this->db->get('users');
+
+  	if($query->num_rows()>0){
+  	 return true;
+  	}
+  	else {
+  	 return false;
+  	}
+ 	}
+
 	public function getID($id)
 	{
 		$this->db->select("Brgy");
@@ -712,6 +753,14 @@ class getinfo extends CI_Model
 		$this->db->select("*");
 		$this->db->where('familyno', $FNo);
 		$query = $this->db->get('fdesc');
+		return $query->result();
+	}
+
+	public function getRecordsInfo($Rno)
+	{
+		$this->db->select("*");
+		$this->db->where('recordno', $Rno);
+		$query = $this->db->get('precords');
 		return $query->result();
 	}
 
@@ -747,7 +796,7 @@ class getinfo extends CI_Model
 		$_POST['inputR'] = strtoupper($_POST['inputR']);
 
 	 		$records = array(
-			'ID'=>$this->input->post('inputID'),
+			'ID'=>$this->input->post('inputID2'),
 			'HCID'=>$this->input->post('txtHCID'),	
 			'Status'=>$this->input->post('inputS'),
 			'Type'=>$this->input->post('inputType'),
@@ -771,7 +820,7 @@ class getinfo extends CI_Model
 			'is_delete'=>("1")	
 			);
 
-	$_POST['inputnote'] = "ADDED PATIENT ID" ."(". $_POST['inputID'].")"." ".$_POST['inputLN'] ." " .$_POST['inputFN'];
+	$_POST['inputnote'] = "ADDED PATIENT ID" ."(". $_POST['inputID2'].")"." ".$_POST['inputLN'] ." " .$_POST['inputFN'];
 	
 	 $logs = array(
 			'code'=>$this->input->post('inputassist'),
@@ -780,7 +829,7 @@ class getinfo extends CI_Model
 			);
 
 	 $fam = array(
-			'ID'=>$this->input->post('inputID'),
+			'ID'=>$this->input->post('inputID2'),
 			'familyno'=>$this->input->post('inputFam')
 			);
 
@@ -813,6 +862,36 @@ class getinfo extends CI_Model
 
 	$this->db->insert('reports', $reports);
 	
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;	
+	}
+	}
+
+	public function addNewAdmins()
+	{
+		$_POST['inputLN'] = strtoupper($_POST['inputLN']);
+		$_POST['inputFN'] = strtoupper($_POST['inputFN']);
+		$_POST['inputMN'] = strtoupper($_POST['inputMN']);
+
+		$records = array(
+			'code'=>$this->input->post('inputCode'),
+			'username'=>$this->input->post('inputUser'),	
+			'password'=>$this->input->post('inputPass'),	
+			'HCID'=>$this->input->post('inputHCID'),
+			'LN'=>$this->input->post('inputLN'),
+			'FN'=>$this->input->post('inputFN'),
+			'MN'=>$this->input->post('inputMN'),
+			'POSITION'=>$this->input->post('Position'),
+			'date'=>$this->input->post('inputinsert')
+		);
+
+	$this->db->insert('users', $records);
 	if($this->db->affected_rows() > 0)
 	{
 		return true;
@@ -940,7 +1019,7 @@ class getinfo extends CI_Model
 		$_POST['inputCS'] = strtoupper($_POST['inputCS']);
 		$_POST['inputR'] = strtoupper($_POST['inputR']);
 
-		$id = $this->input->post('inputID');
+		$id = $this->input->post('inputID2');
 
 		$field = array(
 			'HCID'=>$this->input->post('txtHCID'),	
@@ -969,7 +1048,7 @@ class getinfo extends CI_Model
 			'Relation'=>$this->input->post('inputRel')
 		);
 
-		$_POST['inputnote'] = "EDITED PATIENT NO" ."(". $_POST['inputID'].")"." ".$_POST['inputLN'] ." " .$_POST['inputFN'];
+		$_POST['inputnote'] = "EDITED PATIENT NO" ."(". $_POST['inputID2'].")"." ".$_POST['inputLN'] ." " .$_POST['inputFN'];
 
 		$logs = array(
 			'code'=>$this->input->post('inputassist'),

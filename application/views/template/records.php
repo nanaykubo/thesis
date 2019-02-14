@@ -307,7 +307,7 @@
       <td><?php echo $test->RETURNDATE; ?></td>
       <td><?php echo $test->Diag; ?></td>
       <td><?php echo $test->PRESCRIPTION; ?></td>
-      <td><a href="#" class="message" data-toggle="tooltip" data-placement="top" title="Patient Record"><i class="fas fa-file-medical-alt fa-lg text-red"></i></a>
+      <td><a href="#" class="view" data-toggle="tooltip" data-placement="top" title="Patient Record"><i class="fas fa-file-medical-alt fa-lg text-red"></i></a>
       <a href="#" id="actbutton" class="resolve" style="margin-left: 20px;" data-toggle="tooltip" data-placement="top" title=" Attached Record"><i class="fas fa-paperclip fa-lg text-yellow"></i></a></td>
     </tr>
    </tbody> 
@@ -331,8 +331,19 @@
         <h5 class="modal-title" id="exampleModalLongTitle">Uploaded Image</h5>
       </div>
       <div class="modal-body">
-
-      
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+   
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
       
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -474,6 +485,26 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
  $(document).ready(function() {
     $("#Services").prop("disabled",true);
@@ -518,28 +549,47 @@ $("#inputType").change(function()
     $("#inputDiagnosis").val(val+"(Diagnosis)");
   });
 
-    $("#nav").click(function(){
-      $("#exampleModal").modal('show')
-    });
+  $("#nav").click(function(){
+    $("#exampleModal").modal('show')
+  });
 
-   $("#actbutton").click(function() {
+  $(".view").click(function(){
+    $(".modal-body").empty();
+     var $row = $(this).closest("tr");    // Find the row
+    var $text = $row.find(".nr").text(); // Find the text
+     $.ajax({
+          url: '<?php echo base_url('template/getRecordInfo/'); ?>',  
+          type: 'POST',
+          data: {'RNo': $text},
+          success: function (result) 
+          {
+            var parsed = JSON.parse(result);
+            $.each(parsed,function(index,value)
+            {
+            $(".modal-body").append("<h3>Record No : " +value[0]+" </h3> RecordType <br>" + value[3] +
+              "<br>Date Inserted<br>"+value[4]+"<br>Return Date<br>"+value[5]+"<br>Diagnosis<br>"+value[6]
+              +"<br>Outcome<br>"+value[7]+"<br>Prescription<br>"+value[8]);
+
+           $("#exampleModalCenter").modal('show')
+            });
+          }
+        });
+  });
+
+   $(".resolve").click(function() {
     var $row = $(this).closest("tr");    // Find the row
     var $text = $row.find(".nr").text(); // Find the text
-
     $.ajax({
           url: '<?php echo base_url('template/viewRecord/'); ?>',  
           type: 'POST',
           data: {'RNo': $text},
           success: function (result) 
           {
-            alert(result)
-          var parsed=JSON.parse(result);
+            var parsed = JSON.parse(result);
             $.each(parsed,function(index,value)
             {
             $('.carousel-inner').append($('<div class="item"><img src="' + '<?php echo base_url('/assets/uploads/');?>' + value[0] + '" alt="image description" width="100%" height="250" /><div class="carousel-caption"></div></div>'));
 
-
-            $("#myImage").attr('src', '<?php echo base_url('/assets/uploads/');?>'+result);
             $("#viewModal").modal('show')
             });
           }

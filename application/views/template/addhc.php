@@ -408,6 +408,28 @@ aria-labelledby="myModalLabel">
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="BRGY" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label>LIST OF BARANGAYS :</label>
+        <BR>
+        <textarea id="txtArea" style="font-size: 20px; text-align: center; color:black;" class="form-control" rows="3"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <script>
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function() {
@@ -889,7 +911,21 @@ aria-labelledby="myModalLabel">
              $("#logs tbody").empty();
             if (action=='logs')
             {
-             alert('yes')
+             $.ajax(
+                {
+                url:'<?php echo base_url('template/viewHCBrgy/'); ?>',
+                type:'POST',
+                data:{'HCID': HCID},
+                success: function(data){
+                var parsed= JSON.parse(data);
+               $(".modal-body #txtArea").val(parsed);
+                 $.each(parsed,function(index,value)
+                  {
+                      $("#BRGY").modal('show')
+                  });
+                }
+                }
+                );
             }
             if (action=='update')
             {

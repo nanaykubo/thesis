@@ -30,6 +30,23 @@ class Template extends CI_Controller {
 		$this->load->view('Template/login');	
 	}
 
+	public function register()
+	{
+		$adminuser= $this->input->post('inputUser');
+		$adminpass= $this->input->post('inputPass');
+
+		if($this->m->admin_login($adminuser,$adminpass))
+		{
+			$this->session->set_flashdata('response', 'Success');
+			 redirect(base_url('Template/index'));
+		}
+		else
+		{
+		   $this->session->set_flashdata('register_err', 'Incorrect Default Credentials');
+		   redirect(base_url('Template/index'));
+		}
+	}
+
 	public function profile()
 	{
 		if($this->session->userdata('logged_in')){
@@ -50,7 +67,6 @@ class Template extends CI_Controller {
 			$this->load->view('Template/profile',$data);	
 		}
 	}
-
 
 	public function logout()
 	{
@@ -417,6 +433,29 @@ class Template extends CI_Controller {
 		echo json_encode($data2);
 	}
 
+	public function getRecordInfo()
+	{
+		$data = $this->input->post();
+
+		$values = $this->m->getRecordsInfo($data['RNo']);
+
+		foreach ($values as $value) {
+			$row = array();
+			$row[0] = $value->recordno;
+			$row[1] = $value->ID;
+			$row[2] = $value->HCID;
+			$row[3] = $value->RecordType;
+			$row[4] = $value->DATE;
+			$row[5] = $value->RETURNDATE;
+			$row[6] = $value->Diag;
+			$row[7] = $value->OUTCOME;
+			$row[8] = $value->PRESCRIPTION;
+			$data2[] = $row;
+		}
+		
+		echo json_encode($data2);
+	}
+
 	public function reports()
 	{
 		if($this->session->userdata('logged_in')){
@@ -451,9 +490,7 @@ class Template extends CI_Controller {
             $this->upload->initialize($this->set_upload_options());
 			if (!$this->upload->do_upload()) {
 				$error = array('error' => $this->upload->display_errors());
-				$result=$this->m->addPRecords();
-				$this->session->set_flashdata('error_msg', 'No Attached Image is uploaded, but the Record is successfully saved');
-    			redirect(base_url('Template/getRecords/').$something);
+				print_r($error);
 			} 
 			else 
 			{
@@ -468,10 +505,9 @@ class Template extends CI_Controller {
 	        	$this->db->insert('attached', $fileData);	
     			$result=$this->m->addPRecords();
     			$this->session->set_flashdata('success_msg', 'Record is successfully save with an Attached Image');
-    			redirect(base_url('Template/getRecords/').$something);
 			}
 		}
-
+    			redirect(base_url('Template/getRecords/').$something);
 	}
 
 	private function set_upload_options()
@@ -494,6 +530,13 @@ class Template extends CI_Controller {
 	{
 		$result = $this->m->addNewUsers();
 		redirect(base_url('Template/adduser'));
+	}
+
+	public function submitAdmin()
+	{
+		$result = $this->m->addNewAdmins();
+		$this->session->set_flashdata('user_msg', 'Added Admin Role Successfully');
+		redirect(base_url('Template/index'));
 	}
 
 	public function create()
@@ -586,6 +629,21 @@ class Template extends CI_Controller {
 		redirect(base_url('Template/profile'));
 	}
 
+	public function viewHCBrgy()
+	{
+		$data = $this->input->post();
+
+		$values = $this->m->viewHCBrgy($data['HCID']);
+
+		foreach ($values as $value) {
+			$row = array();
+			$row[0] = $value->BRGY;
+			$data2[] = $row;
+		}
+		
+		echo json_encode($data2);
+	}
+
 	public function updateUser()
 	{
 		$result = $this->m->updateUser();
@@ -611,11 +669,24 @@ class Template extends CI_Controller {
   	if($this->m->getUsername($_POST['username']))
   	{
   	 echo '<label class="text-danger"><span><i class="fa fa-times" aria-hidden="true">
-   </i> This ID is already registered</span></label>';
-  	}
+   		</i> This ID is already registered</span></label>';
+  		}
  	 else 
  	 {
   	 echo '<label class="text-success"><span><i class="fa fa-check" aria-hidden="true"></i> ID is available</span></label>';
+ 	 }
+ 	}
+
+ 	public function checkCode()
+ 	{
+  	if($this->m->getCode($_POST['code']))
+  	{
+  	 echo '<label class="text-danger"><span><i class="fa fa-times" aria-hidden="true">
+   		</i> This ID is already registered</span></label>';
+  		}
+ 	 else 
+ 	 {
+  	 echo '<label class="text-success"><span><i class="fa fa-check" aria-hidden="true"></i> Code is available</span></label>';
  	 }
  	}
 

@@ -294,6 +294,7 @@
             <label for="recipient-name" class="col-form-label">ID:</label>
             <input type="text" name="inputID" id="inputID" class="form-control" value="<?php echo $data[3]['userlist'][0]->code?>" readonly>
           </div>
+          <span id="username_result"></span>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Title:</label>
             <input type="text" class="form-control" name="inputTitle" id="inputTitle">
@@ -345,11 +346,11 @@
       <!-- body -->  <div class="form-row">
     <div class="col-md-12">
     <label for="inputAddress">ID *</label>
-    <input type="text" required class="form-control" name="inputID" id="inputID" placeholder="Enter your ID (chars are not allowed)"  onkeypress='validate(event)'>
-    <span id="username_result"></span>
+    <input type="text" required class="form-control" name="inputID2" id="inputID2" placeholder="Enter your ID (chars are not allowed)"  onkeypress='validate(event)'>
     <div class="invalid-feedback">
           Please enter an ID
         </div>
+            <span id="username_result"></span>
         <br/>
   </div>
     <div class="col-md-4 mb-3">
@@ -437,7 +438,7 @@
   </div>
   <div class="col-md-4 mb-3">
       <label for="validationCustom01">Philhealth No *</label>
-      <input type="text" class="form-control" style="text-transform: uppercase;" name="inputPN" id="inputPN" placeholder="Philhealth No"required>
+      <input type="text" class="form-control" style="text-transform: uppercase;" name="inputPN" id="inputPN" placeholder="Philhealth No">
       <div class="invalid-feedback">
           Please enter your Philhealth No
         </div>
@@ -491,11 +492,7 @@
   </div>
   <div class="col-md-4 mb-3">
     <label for="validationCustom01">St *</label>
-    <select class="custom-select" style="text-transform: uppercase;" id="inputSt" name="inputSt" required>
-          <option value="TAGUIG">Taguig</option>
-          <option value="MAKATI">Makati</option>
-          <option value="MANILA">Manila</option>
-    </select>
+    <input type="text" class="form-control" style="text-transform: uppercase;" id="inputSt" name="inputSt" required>
     <div class="invalid-feedback">Please Select one of the following options</div>
   </div>
     <div class="col-md-4 mb-3">
@@ -737,18 +734,20 @@ $("#addpatient").click(function(){
      document.getElementById("inputPN").disabled = true; 
     }
   });
-$('#inputID').change(function(){
-   var username = $('#inputID').val();
+ 
+$('#inputID2').change(function(){
+   var username = $('#inputID2').val();
    if(username != ''){
     $.ajax({
      url: "<?php echo base_url(); ?>template/checkUsername",
      method: "POST",
-     data: {username:username},
+     data: {'username':username},
      success: function(data){
-      $('#username_result').html(data);
+      $('.modal-body #username_result').html(data);
      }
     });
    }
+
   });
 </script>
 </body>
