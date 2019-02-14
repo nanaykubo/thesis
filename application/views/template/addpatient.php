@@ -178,12 +178,12 @@
           </div>
         </form>
         <form class="navbar-search mr-4 d-none d-md-flex ml-lg-auto">
-          <a href="profile" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
+           <a href="profile#profile-tab" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
         </form>
         <form class="navbar-search mr-3 d-none d-md-flex">
-          <a href="" data-toggle="tooltip" data-placement="top" title="Activities"><i class="fas fa-clipboard-list fa-lg text-white"></i></a>
+          <a href="profile#home-tab" data-toggle="tooltip" data-placement="top" title="Activities"><i class="fas fa-clipboard-list fa-lg text-white"></i></a>
         </form>
-
+        
          <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">

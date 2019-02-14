@@ -40,9 +40,12 @@ class Template extends CI_Controller {
 
 			$myvars = $get[0]->HCID;
 
+			$code = $get[0]->code;
+
 			$hname['hname'] = $this->m->getHCName($myvars);
 			$userlist['userlist'] = $get;
-			$data['data']=array($userlist ,$hname);
+			$logs['logs'] = $this->m->getLogs($code);
+			$data['data']=array($userlist ,$hname,$logs);
 
 			$this->load->view('Template/profile',$data);	
 		}
@@ -79,9 +82,11 @@ class Template extends CI_Controller {
 			   ,$this->session->userdata('password')
 			);
 
+			$totalreports=$this->m->getTotalReports();
+			$totalusers=$this->m->getTotalUsers();
 			$user['user']=$get;
 			$reports['reports']=$this->m->getallReports();
-			$data['data']=array($user,$reports);
+			$data['data']=array($user,$reports,$totalusers,$totalreports);
 
 			$this->load->view('Template/admindb',$data);	
 		}
@@ -219,12 +224,6 @@ class Template extends CI_Controller {
 
 			$this->load-> view('Template/dashboard',$data);
 		}	
-	}
-
-	public function test($HCID)
-	{
-		$totalfamily= $this->m->getDiseaseMax($HCID);
-		print_r($totalfamily);
 	}
 
 	public function getBarChart($HCID)
@@ -366,10 +365,19 @@ class Template extends CI_Controller {
 		}	
 	}
 
-	public function testsubmit()
+	public function getAdminDB()
 	{
-		$result = $this->m->testsubmit();
-		redirect(base_url('Template/test'));
+		$charts = $this->m->getAdminDB();
+
+		foreach ($charts as $value) 
+			{
+			$row = array();	
+			$row[0] = $value->title;
+			$row[1] = $value->total;
+			$data2[] = $row;
+			}
+
+			echo json_encode($data2); 
 	}
 
 	public function deletePInfo()
@@ -429,8 +437,8 @@ class Template extends CI_Controller {
 	{
 		$something = $this->input->post('txtID');
 		$this->load->library('upload');
-		$
         $files = $_FILES;
+
         $filesCount = count($_FILES['userfile']['name']);
         for($i=0; $i<$filesCount; $i++)
         {                   	
@@ -438,7 +446,8 @@ class Template extends CI_Controller {
             $_FILES['userfile']['type']= $files['userfile']['type'][$i];
             $_FILES['userfile']['tmp_name']= $files['userfile']['tmp_name'][$i];
             $_FILES['userfile']['error']= $files['userfile']['error'][$i];
-            $_FILES['userfile']['size']= $files['userfile']['size'][$i];    
+            $_FILES['userfile']['size']= $files['userfile']['size'][$i];
+
             $this->upload->initialize($this->set_upload_options());
 			if (!$this->upload->do_upload()) {
 				$error = array('error' => $this->upload->display_errors());
@@ -456,8 +465,7 @@ class Template extends CI_Controller {
 	        		'images' => $files['userfile']['name'][$i]
 	        	);
 
-	        	print_r($fileData);  		
-    			$this->db->insert('attached', $fileData);	
+	        	$this->db->insert('attached', $fileData);	
     			$result=$this->m->addPRecords();
     			$this->session->set_flashdata('success_msg', 'Record is successfully save with an Attached Image');
     			redirect(base_url('Template/getRecords/').$something);
@@ -570,6 +578,12 @@ class Template extends CI_Controller {
 	{
 		$result = $this->m->update();
 		redirect(base_url('Template/addpatient'));
+	}
+
+	public function updateProfile()
+	{
+		$result = $this->m->updateProfile();
+		redirect(base_url('Template/profile'));
 	}
 
 	public function updateUser()
@@ -1019,9 +1033,9 @@ class Template extends CI_Controller {
 			echo json_encode($data2);
 	}
 
-	public function getadminLogs()
+	public function getadminLogs($code)
 	{
-	$getdata = $this->m->getadminLogs();
+	$getdata = $this->m->getadminLogs($code);
 	$data = array();
 	foreach ($getdata as $value)
 	{
@@ -1038,7 +1052,6 @@ class Template extends CI_Controller {
 	echo json_encode($output);
 	}
 
-
 	public function getLogs($code)
 	{
 	$getdata = $this->m->getLogs($code);
@@ -1048,6 +1061,27 @@ class Template extends CI_Controller {
 		$row = array();
 		$row[] = $value->activity;
 		$row[] = $value->date;
+		$data[] = $row;
+	}
+
+	$output = array(
+		"data" => $data,
+	);
+
+	echo json_encode($output);
+	}
+
+	public function getNotif($ID)
+	{
+	$getdata = $this->m->getNotif($ID);
+	$data = array();
+
+	foreach ($getdata as $value)
+	{
+		$row = array();
+		$row[] = $value->reportno;
+		$row[] = $value->title;
+		$row[] = "Resolved";
 		$data[] = $row;
 	}
 

@@ -168,10 +168,21 @@
         <!-- Brand -->
         <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">Reports</a>
         <!-- Form -->
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+       <form style="margin-left: 320px;">
           <div class="form-group mb-0">
-            
+            <div class="input-group input-group-alternative mr-8">
+              <div class="input-group-prepend">
+                <span class="input-group-text "><i class="fas fa-search"></i></span>
+              </div>
+              <input class="form-control " placeholder="Search" type="text">
+            </div>
           </div>
+        </form>
+         <form class="navbar-search mr-4 d-none d-md-flex ml-lg-auto">
+           <a href="profile#profile-tab" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
+        </form>
+        <form class="navbar-search mr-3 d-none d-md-flex">
+          <a href="profile#home-tab" data-toggle="tooltip" data-placement="top" title="Activities"><i class="fas fa-clipboard-list fa-lg text-white"></i></a>
         </form>
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">

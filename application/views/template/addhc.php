@@ -234,7 +234,7 @@
         <div class="col">
           <div class="card shadow">
             <div class="card-header border-0">
-              <h1 class="mb-0">Patients</h1>
+              <h1 class="mb-0">Health Centers</h1>
               <br/>
             <table class="table align-items-center table-flush" id="myTable">
   <thead class="thead-light">
@@ -334,7 +334,7 @@
      <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
   </div>
-  <button class="btn btn-primary" id="editUser" style="float:right;"type="submit">Add User</button>
+  <button class="btn btn-primary" id="editUser" style="float:right;"type="submit">Add Health Center</button>
 </form>
 
         </div>
@@ -874,8 +874,8 @@ aria-labelledby="myModalLabel">
    });
 
     $("#healthcenter").on("click",function(){
-        $("#editUser").html('Add User');
-        $(".modal-title").html('Add User');
+        $("#editUser").html('Add New Healthcenter');
+        $(".modal-title").html('Add Healthcenter');
      });
 
     $('#exampleModalLong').on('hidden.bs.modal', function () {
@@ -923,8 +923,8 @@ aria-labelledby="myModalLabel">
 
                       $("#ta").text(selOption);
 
-                    $(".modal-body #editUser").html('Edit User');
-                    $(".modal-title").html('Edit User');
+                    $(".modal-body #editUser").html('Edit Healthcenter');
+                    $(".modal-title").html('Edit Healthcenter');
                     $("#exampleModalLong").modal('show')
                     $("#testform").attr("action",'<?php echo base_url('template/updateHC') ?>');
                   });

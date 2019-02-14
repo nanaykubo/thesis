@@ -234,7 +234,7 @@
         <div class="col">
           <div class="card shadow">
             <div class="card-header border-0">
-              <h1 class="mb-0">Patients</h1>
+              <h1 class="mb-0">Users</h1>
               <br/>
             <table class="table align-items-center table-flush" id="myTable">
   <thead class="thead-light">

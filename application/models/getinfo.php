@@ -375,6 +375,15 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getNotif($ID)
+	{
+		$this->db->select("reportno,title");
+		$this->db->where('ID',$ID);
+		$this->db->where('is_resolve',0);
+		$query = $this->db->get('reports');
+		return $query->result();
+	}
+
 	public function getallLogs()
 	{
 		$this->db->select("*");
@@ -422,9 +431,10 @@ class getinfo extends CI_Model
 		}
 	}
 
-	public function getadminLogs()
+	public function getadminLogs($code)
 	{
 		$this->db->select("*");
+		$this->db->where('code',$code);	
 		$query = $this->db->get('adminlogs');
 		return $query->result();
 	}
@@ -436,6 +446,15 @@ class getinfo extends CI_Model
 		$this->db->join('family', 'brgy.BRGY = family.Brgy','left')
          ->group_by('brgy.Brgy');	
         $this->db->having('brgy.HCID=',$HCID);
+        $query = $this->db->get();
+		return $query->result();
+	}
+
+	public function getAdminDB()
+	{
+		$this->db->select('title, count(*) as total')
+		->from('reports');
+		$this->db->group_by('title');
         $query = $this->db->get();
 		return $query->result();
 	}
@@ -517,6 +536,33 @@ class getinfo extends CI_Model
 	{
 		return false;	
 	}
+	}
+
+	public function getTotalUsers()
+	{
+		$this->db->select('COUNT(code) as count');
+		$this->db->from('users');
+		$query = $this->db->get();
+		if ($query->num_rows() > 0 )
+		{
+		$row = $query->row();
+		return $row->count;
+		}
+		return 0;
+	}
+
+	public function getTotalReports()
+	{
+		$this->db->select('COUNT(reportno) as count');
+		$this->db->where('is_resolve',1);
+		$this->db->from('reports');
+		$query = $this->db->get();
+		if ($query->num_rows() > 0 )
+		{
+		$row = $query->row();
+		return $row->count;
+		}
+		return 0;
 	}
 
 	public function getTotalPatients($HCID)
@@ -1027,7 +1073,7 @@ class getinfo extends CI_Model
 			'Diag'=>$this->input->post('inputDiagnosis'),
 			'OUTCOME'=>$this->input->post('inputResult'),
 			'PRESCRIPTION'=>$this->input->post('inputPrescripton'),
-			'is_delete'=> "1"
+			'r_delete'=> "1"
 		);
 
 	$_POST['inputnote'] = "ADDED RECORD " .$_POST['inputLN'] ." " .$_POST['inputFN'];
@@ -1113,6 +1159,39 @@ class getinfo extends CI_Model
 
 	$this->db->where('family', $fam);
 	$this->db->update('family', $fam);
+	$this->db->insert('logs', $logs);
+
+	if($this->db->affected_rows() > 0)
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+	}
+
+	public function updateProfile()
+	{
+	$code = $this->input->post('code');
+	$note = "UPDATED PROFILE NAME";
+	$date = $this->input->post('inputinsert');
+
+	$logs = array(
+		'code' => $code,
+		'activity' => $note,
+		'date' => $date
+	);    
+
+	$fam = array(
+		'LN' => $this->input->post('inputLN'),
+		'FN' => $this->input->post('inputFN'),
+		'MN' => $this->input->post('inputMN')
+	);  
+
+	$this->db->where('code', $code);
+	$this->db->update('users', $fam); 
 	$this->db->insert('logs', $logs);
 
 	if($this->db->affected_rows() > 0)

@@ -216,17 +216,17 @@
         </div>
           <!-- Card stats -->
           <div class="row">
-             <div class="col-xl-4 col-lg-6">
+             <div class="col-xl-6 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Total Users</h5>
-                      <span class="h2 font-weight-bold mb-0">Malaria</span>
+                      <span class="h2 font-weight-bold mb-0"><?php echo$data[2]?></span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                        <i class="fas fa-chart-pie"></i>
+                        <i class="fas fa-users"></i>
                       </div>
                     </div>
                   </div>
@@ -237,42 +237,23 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-4 col-lg-6">
+            <div class="col-xl-6 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Total Info Deleted</h5>
-                    </div>
-                    <div class="col-auto">
-                      <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
-                        <i class="fas fa-chart-bar"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 mb-0 text-muted text-sm">
-                    <span class="text-nowrap" id="username_result"></span>
-                    <span >Added Patient 20 mins ago</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4 col-lg-6">
-              <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Total Reports</h5>
+                      <h5 class="card-title text-uppercase text-muted mb-0">Unresolved Reports</h5>
+                      <span class="h2 font-weight-bold mb-0"><?php echo$data[3]?></span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                        <i class="fas fa-users"></i>
+                        <i class="fas fa-window-restore"></i>
                       </div>
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-nowrap" id="username_result"></span>
-                    <span >Added Family 10 mins ago</span>
+                    <span >Checked 10 mins ago</span>
                   </p>
                 </div>
               </div>
@@ -286,7 +267,7 @@
     <div class="container-fluid mt--7">
       <div class="card text-center">
         <div class="card-header">
-       <h1>Top Infectious Disease News of the Month Chart<h1>
+       <h1>Maintenance Report<h1>
   </div>
         <div class="card-body">
       <div class="row">
@@ -346,7 +327,17 @@
     </div>
       <div class="card-body">
        <div class="row">
-<div id="barChart" style="width: 100%; height: 300px;"></div>
+<table class="table" id="profTable" width="450px">
+  <thead>
+    <tr>
+      <th scope="col">Activity</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+</table>
      </div>
       </div>
   </div>
@@ -408,8 +399,56 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+window.onload = function () {
+
+var dataPoints = new Array();
+
+var chart = new CanvasJS.Chart("lineChart", {
+  animationEnabled: true,
+  theme: "light2",
+  title: {
+  },
+  axisY: {
+    title: "Total of Reports",
+    titleFontSize: 24
+  },
+  data: [{
+  type: "column",
+  dataPoints : dataPoints
+    }]
+});
+
+function addData(data) {
+  $.each(data, function(key, value){
+        dataPoints.push({label: value[0], y: parseInt(value[1])});
+    });
+  chart.render();
+}
+
+$.getJSON("<?php echo base_url('Template/getAdminDB/') ?>", addData);
+}
+</script>
   <script>
   $(document).ready(function() {
+     var table =$('#profTable').DataTable({
+      "ajax": '<?php echo base_url('template/getadminLogs/'.$data[0]['user'][0]->code); ?>',
+      "type": 'POST',
+      "searching":false,
+      "info":false,
+      "bLengthChange": false,
+      "pageLength": 5,
+       order: [[1, 'desc']],
+    //Set column definition initialisation properties.
+            "columnDefs": [
+                { "width": "40%", "targets": [1]},
+                { "width": "60%", "targets": [0], "orderable":false },
+                {"className": "dt-center", "targets": "_all"}
+                        ]
+    });
+
+
 $(".message").click(function() {
     var $row = $(this).closest("tr");    
     var $text = $row.find(".nr").text(); 

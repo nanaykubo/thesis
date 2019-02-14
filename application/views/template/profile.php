@@ -102,7 +102,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" href="logged">
+            <a class="nav-link" href="logged">
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
@@ -161,10 +161,10 @@
           </div>
         </form>
         <form class="navbar-search mr-4 d-none d-md-flex ml-lg-auto">
-          <a href="profile" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
+           <a href="profile#profile-tab" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
         </form>
         <form class="navbar-search mr-3 d-none d-md-flex">
-          <a href="" data-toggle="tooltip" data-placement="top" title="Activities"><i class="fas fa-clipboard-list fa-lg text-white"></i></a>
+          <a href="profile#home-tab" data-toggle="tooltip" data-placement="top" title="Activities"><i class="fas fa-clipboard-list fa-lg text-white"></i></a>
         </form>
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
@@ -227,7 +227,6 @@
         <div class="card-header">
        <h1>Users Profile<h1>
   </div>
-
         <div class="card-body">
      <div class="row">
   <div class="col-xl-6">
@@ -239,11 +238,12 @@
    
       <div class="card-body">
       <div class="row">
-<form>
+<form action="<?php echo base_url('template/updateProfile')?>" method="POST">
       <input type="text" id="code" name="code" class="form-control" placeholder="Code" value="<?php echo strtoupper($data[0]['userlist'][0]->code) ?>" readonly>
     <br>
   <div class="row">
     <div class="col">
+       <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d H:i:s'); ?>"/>
       <input type="text" id="inputFN" name="inputFN" class="form-control" placeholder="First name"
       value="<?php echo strtoupper($data[0]['userlist'][0]->FN) ?>" readonly>
     </div>
@@ -282,7 +282,43 @@
     </div>
       <div class="card-body">
        <div class="row">
-<div id="barChart" style="width: 100%; height: 300px;"></div>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Activities</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Notifications</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+<table class="table" id="myTable" width="95%">
+  <thead>
+    <tr>
+      <th scope="col">Activities</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+</table>
+</div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+  <table class="table" id="profTable" width="450px">
+  <thead>
+    <tr>
+      <th scope="col">Report No.</th>
+      <th scope="col">Title</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+</table>
+</div>
+</div>
      </div>
       </div>
   </div>
@@ -359,6 +395,76 @@
   <script>
   $(document).ready(function() {
     $("#save").hide();
+     var table =$('#myTable').DataTable({
+      "ajax": '<?php echo base_url('template/getLogs/'.$data[0]['userlist'][0]->code); ?>',
+      "type": 'POST',
+      "searching":false,
+      "info":false,
+      "bLengthChange": false,
+      "pageLength": 9,
+       order: [[1, 'desc']],
+    //Set column definition initialisation properties.
+            "columnDefs": [
+                { "width": "40%", "targets": [1]},
+                { "width": "60%", "targets": [0], "orderable":false },
+                {"className": "dt-center", "targets": "_all"}
+                        ]
+    });
+
+    var table1 =$('#profTable').DataTable({
+      "ajax": '<?php echo base_url('template/getNotif/'.$data[0]['userlist'][0]->code); ?>',
+      "type": 'POST',
+      "searching":false,
+      "info":false,
+      "bLengthChange": false,
+      "pageLength": 9,
+       order: [[0, 'desc']],
+    //Set column definition initialisation properties.
+            "columnDefs": [
+                { "width": "40%", "targets": [0]},
+                { "width": "60%", "targets": [1,2], "orderable":false },
+                {"className": "dt-center", "targets": "_all"}
+                        ]
+    });
+
+    $("#home-tab").click(function(){
+      table.destroy();
+      var table =$('#myTable').DataTable({
+      "ajax": '<?php echo base_url('template/getLogs/'.$data[0]['userlist'][0]->code); ?>',
+      "type": 'POST',
+      "searching":false,
+      "info":false,
+      "bLengthChange": false,
+      "pageLength": 9,
+       order: [[1, 'desc']],
+    //Set column definition initialisation properties.
+            "columnDefs": [
+                { "width": "40%", "targets": [1]},
+                { "width": "60%", "targets": [0], "orderable":false },
+                {"className": "dt-center", "targets": "_all"}
+                        ]
+    });
+    });
+
+    $("#profile-tab").click(function(){
+      table1.destroy();
+      var table1= $('#profTable').DataTable(
+      {
+      "ajax": '<?php echo base_url('template/getNotif/'.$data[0]['userlist'][0]->code); ?>',
+      "type": 'POST',
+      "searching":false,
+      "info":false,
+      "bLengthChange": false,
+      "pageLength": 9,
+      order: [[0, 'desc']],
+      "columnDefs": [
+                { "width": "40%", "targets": [0]},
+                { "width": "60%", "targets": [1,2], "orderable":false },
+                {"className": "dt-center", "targets": "_all"}
+                        ]
+      }
+      )
+    });
 
     $("#nav").click(function(){
       $("#exampleModal").modal('show')
