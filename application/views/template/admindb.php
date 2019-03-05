@@ -214,9 +214,9 @@
       <div class="container-fluid">
         <div class="header-body">
         </div>
-          <!-- Card stats -->
+ <!-- Card stats -->
           <div class="row">
-             <div class="col-xl-6 col-lg-6">
+             <div class="col-xl-4 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
@@ -226,7 +226,7 @@
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                        <i class="fas fa-users"></i>
+                          <i class="fas fa-users"></i>
                       </div>
                     </div>
                   </div>
@@ -237,7 +237,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-6 col-lg-6">
+            <div class="col-xl-4 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
@@ -246,21 +246,43 @@
                       <span class="h2 font-weight-bold mb-0"><?php echo$data[3]?></span>
                     </div>
                     <div class="col-auto">
-                      <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                      <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
                         <i class="fas fa-window-restore"></i>
                       </div>
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-muted text-sm">
                     <span class="text-nowrap" id="username_result"></span>
-                    <span >Checked 10 mins ago</span>
+                    <span >Added Patient 20 mins ago</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-6">
+              <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Total Admins</h5>
+                      <span class="h2 font-weight-bold mb-0"><?php echo$data[4]?></span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                        <i class="fas fa-user-cog"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="mt-3 mb-0 text-muted text-sm">
+                    <span class="text-nowrap" id="username_result"></span>
+                    <span >Added Family 10 mins ago</span>
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+    </div>
+
 
 
   <!-- Disease -->

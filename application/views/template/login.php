@@ -1,3 +1,4 @@
+<?php var_dump($data) ?>
 <!DOCTYPE html>
 <html lang="en" >
 
@@ -113,7 +114,12 @@
   </div>
   <div class="form-group">
     <label for="formGroupExampleInput2">HCID</label>
-    <input type="text" class="form-control" id="inputPass" name="inputHCID" placeholder="HealthCenter ID">
+      <select class="custom-select" style="text-transform: uppercase;" id="inputHCID" name="inputHCID" required>
+      <option value="">Select Healthcenter...</option>
+      <?php foreach ($data as $test) { ?>
+      <option value="<?php echo $test->HCID?>"><?php echo $test->Name; ?>
+      <?php }?></option>
+      </select>
   </div>
   <div class="form-group">
     <div class="form-row">
@@ -208,7 +214,6 @@
 
 <script>
   $( document ).ready(function() {
-    $('#register').modal('show')
     $("#inputCode").change(function(){
     var code = $('#inputCode').val();
     if(code != ''){

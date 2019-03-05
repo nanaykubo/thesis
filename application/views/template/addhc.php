@@ -265,14 +265,15 @@
       </div>
       <div class="modal-body">
         <form class="needs-validation" id="testform" action="<?php echo base_url('template/create') ?>" method="post" novalidate>
- 
            <div class="form-row">
     <div class="col-md-12 mb-3">
       <label for="validationCustom01">HCID</label>
       <input type="text" class="form-control" id="inputHCID" name="inputHCID" placeholder="HCID">
+                <input type="hidden" name="HCname" id="HCname" value="">
       <div class="invalid-feedback">
         Please provide details.
       </div>
+          <span id="username_result"></span>
     </div>
   </div>
   <div class="form-row">
@@ -456,6 +457,9 @@ aria-labelledby="myModalLabel">
 
 <script>
   $(document).ready(function() {
+    var el = $("#Position option:selected").text();
+     $('#HCname').attr('value', el);
+
     var sub_array = [];
     var val= $('#Position').val();
     if(val=='0')
@@ -685,8 +689,25 @@ aria-labelledby="myModalLabel">
         $("#ta").text(value);
      });
 
+    $("#inputHC").change(function(){
+    var code = $('#inputHC').val();
+    if(code != ''){
+    $.ajax({
+    url: "<?php echo base_url(); ?>template/checkCode",
+    method: "POST",
+    data: {'code':code},
+    success: function(data){
+    $('.modal-body #username_result').html(data);
+    }
+    });
+    }
+    });
+
    $("#Position").change(function() 
     {   
+    var el = $("#Position option:selected").text();
+         $('#HCname').attr('value', el);
+
     var sub_array = [];
     var val= $(this).val();
     if(val=='0')

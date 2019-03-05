@@ -911,6 +911,7 @@ $("#exampleModal").modal('show')
         }
         else if ($("#inputSelect").val() == "2" && $("#inputReport").val() == "Annual")
         {
+                var HCID= <?php echo $userlist[0]->HCID?>;
                 var txtYear = ($("#inputYear").val());
                 var txtQuarter = ($("#inputQuarter").val());
                 table = $('#example').DataTable({

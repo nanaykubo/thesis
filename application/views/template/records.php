@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
+  <title>MedRec Tracking System</title>
   <!-- Favicon -->
   <link href="../../assets/img/brand/favicon.png" rel="icon" type="image/png">
   <!-- Fonts -->
@@ -23,7 +23,7 @@
 
 </head>
 
-<body>
+<body style="background-color: white;">
   <!-- Sidenav -->
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
@@ -238,12 +238,14 @@
     <p class="card-text"><a href="#" class="badge badge-info">Patient Information</a> </p>
   </div>
   <div class="input-group ">
-    <button class="btn btn-icon btn-3 btn-secondary" data-toggle="modal" data-target="#myModal" type="button">
+    <button class="btn btn-icon btn-3 btn-secondary" style="margin-left: 450px;" data-toggle="modal" data-target="#myModal" type="button">
       <span class="btn-inner--icon"><i class="fas fa-file-medical fa-lg text-default"></i></i></span>
       
       <span class="btn-inner--text">Add New Record</span>
         </button>
   </div>
+  <?php   $portid = $this->uri->segment(3); ?>
+   <a href="<?php echo base_url('template/test/'.$portid)?>" class="btn btn-icon btn-3 btn-secondary"><i class="fas fa-print fa-lg"></i> Print Record</a>
 </div>
         </div>
         </div>
@@ -324,13 +326,13 @@
       </div>
     </div>
 
-<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="viewModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Uploaded Image</h5>
       </div>
-      <div class="modal-body">
+      <div class="modal-body text-center">
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
    
@@ -382,9 +384,9 @@
     <div class="form-group col-md-12">
       <label for="inputState">Record Type</label>
       <select id="inputType" name="inputType" class="form-control">
-        <option value="1">Checkup</option>
-        <option value="2">Follow Up Check Up</option>
-        <option value="3">Services</option>
+        <option value="Checkup">Checkup</option>
+        <option value="FollowupCheckup">Follow Up Check Up</option>
+        <option value="Services">Services</option>
       </select>
     </div>
     <div class="form-group col-md-6">
@@ -486,20 +488,18 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title" id="exampleModalLongTitle">Record Info</h5>
+
       </div>
-      <div class="modal-body">
+      <div class="modal-body text-center">
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" onclick="javascript:window.location.reload()">Close</button>
       </div>
     </div>
   </div>
@@ -514,21 +514,21 @@
 
 $("#inputType").change(function() 
   {    
-    if($(this).val()=="1")
+    if($(this).val()=="Checkup")
     {
        $("#Diagnosis").prop("disabled",false);
        $("#Services").prop("disabled",true);
       var val = $("#Diagnosis option:selected").text();
       $("#inputDiagnosis").val(val+"(Diagnosis)");
     }
-    if($(this).val()=="2")
+    if($(this).val()=="FollowupCheckup")
     {
        $("#Diagnosis").prop("disabled",false);
        $("#Services").prop("disabled",true);
       var val = $("#Diagnosis option:selected").text();
       $("#inputDiagnosis").val(val+"(Diagnosis)");
     }
-    if($(this).val()=="3")
+    if($(this).val()=="Services")
     {
        $("#Diagnosis").prop("disabled",true);
        $("#Services").prop("disabled",false);
@@ -566,9 +566,9 @@ $("#inputType").change(function()
             var parsed = JSON.parse(result);
             $.each(parsed,function(index,value)
             {
-            $(".modal-body").append("<h3>Record No : " +value[0]+" </h3> RecordType <br>" + value[3] +
-              "<br>Date Inserted<br>"+value[4]+"<br>Return Date<br>"+value[5]+"<br>Diagnosis<br>"+value[6]
-              +"<br>Outcome<br>"+value[7]+"<br>Prescription<br>"+value[8]);
+            $(".modal-body").append("<b>Record No : " +value[0]+" </b><br><br> <b> RecordType </b> <br>" + value[3] +
+              "<br><br><b>Date Inserted</b><br>"+value[4]+"<br><br><b>Return Date</b><br>"+value[5]+"<br><br><b>Diagnosis</b><br>"+value[6]
+              +"<br><br><b>Outcome</b><br>"+value[7]+"<br><br><b>Prescription</b><br>"+value[8]);
 
            $("#exampleModalCenter").modal('show')
             });
@@ -585,14 +585,24 @@ $("#inputType").change(function()
           data: {'RNo': $text},
           success: function (result) 
           {
+            if(result==0)
+            {
+             $(".modal-body").html('No Attached File');
+              $(".modal-body").append('<br><br><button type="button" style="float:right;" onclick="javascript:window.location.reload()" class="btn btn-secondary">Close</button>');
+             $("#viewModal").modal('show')
+            }
+            else
+            {
             var parsed = JSON.parse(result);
             $.each(parsed,function(index,value)
             {
+            $('.carousel-inner .item').remove();
             $('.carousel-inner').append($('<div class="item"><img src="' + '<?php echo base_url('/assets/uploads/');?>' + value[0] + '" alt="image description" width="100%" height="250" /><div class="carousel-caption"></div></div>'));
 
             $("#viewModal").modal('show')
             });
-          }
+            }
+            }
         });
     });
 

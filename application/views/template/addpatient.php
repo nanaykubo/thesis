@@ -346,7 +346,7 @@
       <!-- body -->  <div class="form-row">
     <div class="col-md-12">
     <label for="inputAddress">ID *</label>
-    <input type="text" required class="form-control" name="inputID2" id="inputID2" placeholder="Enter your ID (chars are not allowed)"  onkeypress='validate(event)'>
+    <input type="text" required class="form-control" name="inputID2" id="inputID2" placeholder="Enter your ID (chars are not allowed)" readonly="" onkeypress='validate(event)'>
     <div class="invalid-feedback">
           Please enter an ID
         </div>
@@ -448,7 +448,8 @@
     <label for="validationCustom01">Family Number *</label>
     <select class="custom-select" style="text-transform: uppercase;" name="inputFam" id="inputFam" required>
       <?php foreach ($data[2]['famlist'] as $test) { ?>
-        <option><?php echo $test->familyno; ?>
+        <option value="<?php echo $test->familyno; ?>"><?php echo $test->familyno; ?> <?php echo $test->LN; ?>
+        <?php echo $test->FN; ?> <?php echo $test->MN; ?>
         <?php }?></option>
         <option value="New">Add New Family...</option>
     </select>
@@ -497,10 +498,21 @@
   </div>
     <div class="col-md-4 mb-3">
     <label for="validationCustom01">City/Municipality *</label>
-    <select class="custom-select" style="text-transform: uppercase;" id="inputC" name="inputC" required>
-          <option value="TAGUIG">Taguig</option>
-          <option value="MAKATI">Makati</option>
-          <option value="MANILA">Manila</option>
+    <select class="custom-select" id="inputC" name="inputC" required>
+      <option value="Binondo">Binondo</option>
+      <option value="Ermita">Ermita</option>
+      <option value="Intramuros">Intramuros</option>
+      <option value="Malate">Malate</option>
+      <option value="Paco">Paco</option>
+      <option value="Pandacan">Pandacan</option>
+      <option value="Port Area">Port Area</option>
+      <option value="Quiapo">Quiapo</option>
+      <option value="Sampaloc">Sampaloc</option>
+      <option value="San Miguel">San Miguel</option>
+      <option value="San Nicolas">San Nicolas</option>
+      <option value="Sta Ana">Sta Ana</option>
+      <option value="Sta Cruz">Sta Cruz</option>
+      <option value="Tondo">Tondo</option>
     </select>
     <div class="invalid-feedback">Please Select one of the following options</div>
   </div>
@@ -621,7 +633,8 @@
                   var parsed= JSON.parse(result);
                   $.each(parsed,function(index,value)
                   {
-                    $(".modal-body #inputID").val(value[0]);
+                    $("#inputID2").prop("",false);
+                    $(".modal-body #inputID2").val(value[0]);
                     $(".modal-body #inputFN").val(value[1]);
                     $(".modal-body #inputMN").val(value[2]);
                     $(".modal-body #inputLN").val(value[3]);
@@ -700,6 +713,7 @@ $("#nav").click(function(){
 $("#addpatient").click(function(){
        $(".modal-body #add").html('Add Patient');
       $(".modal-title").html('Add New Patient');
+       $("#inputID2").prop("disabled",false);
     }); 
 
  $("#inputBD").change(function() 

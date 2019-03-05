@@ -280,10 +280,10 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-body">
-      <form action="<?php echo base_url('template/submitFamilyRecords') ?>" id="testform" method="post">
+  <form action="<?php echo base_url('template/submitFamilyRecords') ?>" id="testform" method="post">
   <input type="hidden" name="txtHCID" id="txtHCID" value="<?php echo $data[1]['userlist'][0]->HCID?>"/>
   <input type="hidden" name="inputAssist" id="inputAssist" value="<?php echo $data[1]['userlist'][0]->code?>"/>
-  <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
+  <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d H:i:s'); ?>"/>
   <input type="hidden" name="inputnote" id="inputnote"/>
   <input type="hidden" name="inputFam" id="inputFam" value=""/>
   <h2>Family Head</h2>
@@ -370,7 +370,7 @@
   </div>
 </div>
 
-<div class="modal" id="myModal" tabindex="-1" role="dialog">
+<div class="modal" id="myModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -380,13 +380,13 @@
         </button>
       </div>
       
-      <div class="modal-body">
+      <div class="modal-body ">
         <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Family Members (Relation) :">
          <ol id="friendsList">
          </ol>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" onclick="javascript:window.location.reload()" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -431,6 +431,13 @@ $(document).ready( function () {
                 type:'POST',
                 data:{'FNo': FNo},
                 success: function(data){
+                  if(data==0)
+                  {
+                      $(".modal-body").html('No Family Tags');
+                     $("#myModal").modal('show')
+                  }
+                  else
+                  {
                 var parsed= JSON.parse(data);
                  $.each(parsed,function(index,value)
                   {
@@ -438,6 +445,7 @@ $(document).ready( function () {
                       +"("+value[4]+")"+'</li>');
                      $("#myModal").modal('show')
                   });
+                }
                 }
                 }
                 );

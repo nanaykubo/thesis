@@ -17,7 +17,7 @@ class Template extends CI_Controller {
 	 * So any other public methods not prefixed with an underscore will
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
+	 */	
 
 	function __construct()
 	{
@@ -27,7 +27,8 @@ class Template extends CI_Controller {
 
 	function index()
 	{
-		$this->load->view('Template/login');	
+		$data['data'] = $this->m->getallHCID();
+		$this->load->view('Template/login',$data);	
 	}
 
 	public function register()
@@ -100,9 +101,10 @@ class Template extends CI_Controller {
 
 			$totalreports=$this->m->getTotalReports();
 			$totalusers=$this->m->getTotalUsers();
+			$totaladmin=$this->m->getTotalAdmin();
 			$user['user']=$get;
 			$reports['reports']=$this->m->getallReports();
-			$data['data']=array($user,$reports,$totalusers,$totalreports);
+			$data['data']=array($user,$reports,$totalusers,$totalreports,$totaladmin);
 
 			$this->load->view('Template/admindb',$data);	
 		}
@@ -148,6 +150,17 @@ class Template extends CI_Controller {
 	{
 			$allInfo= $this->m->getAllInfo();
 
+			if($allInfo==null)
+			{
+			echo '{
+			"sEcho": 1,
+			"iTotalRecords": "0",
+			"iTotalDisplayRecords": "0",
+			"aaData": []
+			}';
+			}
+			else
+			{
 			foreach ($allInfo as $value) 
 			{
 			$row = array();
@@ -159,12 +172,12 @@ class Template extends CI_Controller {
 			$row[5] = $value->POSITION;
 			$data2[] = $row;
 			}
-
 			$output = array(
 			"data" => $data2,
 			);
 
 			echo json_encode($output);
+			}
 	}
 
 	public function getHC()
@@ -257,6 +270,13 @@ class Template extends CI_Controller {
 			echo json_encode($data2);
 	}
 
+	public function test($ID)
+	{
+		$this ->load->library('Myfpdf');
+		$get['get']=$ID;
+		$this->load->view('Template/try',$get);
+	}
+
 
 	public function getpie($HCID)
 	{
@@ -324,6 +344,8 @@ class Template extends CI_Controller {
 
 		$getFam = $this->m->getFam($data['FNo']);
 
+		if(!$getFam==null)
+		{
 		foreach ($getFam as $value) 
 		{
 			$row = array();	
@@ -336,6 +358,11 @@ class Template extends CI_Controller {
 		}
 
 		echo json_encode($data2);
+		}
+		else
+		{
+			echo('0');
+		}
 	}
 
 	public function getFInfo()
@@ -343,9 +370,11 @@ class Template extends CI_Controller {
 		$data = $this->input->post();
 
 		$getFam = $this->m->getFamily($data['FNo']);
-
-		foreach ($getFam as $value) 
+		
+		if(!$getFam==null)
 		{
+			foreach ($getFam as $value) 
+		    {
 			$row = array();	
 			$row[0] = $value->familyno;
 			$row[1] = $value->LN;
@@ -354,9 +383,13 @@ class Template extends CI_Controller {
 			$row[4] = $value->Brgy;
 			$row[5] = $value->City;
 			$data2[] = $row;
-		}
-
+	    	}
 		echo json_encode($data2);
+		}
+		else
+		{
+			echo('0');
+		}
 	}
 
 	public function getRecords()
@@ -418,20 +451,6 @@ class Template extends CI_Controller {
 	}
 
 	
-	public function viewRecord()
-	{
-		$data = $this->input->post();
-
-		$values = $this->m->getImage($data['RNo']);
-
-		foreach ($values as $value) {
-			$row = array();
-			$row[0] = $value->images;
-			$data2[] = $row;
-		}
-		
-		echo json_encode($data2);
-	}
 
 	public function getRecordInfo()
 	{
@@ -499,14 +518,17 @@ class Template extends CI_Controller {
 	        	// FILE DATA 
 	        	$fileData = array(
 	        		'recordno' => $this->input->post('inputRecordNo'),
+	        		'ID' => $this->input->post('txtID'),
 	        		'images' => $files['userfile']['name'][$i]
 	        	);
 
-	        	$this->db->insert('attached', $fileData);	
-    			$result=$this->m->addPRecords();
+	        	$this->db->insert('attached', $fileData);
+	       		}	
+	       		}
+	       		$result=$this->m->addPRecords();
     			$this->session->set_flashdata('success_msg', 'Record is successfully save with an Attached Image');
-			}
-		}
+
+
     			redirect(base_url('Template/getRecords/').$something);
 	}
 
@@ -583,7 +605,7 @@ class Template extends CI_Controller {
 
 	public function submitReport()
 	{
-		$result = $this->m->pRecords();
+		$result = $this->m->addReport();
 		redirect(base_url('Template/logged'));
 	}
 
@@ -665,6 +687,19 @@ class Template extends CI_Controller {
 	}
 
 	public function checkUsername()
+ 	{
+  	if($this->m->getUsername($_POST['username']))
+  	{
+  	 echo '<label class="text-danger"><span><i class="fa fa-times" aria-hidden="true">
+   		</i> This ID is already registered</span></label>';
+  		}
+ 	 else 
+ 	 {
+  	 echo '<label class="text-success"><span><i class="fa fa-check" aria-hidden="true"></i> ID is available</span></label>';
+ 	 }
+ 	}
+
+ 	public function checkHCID()
  	{
   	if($this->m->getUsername($_POST['username']))
   	{
@@ -902,7 +937,7 @@ class Template extends CI_Controller {
 	$Year = $data['Year'];
 	$HCID = $data['HCID'];
 
-	$result = $this->m->getBrgyMonth($Month,$Year,$HCID);
+	$result = $this->m->getBrgyMonth("1",'2019','1');
 
 	$output = array(
 		"data" => $result,

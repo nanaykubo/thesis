@@ -276,13 +276,14 @@
       <div class="invalid-feedback">
         Please provide details.
       </div>
+      <span id="username_result"></span>
     </div>
     <div class="col-md-6 mb-3">
       <label for="validationCustom02">Health Center ID (HCID)</label>
       <select id="inputHCID" name="inputHCID" class="custom-select" required>
       <option value="">Select HCID...</option>
       <?php foreach ($data[0]['hcid'] as $test) { ?>
-        <option><?php echo $test->HCID; ?>
+        <option value="<?php echo $test->HCID; ?>"><?php echo $test->Name; ?>
         <?php }?></option>
       </select>
      <div class="invalid-feedback">Example invalid custom select feedback</div>
@@ -447,6 +448,20 @@ aria-labelledby="myModalLabel">
       "targets": [1,2,3,4,5,6],
       "orderable": false}
             ]
+    });
+
+    $("#inputCode").change(function(){
+    var code = $('#inputCode').val();
+    if(code != ''){
+    $.ajax({
+     url: "<?php echo base_url(); ?>template/checkCode",
+     method: "POST",
+     data: {'code':code},
+     success: function(data){
+      $('.modal-body #username_result').html(data);
+     }
+    });
+   }
     });
 
     $("#editUser").on("click",function(){

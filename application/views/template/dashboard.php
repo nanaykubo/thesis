@@ -216,7 +216,7 @@
         <div class="header-body">
           <!-- Card stats -->
           <div class="row">
-             <div class="col-xl-4 col-lg-6">
+             <div class="col-xl-5 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
@@ -237,7 +237,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-4 col-lg-6">
+            <div class="col-xl-3 col-lg-6">
               <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                   <div class="row">
@@ -357,7 +357,12 @@
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Title:</label>
-            <input type="text" class="form-control" name="inputTitle" id="inputTitle">
+            <select id="inputTitle" name="inputTitle" class="custom-select" required>
+            <option value="Dashboard">Dashboard</option>
+            <option value="Patient">Patient</option>
+            <option value="Family">Family</option>
+            <option value="Reports">Reports</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">Message:</label>

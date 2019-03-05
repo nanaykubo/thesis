@@ -334,6 +334,14 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function getPatientRecords($ID)
+	{
+		$this->db->select("*");
+		$this->db->where('ID',$ID);
+		$query = $this->db->get('precords');
+		return $query->result();
+	}
+
 	public function getInfoID($ID)
 	{
 		$this->db->select('*');
@@ -540,7 +548,8 @@ class getinfo extends CI_Model
 	$records = array(
 			'HCID'=>$this->input->post('inputHCID'),
 			'Name'=>$this->input->post('inputHC'),	
-			'Location'=>$this->input->post('inputLoc')
+			'Location'=>$this->input->post('inputLoc'),
+			'City'=>$this->input->post('HCname')
 			);
 
 	$this->db->insert('healthcenters',$records);
@@ -559,6 +568,8 @@ class getinfo extends CI_Model
 	public function getTotalUsers()
 	{
 		$this->db->select('COUNT(code) as count');
+		$this->db->where('POSITION','NURSE');
+		$this->db->or_where('POSITION', "DOCTOR");
 		$this->db->from('users');
 		$query = $this->db->get();
 		if ($query->num_rows() > 0 )
@@ -568,6 +579,21 @@ class getinfo extends CI_Model
 		}
 		return 0;
 	}
+
+	public function getTotalAdmin()
+	{
+		$this->db->select('COUNT(code) as count');
+		$this->db->or_where('POSITION', "ADMIN");
+		$this->db->from('users');
+		$query = $this->db->get();
+		if ($query->num_rows() > 0 )
+		{
+		$row = $query->row();
+		return $row->count;
+		}
+		return 0;
+	}
+
 
 	public function getTotalReports()
 	{
@@ -766,7 +792,7 @@ class getinfo extends CI_Model
 
 	public function getallHCID()
 	{
-		$this->db->select("HCID");
+		$this->db->select("*");
 		$query = $this->db->get('healthcenters');
 		return $query->result();
 	}
@@ -1080,6 +1106,7 @@ class getinfo extends CI_Model
 			'MN'=>$this->input->post('inputMN'),
 			'Brgy'=>$this->input->post('inputBrgy'),	
 			'City'=>$this->input->post('inputC'),
+			'dateinsert'=>$this->input->post('inputinsert'),
 			'is_delete'=>("1")
 		);
 
