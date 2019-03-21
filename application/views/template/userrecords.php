@@ -104,27 +104,26 @@
           </div>
         </div>
         <!-- Form -->
-       
+        <form class="mt-4 mb-3 d-md-none">
+          <div class="input-group input-group-rounded input-group-merge">
+            <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <span class="fa fa-search"></span>
+              </div>
+            </div>
+          </div>
+        </form>
         <!-- Navigation -->
-        <ul class="navbar-nav">
+          <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="<?php echo base_url('Template/logged') ?>">
-              <i class="ni ni-tv-2 text-primary"></i> Dashboard
+            <a class="nav-link active" href="<?php echo base_url('Template/userpage') ?>">
+              <i class="fas fa-plus-circle text-green"></i> Add Patient
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link  " href="<?php echo base_url('Template/adduser') ?>">
-              <i class="fas fa-user-plus text-green"> </i> Add User
-            </a>
-         </li>   
-          <li class="nav-item">
-            <a class="nav-link active" >
-           <i class="fas fa-eye text-orange"></i>View Patients
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Template/reports') ?>">
-              <i class="fas fa-file-signature text-info"></i> Reports
+            <a class="nav-link" href="<?php echo base_url('Template/family') ?>">
+              <i class="fas fa-users text-blue"></i> List of Families
             </a>
           </li>
           <li class="nav-item">
@@ -152,9 +151,24 @@
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 text-white" href="<?php echo base_url('template/addpatient') ?>"> BACK</a>
+        <a class="h4 text-white" href="<?php echo base_url('template/userpage') ?>"> BACK</a>
         <!-- Form -->
-        
+        <form style="margin-left: 375px;">
+          <div class="form-group mb-0">
+            <div class="input-group input-group-alternative mr-8">
+              <div class="input-group-prepend">
+                <span class="input-group-text "><i class="fas fa-search"></i></span>
+              </div>
+              <input class="form-control " placeholder="Search" type="text">
+            </div>
+          </div>
+        </form>
+        <form class="navbar-search mr-4 d-none d-md-flex ml-lg-auto">
+          <a href="" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
+        </form>
+        <form class="navbar-search mr-3 d-none d-md-flex">
+          <a href="" data-toggle="tooltip" data-placement="top" title="Activities"><i class="fas fa-clipboard-list fa-lg text-white"></i></a>
+        </form>
 
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
@@ -213,6 +227,13 @@
          <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
   <div class="btn-group" role="group" aria-label="First group">
     <p class="card-text"><a href="#" class="badge badge-info">Patient Information</a> </p>
+  </div>
+  <div class="input-group ">
+    <button class="btn btn-icon btn-3 btn-secondary" style="margin-left: 450px;" id="addnewrecord" data-toggle="modal" data-target="#myModal" type="button">
+      <span class="btn-inner--icon"><i class="fas fa-file-medical fa-lg text-default"></i></i></span>
+      
+      <span class="btn-inner--text">Add New Record</span>
+        </button>
   </div>
   <?php   $portid = $this->uri->segment(3); ?>
    <a href="<?php echo base_url('template/test/'.$portid)?>" id="printrecord" class="btn btn-icon btn-3 btn-secondary"><i class="fas fa-print fa-lg"></i> Print Record</a>
@@ -480,6 +501,20 @@
     $("#Services").prop("disabled",true);
     var val = $("#Diagnosis option:selected").text();
       $("#inputDiagnosis").val(val+"(Diagnosis)");
+
+    var alerta = $("#POSITION").val();
+
+      if(alerta=="ADMIN")
+      {
+        $("#addnewrecord").hide();
+        document.getElementById("first1").children[1].style.display = "none";
+        $("#printrecord").show();
+
+      }
+      else if(alerta=="USER")
+      {
+        $("#addnewrecord").show();
+      }
   });
 
 $("#inputType").change(function() 

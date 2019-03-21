@@ -106,41 +106,17 @@
           </div>
         </div>
         <!-- Form -->
-        <form class="mt-4 mb-3 d-md-none">
-          <div class="input-group input-group-rounded input-group-merge">
-            <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
-            <div class="input-group-prepend">
-              <div class="input-group-text">
-                <span class="fa fa-search"></span>
-              </div>
-            </div>
-          </div>
-        </form>
+
         <!-- Navigation -->
-      <ul class="navbar-nav">
+        <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="logged">
-              <i class="ni ni-tv-2 text-primary"></i> Dashboard
+            <a class="nav-link active" href="<?php echo base_url('Template/userpage') ?>">
+              <i class="fas fa-plus-circle text-green"></i> Add Patient
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link  " href="adduser">
-              <i class="fas fa-user-plus text-green"> </i> Add User
-            </a>
-         </li>   
-          <li class="nav-item">
-            <a class="nav-link active" href="addpatient">
-           <i class="fas fa-eye text-orange"></i>View Patients
-            </a>
-          </li>
-           <li class="nav-item">
-            <a class="nav-link" href="viewlogs">
-             <i class="fas fa-window-restore text-info"></i> Info Recovery
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="reports">
-             <i class="fas fa-chart-bar text-yellow"></i> Reports
+            <a class="nav-link" href="<?php echo base_url('Template/family') ?>">
+              <i class="fas fa-users text-blue"></i> List of Families
             </a>
           </li>
           <li class="nav-item">
@@ -154,7 +130,11 @@
         <!-- Heading -->
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
-          
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="nav">
+              <i class="fas fa-phone"></i> Contact Support
+            </a>
+          </li>
       </div>
     </div>
   </nav>
@@ -167,8 +147,8 @@
       <div class="container-fluid">
         <!-- Brand -->
         <a class="h4 text-white text-uppercase d-none d-lg-inline-block">Add Patient</a>
-        <!-- Form -->
-        
+       
+        </form>
         
          <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
@@ -232,11 +212,19 @@
         <div class="col">
           <div class="card shadow">
             <div class="card-header border-0">
-              <h1 style="text-align: center;">HEALTHCENTER PATIENTS</h1>
+              <h1 style="text-align: center;"><?php echo $data[0]['hname'][0]->Name?> PATIENTS</h1>
               <hr class="my-3">
               <!-- Button -->
 
-   
+     <button class="btn btn-icon btn-3 btn-secondary" id="addpatient"style="margin-left: 10px;" data-toggle="modal" data-target="#exampleModalLong" type="button">
+      <span class="btn-inner--icon"><i class="fas fa-user-plus fa-lg text-default"></i></span>
+      <span class="btn-inner--text">Add Patient</span>
+        </button>
+        <small id="passwordHelpBlock" class="form-text text-muted">
+(Click the button to Add Patient)
+</small>
+
+<br>
 <div class="table-responsive">
             <table class="table align-items-center table-flush" id="myTable">
   <thead class="thead-light">
@@ -572,7 +560,7 @@
       "type": 'POST',
       //Set column definition initialisation properties.
             "columnDefs": [
-                {"targets":-1,"className": 'dt-body-center',"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="viewBtn" class="dropdown-item"><i class="fas fa-folder"></i>View Records</button></div></div>'},
+                {"targets":-1,"className": 'dt-body-center',"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="viewBtn" class="dropdown-item"><i class="fas fa-folder"></i>View Records</button><button id="editBtn" class="dropdown-item"><i class="fas fa-edit"></i>Edit</button><button id="deleteBtn" class="dropdown-item"><i class="fas fa-trash-alt"></i>Delete</button></div></div>'},
                 {
       "targets": [1,2,3,4,5,6],
       "orderable": false}
@@ -595,7 +583,7 @@
             var date = $('#inputinsert').val();
             if (action=='viewBtn')
             {
-            window.location.href = "getRecords/"+ ID;
+            window.location.href = "getUserRecords/"+ ID;
             }
             if (action=='deleteBtn')
             {

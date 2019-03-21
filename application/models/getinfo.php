@@ -60,6 +60,16 @@ class getinfo extends CI_Model
 		return $query->result();
 	}
 
+	public function ajaxTable($HCID)
+	{
+		$this->db->select('*');
+
+		$this->db->where('HCID',$HCID);
+
+		$query = $this->db->get('brgy');
+		return $query->result();
+	}
+
 	public function activateuser($portid,$assist,$note,$date)
 	{
 	$logs = array(
@@ -161,14 +171,13 @@ class getinfo extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->where('HCID',$HCID);
-		$query = $this->db->get('healthcenters');
+		$query = $this->db->get('healthcenter');
 		return $query->result();
 	}
 
-	public function ajax($HCID)
+	public function ajax()
 	{																
 		$this->db->select("*");
-		$this->db->where('HCID',$HCID);
 		$this->db->where('is_delete',"1");
 		$query = $this->db->get('tabletest');
 		return $query->result();
@@ -361,9 +370,9 @@ class getinfo extends CI_Model
 
 	public function getHCCode($HCID)
 	{
-		$this->db->select('healthcenters.*,(SELECT GROUP_CONCAT(brgy.BRGY) FROM brgy WHERE healthcenters.HCID = brgy.HCID) AS combinedsolutions');
-		$this->db->where('healthcenters.HCID', $HCID);
-		$this->db->from('healthcenters');
+		$this->db->select('healthcenter.*,(SELECT GROUP_CONCAT(brgy.BRGY) FROM brgy WHERE healthcenter.HCID = brgy.HCID) AS combinedsolutions');
+		$this->db->where('healthcenter.HCID', $HCID);
+		$this->db->from('healthcenter');
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -372,15 +381,15 @@ class getinfo extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->where('POSITION', "NURSE");
-		$this->db->or_where('POSITION', "DOCTOR");
+		$this->db->or_where('POSITION', "DOCTOR");	
 		$query = $this->db->get('users');
 		return $query->result();
 	}
 
 	public function getHC()
 	{
-		$this->db->select('healthcenters.*,(SELECT GROUP_CONCAT(brgy.BRGY)  FROM brgy WHERE healthcenters.HCID = brgy.HCID) AS combinedsolutions');
-		$this->db->from('healthcenters');
+		$this->db->select('healthcenter.*,(SELECT GROUP_CONCAT(brgy.BRGY)  FROM brgy WHERE healthcenter.HCID = brgy.HCID) AS combinedsolutions');
+		$this->db->from('healthcenter');
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -552,7 +561,7 @@ class getinfo extends CI_Model
 			'City'=>$this->input->post('HCname')
 			);
 
-	$this->db->insert('healthcenters',$records);
+	$this->db->insert('healthcenter',$records);
 	$this->db->insert_batch('brgy', $data);
 	if($this->db->affected_rows() > 0)
 	{
@@ -576,6 +585,20 @@ class getinfo extends CI_Model
 		{
 		$row = $query->row();
 		return $row->count;
+		}
+		return 0;
+	}
+
+	public function HCname($HCID)
+	{
+		$this->db->select('Name as name');
+		$this->db->where('HCID',$HCID);
+		$this->db->from('healthcenter');
+		$query = $this->db->get();
+		if ($query->num_rows() > 0 )
+		{
+		$row = $query->row();
+		return $row->name;
 		}
 		return 0;
 	}
@@ -793,7 +816,7 @@ class getinfo extends CI_Model
 	public function getallHCID()
 	{
 		$this->db->select("*");
-		$query = $this->db->get('healthcenters');
+		$query = $this->db->get('healthcenter');
 		return $query->result();
 	}
 

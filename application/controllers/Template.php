@@ -110,6 +110,43 @@ class Template extends CI_Controller {
 		}
 	}
 
+	public function addadmin()
+	{
+		if($this->session->userdata('logged_in')){
+			$get= $this->m->getUser(
+				$this->session->userdata('username')
+			   ,$this->session->userdata('password')
+			);
+
+			$admincode['get']=$get;
+			$hcid['hcid']=$this->m->getallHCID();
+			$data['data']=array($hcid,$admincode);
+
+			$this->load->view('Template/addadmin',$data);	
+		}
+	}
+
+	public function userpage()
+	{
+		if($this->session->userdata('logged_in')){
+			$get= $this->m->getUser(
+				$this->session->userdata('username')
+			   ,$this->session->userdata('password')
+			);
+
+			$myvars = $get[0]->HCID;
+
+			$hname['hname'] = $this->m->getHCName($myvars);
+			$brgylist['brgylist'] = $this->m->getID($myvars);
+			$familylist['famlist'] = $this->m->getFamilyCode($myvars);
+			$userlist['userlist'] = $get;
+
+			$data['data'] = array($hname,$brgylist,$familylist,$userlist);
+
+			$this->load-> view('Template/userpage',$data);
+		}	
+	}
+
 	public function adduser()
 	{
 		if($this->session->userdata('logged_in')){
@@ -215,13 +252,17 @@ class Template extends CI_Controller {
 				$this->session->set_userdata("logged_in", true);
 				$get= $this->m->getUser($username,$password);
 				$myvars = $get[0]->POSITION;
-				if($myvars == 'ADMIN')
+				if($myvars == 'SUPERADMIN')
 				{
 					redirect('Template/admin');	
 				}
-				else
+				if($myvars == 'ADMIN')
 				{
 					redirect('Template/logged');	
+				}
+				else if($myvars == 'USER')
+				{
+					redirect('Template/userpage');	
 				}
 
 			}
@@ -232,6 +273,33 @@ class Template extends CI_Controller {
 			}
 		}
 
+	}
+
+	public function tables()
+	{
+		$this->load->view('Template/tables');
+	}
+
+	public function ajaxTable()
+	{		
+		$data = $this->input->post();
+
+		$BRGY = $this->m->ajaxTable($data['end']);
+
+		if(!$BRGY==null)
+		{
+		foreach ($BRGY as $value) 
+		{
+			$row = array();	
+			$row[0] = $value->BRGY;
+			$data2[] = $row;
+		}
+		echo json_encode($data2);
+		}
+		else
+		{
+			echo('0');
+		}
 	}
 
 	public function logged()
@@ -413,6 +481,29 @@ class Template extends CI_Controller {
 			$this->load-> view('Template/records',$data);
 		}	
 	}
+
+	public function getUserRecords()
+	{
+		if($this->session->userdata('logged_in')){
+			$get= $this->m->getUser(
+				$this->session->userdata('username')
+			   ,$this->session->userdata('password')
+			);
+
+			$this->load->library('upload');
+
+			$portid = $this->uri->segment(3);
+			$patientinfo['pinfo'] = $this->m->getInfoID($portid);
+			$userlist['userlist'] = $get;
+			$ai['ai']= $this->m->getAI();
+			$precords['precords'] =	$this->m->getallRecords($portid);
+
+			$data['data'] = array($patientinfo,$userlist,$precords,$ai);
+
+			$this->load-> view('Template/userrecords',$data);
+		}	
+	}
+
 
 	public function getAdminDB()
 	{
@@ -1207,17 +1298,16 @@ class Template extends CI_Controller {
 	print_r($txtYear);
 	}
 
-	public function getEventDatatable($code)
+	public function getEventDatatable()
 	{
-	$getdata = $this->m->ajax($code);
+	$getdata = $this->m->ajax();
 	$data = array();
 	foreach ($getdata as $value)
 	{
 		$row = array();
 		$row[] = $value->ID;
-		$row[] = $value->Status;
-		$row[] = $value->LN;
-		$row[] = $value->FN;
+		$row[] = $this->m->HCname($value->HCID); 
+		$row[] = $value->LN .',' .$value->FN . ',' . $value->MN; 
 		$row[] = $value->BirthDate;
 		$row[] = $value->Sex;
 		$row[] = array(

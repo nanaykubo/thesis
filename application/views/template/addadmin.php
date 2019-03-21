@@ -117,30 +117,25 @@
           </div>
         </form>
         <!-- Navigation -->
-        <ul class="navbar-nav">
+         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="logged">
+            <a class="nav-link" href="admin">
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link active " href="adduser">
-              <i class="fas fa-user-plus text-green"> </i> Add User
+            <li class="nav-item">
+            <a class="nav-link active" href="addadmin">
+              <i class="fas fa-plus-circle text-green"></i> Add Admin
             </a>
          </li>   
-          <li class="nav-item">
-            <a class="nav-link" href="addpatient">
-           <i class="fas fa-eye text-orange"></i>View Patients
-            </a>
-          </li>
            <li class="nav-item">
-            <a class="nav-link" href="viewlogs">
-             <i class="fas fa-window-restore text-info"></i> Info Recovery
+            <a class="nav-link " href="addhc">
+              <i class="fas fa-hospital text-orange"></i> Health Centers
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="reports">
-             <i class="fas fa-chart-bar text-yellow"></i> Reports
+         <li class="nav-item">
+            <a class="nav-link " href="addhc">
+              <i class="far fa-clipboard text-yellow"></i> View Admin Logs
             </a>
           </li>
           <li class="nav-item">
@@ -165,7 +160,7 @@
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">Add User</a>
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">Add Admin</a>
         <!-- Form -->
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
           <div class="form-group mb-0">
@@ -224,10 +219,10 @@
           <!-- Card stats -->
 
           <!-- Button -->
-     <button class="btn btn-icon btn-3 btn-secondary" id="editUser" data-toggle="modal" data-target="#exampleModalLong" type="button">
+     <button class="btn btn-icon btn-3 btn-secondary" id="editUser" data-toggle="modal" data-target="#register" type="button">
       <span class="btn-inner--icon"><i class="fas fa-user-plus fa-lg text-default"></i></span>
       
-      <span class="btn-inner--text">Add User</span>
+      <span class="btn-inner--text">Add Admin</span>
         </button>
 
             </div>
@@ -242,7 +237,7 @@
         <div class="col">
           <div class="card shadow">
             <div class="card-header border-0">
-              <h1 class="mb-0">Users</h1>
+              <h1 class="mb-0">Admins</h1>
               <br/>
             <table class="table align-items-center table-flush" id="myTable">
   <thead class="thead-light">
@@ -264,98 +259,66 @@
 </table>
 
 <!-- Modal -->
-<div class="modal fade bd-example-modal-lg" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle" id="adduser">Add User</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle" style="text-align: center;">Register Admin Account Role</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form class="needs-validation" id="testform" action="<?php echo base_url('template/submitUser') ?>" method="post" novalidate>
-          <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d'); ?>"/>
-          <input type="hidden" name="inputnote" id="inputnote"/>
-          <input type="hidden" name="inputassist" id="inputassist" value="<?php echo $data[1]['get'][0]->code; ?>"/>
-           <div class="form-row">
-    <div class="col-md-6 mb-3">
-      <label for="validationCustom01">Code</label>
-      <input type="text" class="form-control" id="inputCode" name="inputCode" placeholder="Code" required>
-      <div class="invalid-feedback">
-        Please provide details.
-      </div>
-      <span id="username_result"></span>
-    </div>
-    <div class="col-md-6 mb-3">
-      <label for="validationCustom02">Health Center ID (HCID)</label>
-      <select id="inputHCID" name="inputHCID" class="custom-select" required>
-      <option value="">Select HCID...</option>
-      <?php foreach ($data[0]['hcid'] as $test) { ?>
-        <option value="<?php echo $test->HCID; ?>"><?php echo $test->Name; ?>
-        <?php }?></option>
+    <form method="POST" action="<?php echo base_url('Template/submitAdmin') ?>">
+         <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d H:i:s'); ?>"/>
+      <div class="form-group">
+    <label for="formGroupExampleInput2">Code</label>
+       <input type="text" class="form-control" name="inputCode"  placeholder="Code" readonly="">
+    <span id="username_result"></span>
+  </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput2">HCID</label>
+      <select class="custom-select" style="text-transform: uppercase;" id="inputHCID" name="inputHCID" required>
+      <option value="">Select Healthcenter...</option>
+      <?php foreach ($data as $test) { ?>
+      <option value="<?php echo $test->HCID?>"><?php echo $test->Name; ?>
+      <?php }?></option>
       </select>
-     <div class="invalid-feedback">Example invalid custom select feedback</div>
+  </div>
+  <div class="form-group">
+    <div class="form-row">
+    <div class="col">
+      <label for="formGroupExampleInput2">First Name</label>
+      <input type="text" class="form-control" name="inputFN"  placeholder="First name" >
+    </div>
+    <div class="col">
+      <label for="formGroupExampleInput2">Middle Name</label>
+      <input type="text" class="form-control" name="inputMN" placeholder="Middle name">
+    </div>
+    <div class="col">
+      <label for="formGroupExampleInput2">Last Name</label>
+      <input type="text" class="form-control" name="inputLN" placeholder="Last name">
     </div>
   </div>
-  <div class="form-row">
-    <div class="col-md-4 mb-3">
-      <label for="validationCustom01">First name</label>
-      <input type="text" class="form-control" id="inputFN" name="inputFN" placeholder="First name" required>
-      <div class="invalid-feedback">
-        Please provide details.
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="validationCustom02">Middle name</label>
-      <input type="text" class="form-control" id="inputMN" name="inputMN" placeholder="Middle name"  required>
-      <div class="invalid-feedback">
-        Please provide details.
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="validationCustom02">Last name</label>
-      <input type="text" class="form-control" id="inputLN" name="inputLN" placeholder="Last name" required>
-      <div class="invalid-feedback">
-        Please provide details.
-      </div>
-    </div>
   </div>
-  <div class="form-row">
-    <div class="col-md-6 mb-3">
-      <label for="validationCustom03">Username</label>
-      <input type="text" class="form-control" id="inputUser" name="inputUser" placeholder="Username" required>
-      <div class="invalid-feedback">
-        Please provide details.
-      </div>
-    </div>
-    <div class="col-md-6 mb-3">
-      <label for="validationCustom03">Password</label>
-      <input type="text" class="form-control" id="inputPass" name="inputPass" placeholder="Password" required>
-      <div class="invalid-feedback">
-        Please provide details.
-      </div>
-    </div>
+  <div class="form-group">
+      <label for="formGroupExampleInput2">Username</label>
+      <input type="text" class="form-control" name="inputUser" placeholder="Username">
+      <input type="hidden" class="form-control" name="inputPass" value="default123">
   </div>
-  <div class="form-row">
-    <div class="col-md-12 mb-3">
-      <label for="validationCustom02">Position</label>
-      <select id="Position" name="Position" class="custom-select" required>
-      <option value="">Select Position...</option>
-      <option value="NURSE">NURSE</option>
-      <option value="DOCTOR">DOCTOR</option>
-      </select>
-     <div class="invalid-feedback">Example invalid custom select feedback</div>
-    </div>
+  <div class="form-group">
+    <label for="formGroupExampleInput2">Position</label>
+    <input type="text" class="form-control" id="inputPass" name="Position" value="ADMIN" readonly="">
+     <br>
+     <input type="submit" id="done" name="done" class="form-control">
+
   </div>
-  <button class="btn btn-primary" id="Add" style="float:right;" type="submit">Add User</button>
+      </div>
 </form>
-        </div>
-      </div>
     </div>
   </div>
 </div>
-</div>
-</div>
+              
 
 <div class="modal fade" data-backdrop="static" data-keyboard="false"id="myModal" tabindex="-1" role="dialog"
 aria-labelledby="myModalLabel">
@@ -451,7 +414,7 @@ aria-labelledby="myModalLabel">
       "type": 'GET',
       //Set column definition initialisation properties.
             "columnDefs": [
-                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="logs" class="dropdown-item"><i class="fa fa-history" aria-hidden="true"></i>View Logs</button><button id="update" class="dropdown-item"><i class="fas fa-user-edit"></i></i>Edit User</button><button id="account" class="dropdown-item"><i class="fas fa-lock"></i></i>Account Details</button></div></div>'},
+                {"targets":-1,"data": null,'defaultContent': '<div class="dropdown"><a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a><div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"><button id="update" class="dropdown-item"><i class="fas fa-user-edit"></i></i>Edit Admin</button></div>'},
                 {
       "targets": [1,2,3,4,5,6],
       "orderable": false}
@@ -475,8 +438,8 @@ aria-labelledby="myModalLabel">
     $("#editUser").on("click",function(){
 
             $("#inputCode").prop("readonly",false);
-             $(".modal-title").html('Add New User');
-            $(".modal-body #Add").html('Add User');
+             $(".modal-title").html('Add New Admin');
+            $(".modal-body #Add").html('Add Admin');
      });
 
     $('#myTable tbody').on( 'click', 'button', function (e) {

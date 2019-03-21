@@ -117,26 +117,30 @@
             </div>
           </div>
         </form>
-        <!-- Navigation -->
-        <ul class="navbar-nav">
+         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="logged">
+            <a class="nav-link " href="logged">
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="addpatient">
-              <i class="fas fa-plus-circle text-green"></i> Add Patient
+            <a class="nav-link  " href="adduser">
+              <i class="fas fa-user-plus text-green"> </i> Add User
+            </a>
+         </li>   
+          <li class="nav-item">
+            <a class="nav-link " href="addpatient">
+           <i class="fas fa-eye text-orange"></i>View Patients
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="family">
-              <i class="fas fa-users text-blue"></i> List of Families
+           <li class="nav-item">
+            <a class="nav-link" href="viewlogs">
+             <i class="fas fa-window-restore text-info"></i> Info Recovery
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" href="reports">
-              <i class="fas fa-file-signature text-info"></i> Reports
+             <i class="fas fa-chart-bar text-yellow"></i> Reports
             </a>
           </li>
           <li class="nav-item">
@@ -149,12 +153,7 @@
         <hr class="my-3">
         <!-- Heading -->
         <!-- Navigation -->
-        <ul class="navbar-nav mb-md-3">
-          <li class="nav-item">
-            <a class="nav-link" href="#" id="nav">
-              <i class="fas fa-phone"></i> Contact Support
-            </a>
-          </li>
+       
         
       </div>
     </div>
@@ -168,22 +167,8 @@
         <!-- Brand -->
         <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">Reports</a>
         <!-- Form -->
-       <form style="margin-left: 320px;">
-          <div class="form-group mb-0">
-            <div class="input-group input-group-alternative mr-8">
-              <div class="input-group-prepend">
-                <span class="input-group-text "><i class="fas fa-search"></i></span>
-              </div>
-              <input class="form-control " placeholder="Search" type="text">
-            </div>
-          </div>
-        </form>
-         <form class="navbar-search mr-4 d-none d-md-flex ml-lg-auto">
-           <a href="profile#profile-tab" data-toggle="tooltip" data-placement="top" title="Notifications"><i class="fas fa-bell fa-lg text-white"></i></a>
-        </form>
-        <form class="navbar-search mr-3 d-none d-md-flex">
-          <a href="profile#home-tab" data-toggle="tooltip" data-placement="top" title="Activities"><i class="fas fa-clipboard-list fa-lg text-white"></i></a>
-        </form>
+       
+       
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
@@ -252,6 +237,18 @@
         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
         <div class="card-body">
             <form>  
+          <div class="row">
+
+          <div class="col">
+          <label for="selectHC">Select Health Center..</label>
+          <select id="selectHC" class="form-control form-control-sm ">
+          <option value="1">Cases of Diseases</option>
+          <option value="2">No of Families in Barangay</option>
+          <option value="3">No of Patients</option>
+          </select>
+          </div>
+
+          </div>
           <div class="row">
 
           <div class="col">

@@ -116,26 +116,26 @@
             </div>
           </div>
         </form>
-        <!-- Navigation -->
-        <ul class="navbar-nav">
+       <!-- Navigation -->
+         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link active" href="admin">
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="adduser">
-              <i class="fas fa-plus-circle text-green"></i> Add User
+            <li class="nav-item">
+            <a class="nav-link " href="addadmin">
+              <i class="fas fa-plus-circle text-green"></i> Add Admin
+            </a>
+         </li>   
+           <li class="nav-item">
+            <a class="nav-link " href="addhc">
+              <i class="fas fa-hospital text-orange"></i> Health Centers
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="addhc">
-             <i class="fas fa-hospital text-orange"></i> Health Centers
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="viewlogs">
-             <i class="fas fa-window-restore text-info"></i> Info Recovery
+         <li class="nav-item">
+            <a class="nav-link " href="addhc">
+              <i class="far fa-clipboard text-yellow"></i> View Admin Logs
             </a>
           </li>
           <li class="nav-item">
@@ -381,9 +381,6 @@
     </div>
   </div>
 
-
-
-
 <div class="modal" id="ViewMessage" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -403,7 +400,8 @@
     </div>
   </div>
 </div>
-              
+
+
 
     <!-- Page content -->
 
@@ -486,6 +484,10 @@ $(".message").click(function() {
     }); 
   
 });  
+
+ $("#nav").click(function(){
+    $("#register").modal('show')
+  });
 
 $(".resolve").click(function() {
     var $row = $(this).closest("tr");    

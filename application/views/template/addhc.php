@@ -117,25 +117,25 @@
           </div>
         </form>
         <!-- Navigation -->
-        <ul class="navbar-nav">
+         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="admin">
+            <a class="nav-link" href="admin">
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="adduser">
-              <i class="fas fa-plus-circle text-green"></i> Add User
+            <li class="nav-item">
+            <a class="nav-link " href="addadmin">
+              <i class="fas fa-plus-circle text-green"></i> Add Admin
             </a>
-          </li>
-          <li class="nav-item">
+         </li>   
+           <li class="nav-item">
             <a class="nav-link active" href="addhc">
-             <i class="fas fa-hospital text-orange"></i> Health Centers
+              <i class="fas fa-hospital text-orange"></i> Health Centers
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="viewlogs">
-             <i class="fas fa-window-restore text-info"></i> Info Recovery
+         <li class="nav-item">
+            <a class="nav-link " href="addhc">
+              <i class="far fa-clipboard text-yellow"></i> View Admin Logs
             </a>
           </li>
           <li class="nav-item">
@@ -268,8 +268,8 @@
            <div class="form-row">
     <div class="col-md-12 mb-3">
       <label for="validationCustom01">HCID</label>
-      <input type="text" class="form-control" id="inputHCID" name="inputHCID" placeholder="HCID">
-                <input type="hidden" name="HCname" id="HCname" value="">
+      <input type="text" class="form-control" id="inputHCID" name="inputHCID" placeholder="HCID" readonly="">
+                <input type="hidden" name="HCname" id="HCname" value="" >
       <div class="invalid-feedback">
         Please provide details.
       </div>
@@ -279,7 +279,7 @@
   <div class="form-row">
     <div class="col-md-12 mb-3">
       <label for="validationCustom01">Health Center Name</label>
-      <input type="text" class="form-control" id="inputHC" name="inputHC" placeholder="Health Center Name" >
+      <input type="text" class="form-control" id="inputHC" name="inputHC" placeholder="Health Center Name" style="text-transform:uppercase" >
       <div class="invalid-feedback">
         Please provide details.
       </div>
@@ -316,7 +316,7 @@
      <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
     <div class="col-md-4 mb-3">
-      <label for="exampleFormControlSelect2">Example multiple select</label>
+      <label for="exampleFormControlSelect2">Barangay</label>
     <select multiple="multiple" class="form-control" name="Brgy[]" id="Brgy">
       <option>1</option>
       <option>2</option>
@@ -703,15 +703,25 @@ aria-labelledby="myModalLabel">
     }
     });
 
+
+
    $("#Position").change(function() 
     {   
     var el = $("#Position option:selected").text();
-         $('#HCname').attr('value', el);
+    $('#HCname').attr('value', el);
 
     var sub_array = [];
     var val= $(this).val();
+
+   $('#inputHCID').val('');
+   $("#inputHC").val('');
+
+   alert('Your HCID and Health Center has been Reset, please re-type your Health Center Name')
     if(val=='0')
     {
+      // var value =  $('#inputHCID').val();
+      // var newvalue= (value+'-BND');
+      // $("#inputHCID").val(newvalue);
       for ($x = 287; $x <= 296; $x++) 
       {
       sub_array.push($x);
@@ -924,6 +934,72 @@ aria-labelledby="myModalLabel">
     $('#exampleModalLong').on('hidden.bs.modal', function () {
     $(this).find('form').trigger('reset');
     })
+
+    $('#inputHC').keypress(function() {
+    var dInput = this.value;
+    var matches = dInput.match(/\b(\w)/g);
+    var res = matches.join('');
+    var acronym = res.toUpperCase()
+    $("#inputHCID").val('19-'+acronym);
+    var value = $('#Position').val();
+
+    if(value==0)
+    {
+     $("#inputHCID").val('19-'+acronym+'-BND'); 
+    }
+    if(value==1)
+    {
+     $("#inputHCID").val('19-'+acronym+'-ERM'); 
+    }
+    if(value==2)
+    {
+     $("#inputHCID").val('19-'+acronym+'-INTRA'); 
+    }
+    if(value==3)
+    {
+     $("#inputHCID").val('19-'+acronym+'-MLT'); 
+    }
+    if(value==4)
+    {
+     $("#inputHCID").val('19-'+acronym+'-PACO'); 
+    }
+    if(value==5)
+    {
+     $("#inputHCID").val('19-'+acronym+'-PNDCN'); 
+    }
+    if(value==6)
+    {
+     $("#inputHCID").val('19-'+acronym+'-PRTAREA'); 
+    }
+    if(value==7)
+    {
+     $("#inputHCID").val('19-'+acronym+'-QUIAPO'); 
+    }
+    if(value==8)
+    {
+     $("#inputHCID").val('19-'+acronym+'-SMPL'); 
+    }
+    if(value==9)
+    {
+     $("#inputHCID").val('19-'+acronym+'-SANM'); 
+    }
+    if(value==10)
+    {
+     $("#inputHCID").val('19-'+acronym+'-SANNCHL'); 
+    }
+    if(value==11)
+    {
+     $("#inputHCID").val('19-'+acronym+'-STAANA'); 
+    }
+    if(value==12)
+    {
+     $("#inputHCID").val('19-'+acronym+'-STACRZ'); 
+    }
+    if(value==13)
+    {
+     $("#inputHCID").val('19-'+acronym+'-TND'); 
+    }
+    });
 
     $('#myTable tbody').on( 'click', 'button', function (e) {
             var data = table.row($(this).parents('tr') ).data();

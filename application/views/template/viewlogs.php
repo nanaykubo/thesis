@@ -119,23 +119,28 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="admin">
+            <a class="nav-link " href="logged">
               <i class="ni ni-tv-2 text-primary"></i> Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="adduser">
-              <i class="fas fa-plus-circle text-green"></i> Add User
+            <a class="nav-link  " href="adduser">
+              <i class="fas fa-user-plus text-green"> </i> Add User
+            </a>
+         </li>   
+          <li class="nav-item">
+            <a class="nav-link " href="addpatient">
+           <i class="fas fa-eye text-orange"></i>View Patients
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="addhc">
-             <i class="fas fa-hospital text-orange"></i> Health Centers
-            </a>
-          </li>
-          <li class="nav-item">
+           <li class="nav-item">
             <a class="nav-link active" href="viewlogs">
              <i class="fas fa-window-restore text-info"></i> Info Recovery
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="reports">
+             <i class="fas fa-chart-bar text-yellow"></i> Reports
             </a>
           </li>
           <li class="nav-item">
