@@ -220,7 +220,7 @@
 
           <!-- Button -->
      <button class="btn btn-icon btn-3 btn-secondary" id="editUser" data-toggle="modal" data-target="#register" type="button">
-      <span class="btn-inner--icon"><i class="fas fa-user-plus fa-lg text-default"></i></span>
+      <span class="btn-inner--icon"><i class="fas fa-lg fa-user-cog"></i></span>
       
       <span class="btn-inner--text">Add Admin</span>
         </button>
@@ -269,18 +269,18 @@
         </button>
       </div>
       <div class="modal-body">
-    <form method="POST" action="<?php echo base_url('Template/submitAdmin') ?>">
+    <form method="POST" id="reg" action="<?php echo base_url('Template/submitAdmin') ?>">
          <input type="hidden" name="inputinsert" id="inputinsert" value="<?php echo date('Y-m-d H:i:s'); ?>"/>
       <div class="form-group">
     <label for="formGroupExampleInput2">Code</label>
-       <input type="text" class="form-control" name="inputCode"  placeholder="Code" readonly="">
+       <input type="text" class="form-control" name="inputCode" placeholder="Code" readonly>
+       <input type="hidden" class="form-control" name="Code" placeholder="Code" readonly>
     <span id="username_result"></span>
   </div>
   <div class="form-group">
     <label for="formGroupExampleInput2">HCID</label>
       <select class="custom-select" style="text-transform: uppercase;" id="inputHCID" name="inputHCID" required>
-      <option value="">Select Healthcenter...</option>
-      <?php foreach ($data as $test) { ?>
+      <?php foreach ($data[0]['hcid'] as $test) { ?>
       <option value="<?php echo $test->HCID?>"><?php echo $test->Name; ?>
       <?php }?></option>
       </select>
@@ -289,31 +289,26 @@
     <div class="form-row">
     <div class="col">
       <label for="formGroupExampleInput2">First Name</label>
-      <input type="text" class="form-control" name="inputFN"  placeholder="First name" >
+      <input type="text" class="form-control" name="inputFN" id="inputFN"  placeholder="First name" >
     </div>
     <div class="col">
       <label for="formGroupExampleInput2">Middle Name</label>
-      <input type="text" class="form-control" name="inputMN" placeholder="Middle name">
+      <input type="text" class="form-control" name="inputMN" id="inputMN" placeholder="Middle name">
     </div>
     <div class="col">
       <label for="formGroupExampleInput2">Last Name</label>
-      <input type="text" class="form-control" name="inputLN" placeholder="Last name">
+      <input type="text" class="form-control" name="inputLN" id="inputLN" placeholder="Last name">
     </div>
   </div>
   </div>
   <div class="form-group">
       <label for="formGroupExampleInput2">Username</label>
-      <input type="text" class="form-control" name="inputUser" placeholder="Username">
+      <input type="text" class="form-control" name="inputUser" id="inputUser" placeholder="Username">
       <input type="hidden" class="form-control" name="inputPass" value="default123">
   </div>
-  <div class="form-group">
-    <label for="formGroupExampleInput2">Position</label>
-    <input type="text" class="form-control" id="inputPass" name="Position" value="ADMIN" readonly="">
-     <br>
-     <input type="submit" id="done" name="done" class="form-control">
-
-  </div>
-      </div>
+    <input type="hidden" class="form-control" id="Position" name="Position" value="ADMIN" readonly="">
+     <input type="submit" id="done" name="done" value="Add Admin" class="btn btn-primary form-control">
+           </div>
 </form>
     </div>
   </div>
@@ -357,7 +352,7 @@ aria-labelledby="myModalLabel">
 </div>
 </div>
 
-<div class="modal fade" id="exampleModalCenter"  data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- <div class="modal fade" id="exampleModalCenter"  data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -382,7 +377,7 @@ aria-labelledby="myModalLabel">
     </div>
   </div>
 </div>
-
+ -->
   <script>
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function() {
@@ -409,6 +404,7 @@ aria-labelledby="myModalLabel">
 
 <script>
   $(document).ready(function() {
+     $('input[name=Code]').val('00'+<?php echo $data[2]['ai'][0]->AUTO_INCREMENT?>);
     var table= $('#myTable').DataTable({
       "ajax": '<?php echo base_url('template/getallUsers'); ?>',
       "type": 'GET',
@@ -419,6 +415,20 @@ aria-labelledby="myModalLabel">
       "targets": [1,2,3,4,5,6],
       "orderable": false}
             ]
+    });
+
+    $("#inputHCID").change(function(){
+        if($(this).val() == ''){ 
+           $('input[name=inputCode]').val('');
+          $('input[name=Code]').val('00'+'<?php echo $data[2]['ai'][0]->AUTO_INCREMENT?>');
+         alert('Please Select A Health Center')
+        }
+        else
+        {
+          var x = $('input[name=Code]').val();
+          var value = $('#inputHCID').val();
+          $('input[name=inputCode]').val(value+'-'+x);
+         }
     });
 
     $("#inputCode").change(function(){
@@ -435,11 +445,13 @@ aria-labelledby="myModalLabel">
    }
     });
 
+
     $("#editUser").on("click",function(){
 
             $("#inputCode").prop("readonly",false);
              $(".modal-title").html('Add New Admin');
-            $(".modal-body #Add").html('Add Admin');
+            $(".modal-body input[name=done]").html('Add Admin');
+             $("#reg").attr("action",'<?php echo base_url('template/submitAdmin') ?>');
      });
 
     $('#myTable tbody').on( 'click', 'button', function (e) {
@@ -464,29 +476,6 @@ aria-labelledby="myModalLabel">
 
             });
             }
-            if (action=='account')
-            {
-              $.ajax({
-            url: '<?php echo base_url('template/editUser/'); ?>',  
-            type: 'POST',
-            data: {'code': code},
-            success: function (result) { 
-            var parsed= JSON.parse(result);           
-            $.each(parsed,function(index,value)
-                  {
-                    $(".modal-body #inputnote").val("VIEW ACCOUNT DETAILS "+value[6] + " " +value[5]);
-                    $(".modal-body #staticUser").val(value[2]);
-                    $(".modal-body #staticPass").val(value[3]);
-                    $(".modal-body #buttonuser").html('Edit User');
-
-                    $("#myModal").modal('show')
-                  });
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-               console.log(textStatus, errorThrown);
-            }
-            });
-            }
             if (action=='update')
             {
             $.ajax({
@@ -497,22 +486,21 @@ aria-labelledby="myModalLabel">
             var parsed= JSON.parse(result);              
             $.each(parsed,function(index,value)
                   {
-                    $(".modal-body #inputCode").val(value[0]);
+                    $('.modal-body input[name=Code]').val(value[8]);
+                    $('.modal-body input[name=inputCode]').val(value[0]);
                     $(".modal-body #inputHCID").val(value[1]).change();
-                    $(".modal-body #inputFN").val(value[4]);
-                    $(".modal-body #inputMN").val(value[5]);
-                    $(".modal-body #inputLN").val(value[6]);
+                    $(".modal-body #inputFN").val(value[5]);
+                    $(".modal-body #inputMN").val(value[6]);
+                    $(".modal-body #inputLN").val(value[4]);
                     $(".modal-body #inputUser").val(value[2]);
                     $(".modal-body #inputPass").val(value[3]);
                     $(".modal-body #Position").val(value[7]).change();
                     
-                    $("#inputCode").prop("readonly",true);
-                    
-                    $("#exampleModalLong").modal('show')
+                    $("#register").modal('show')
 
-                    $(".modal-title").html('Edit User');
-                    $(".modal-body #Add").html('Edit User');
-                    $("#testform").attr("action",'<?php echo base_url('template/updateUser') ?>');
+                    $(".modal-title").html('Update Admin');
+                    $(".modal-body input[name=done]").val('Update Admin');
+                    $("#reg").attr("action",'<?php echo base_url('template/updateAdmin') ?>');
                   });
             },
             error: function(jqXHR, textStatus, errorThrown) {

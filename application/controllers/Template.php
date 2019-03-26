@@ -120,7 +120,8 @@ class Template extends CI_Controller {
 
 			$admincode['get']=$get;
 			$hcid['hcid']=$this->m->getallHCID();
-			$data['data']=array($hcid,$admincode);
+			$ai['ai']= $this->m->getUsersAI();
+			$data['data']=array($hcid,$admincode,$ai);
 
 			$this->load->view('Template/addadmin',$data);	
 		}
@@ -649,7 +650,7 @@ class Template extends CI_Controller {
 	{
 		$result = $this->m->addNewAdmins();
 		$this->session->set_flashdata('user_msg', 'Added Admin Role Successfully');
-		redirect(base_url('Template/index'));
+		redirect(base_url('Template/admindb'));
 	}
 
 	public function create()
@@ -763,6 +764,12 @@ class Template extends CI_Controller {
 		redirect(base_url('Template/adduser'));
 	}
 
+	public function updateAdmin()
+	{
+		$result = $this->m->updateUser();
+		redirect(base_url('Template/addadmin'));
+	}
+
 	public function updateHC()
 	{
 		$foods = $this->input->post('Brgy');
@@ -869,6 +876,7 @@ class Template extends CI_Controller {
 			$row[5] = $value->FN;
 			$row[6] = $value->MN;
 			$row[7] = $value->POSITION;
+			$row[8] = $value->no;
 			$data2[] = $row;
 		}
 		

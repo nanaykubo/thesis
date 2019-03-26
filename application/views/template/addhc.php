@@ -236,6 +236,7 @@
             <div class="card-header border-0">
               <h1 class="mb-0">Health Centers</h1>
               <br/>
+              <div class="table-responsive">
             <table class="table align-items-center table-flush" id="myTable">
   <thead class="thead-light">
     <tr>
@@ -253,6 +254,7 @@
   </tr>
   </tbody>
 </table>
+</div>
 
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -280,6 +282,7 @@
     <div class="col-md-12 mb-3">
       <label for="validationCustom01">Health Center Name</label>
       <input type="text" class="form-control" id="inputHC" name="inputHC" placeholder="Health Center Name" style="text-transform:uppercase" >
+      <input type="hidden" id="HC">
       <div class="invalid-feedback">
         Please provide details.
       </div>
@@ -335,6 +338,7 @@
      <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
   </div>
+  <button type="button" class="btn btn-danger" style="float:right; margin-left: 20px;" data-dismiss="modal">Close</button>
   <button class="btn btn-primary" id="editUser" style="float:right;"type="submit">Add Health Center</button>
 </form>
 
@@ -704,7 +708,6 @@ aria-labelledby="myModalLabel">
     });
 
 
-
    $("#Position").change(function() 
     {   
     var el = $("#Position option:selected").text();
@@ -713,10 +716,12 @@ aria-labelledby="myModalLabel">
     var sub_array = [];
     var val= $(this).val();
 
-   $('#inputHCID').val('');
+   $("#HC").val('');
    $("#inputHC").val('');
 
+
    alert('Your HCID and Health Center has been Reset, please re-type your Health Center Name')
+
     if(val=='0')
     {
       // var value =  $('#inputHCID').val();
@@ -931,16 +936,17 @@ aria-labelledby="myModalLabel">
         $(".modal-title").html('Add Healthcenter');
      });
 
-    $('#exampleModalLong').on('hidden.bs.modal', function () {
-    $(this).find('form').trigger('reset');
-    })
+    $('#exampleModalLong').on('hidden.bs.modal', function(){
+    $(this).find('form')[0].reset();
+    });
 
     $('#inputHC').keypress(function() {
     var dInput = this.value;
     var matches = dInput.match(/\b(\w)/g);
     var res = matches.join('');
     var acronym = res.toUpperCase()
-    $("#inputHCID").val('19-'+acronym);
+    var x= $("#HC").val('19-'+acronym);
+    $("#inputHCID").val(x);
     var value = $('#Position').val();
 
     if(value==0)
@@ -981,19 +987,19 @@ aria-labelledby="myModalLabel">
     }
     if(value==9)
     {
-     $("#inputHCID").val('19-'+acronym+'-SANM'); 
+     $("#inputHCID").val('19-'+acronym+'-SANMIGUEL'); 
     }
     if(value==10)
     {
-     $("#inputHCID").val('19-'+acronym+'-SANNCHL'); 
+     $("#inputHCID").val('19-'+acronym+'-SANNCHLS'); 
     }
     if(value==11)
     {
-     $("#inputHCID").val('19-'+acronym+'-STAANA'); 
+     $("#inputHCID").val('19-'+acronym+'-STA.ANA'); 
     }
     if(value==12)
     {
-     $("#inputHCID").val('19-'+acronym+'-STACRZ'); 
+     $("#inputHCID").val('19-'+acronym+'-STA.CRZ'); 
     }
     if(value==13)
     {

@@ -480,6 +480,8 @@
     $("#Services").prop("disabled",true);
     var val = $("#Diagnosis option:selected").text();
       $("#inputDiagnosis").val(val+"(Diagnosis)");
+
+
   });
 
 $("#inputType").change(function() 

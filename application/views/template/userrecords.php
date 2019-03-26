@@ -24,7 +24,8 @@
 </head>
 
 <body style="background-color: white;">
-  <input type="hidden" id="POSITION" value="<?php echo $data[1]['userlist'][0]->POSITION; ?>">
+  <input type="hidden" id="HCID" value="<?php echo $data[1]['userlist'][0]->HCID; ?>">
+    <input type="hidden" id="pHCID" value="<?php echo $data[0]['pinfo'][0]->HCID; ?>">
   <!-- Sidenav -->
   <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
@@ -502,19 +503,18 @@
     var val = $("#Diagnosis option:selected").text();
       $("#inputDiagnosis").val(val+"(Diagnosis)");
 
-    var alerta = $("#POSITION").val();
+    var patientHCID = $("#pHCID").val();  
+    var userHCID = $("#HCID").val();
 
-      if(alerta=="ADMIN")
-      {
-        $("#addnewrecord").hide();
-        document.getElementById("first1").children[1].style.display = "none";
-        $("#printrecord").show();
+    if(userHCID !== patientHCID)
+    {
+      $("#addnewrecord").hide();
+    }
+    else
+    {
+      $("#addnewrecord").show();
+    }
 
-      }
-      else if(alerta=="USER")
-      {
-        $("#addnewrecord").show();
-      }
   });
 
 $("#inputType").change(function() 

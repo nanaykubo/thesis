@@ -212,7 +212,7 @@
         <div class="col">
           <div class="card shadow">
             <div class="card-header border-0">
-              <h1 style="text-align: center;"><?php echo $data[0]['hname'][0]->Name?> PATIENTS</h1>
+              <h1 style="text-align: center;"> PATIENTS</h1>
               <hr class="my-3">
               <!-- Button -->
 

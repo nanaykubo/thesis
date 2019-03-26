@@ -154,8 +154,18 @@ class getinfo extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('INFORMATION_SCHEMA.TABLES');
-		$this->db->where('TABLE_SCHEMA','medrec');
+		$this->db->where('TABLE_SCHEMA','revisions');
 		$this->db->where('TABLE_NAME','precords');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function getUsersAI()
+	{
+		$this->db->select('*');
+		$this->db->from('INFORMATION_SCHEMA.TABLES');
+		$this->db->where('TABLE_SCHEMA','revisions');
+		$this->db->where('TABLE_NAME','users');
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -171,7 +181,7 @@ class getinfo extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->where('HCID',$HCID);
-		$query = $this->db->get('healthcenter');
+		$query = $this->db->get('hc');
 		return $query->result();
 	}
 
@@ -370,9 +380,9 @@ class getinfo extends CI_Model
 
 	public function getHCCode($HCID)
 	{
-		$this->db->select('healthcenter.*,(SELECT GROUP_CONCAT(brgy.BRGY) FROM brgy WHERE healthcenter.HCID = brgy.HCID) AS combinedsolutions');
-		$this->db->where('healthcenter.HCID', $HCID);
-		$this->db->from('healthcenter');
+		$this->db->select('hc.*,(SELECT GROUP_CONCAT(brgy.BRGY) FROM brgy WHERE hc.HCID = brgy.HCID) AS combinedsolutions');
+		$this->db->where('hc.HCID', $HCID);
+		$this->db->from('hc');
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -380,16 +390,15 @@ class getinfo extends CI_Model
 	public function getAllInfo()
 	{
 		$this->db->select('*');
-		$this->db->where('POSITION', "NURSE");
-		$this->db->or_where('POSITION', "DOCTOR");	
+		$this->db->where('POSITION', "ADMIN");
 		$query = $this->db->get('users');
 		return $query->result();
 	}
 
 	public function getHC()
 	{
-		$this->db->select('healthcenter.*,(SELECT GROUP_CONCAT(brgy.BRGY)  FROM brgy WHERE healthcenter.HCID = brgy.HCID) AS combinedsolutions');
-		$this->db->from('healthcenter');
+		$this->db->select('hc.*,(SELECT GROUP_CONCAT(brgy.BRGY)  FROM brgy WHERE hc.HCID = brgy.HCID) AS combinedsolutions');
+		$this->db->from('hc');
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -561,7 +570,7 @@ class getinfo extends CI_Model
 			'City'=>$this->input->post('HCname')
 			);
 
-	$this->db->insert('healthcenter',$records);
+	$this->db->insert('hc',$records);
 	$this->db->insert_batch('brgy', $data);
 	if($this->db->affected_rows() > 0)
 	{
@@ -593,7 +602,7 @@ class getinfo extends CI_Model
 	{
 		$this->db->select('Name as name');
 		$this->db->where('HCID',$HCID);
-		$this->db->from('healthcenter');
+		$this->db->from('hc');
 		$query = $this->db->get();
 		if ($query->num_rows() > 0 )
 		{
@@ -816,7 +825,7 @@ class getinfo extends CI_Model
 	public function getallHCID()
 	{
 		$this->db->select("*");
-		$query = $this->db->get('healthcenter');
+		$query = $this->db->get('hc');
 		return $query->result();
 	}
 
@@ -1002,7 +1011,6 @@ class getinfo extends CI_Model
 
 		$records = array(
 			'username'=>$this->input->post('inputUser'),	
-			'password'=>$this->input->post('inputPass'),	
 			'HCID'=>$this->input->post('inputHCID'),
 			'LN'=>$this->input->post('inputLN'),
 			'FN'=>$this->input->post('inputFN'),
@@ -1011,17 +1019,17 @@ class getinfo extends CI_Model
 			'date'=>$this->input->post('inputinsert')
 		);
 
-		$_POST['inputnote'] = "EDITED USER CODE" ."(". $_POST['inputCode'].")"." ".$_POST['inputLN'] ." " .$_POST['inputFN'];
+		// $_POST['inputnote'] = "EDITED USER CODE" ."(". $_POST['inputCode'].")"." ".$_POST['inputLN'] ." " .$_POST['inputFN'];
 
-		$logs = array(
-			'code'=>$this->input->post('inputassist'),
-			'activity'=>$this->input->post('inputnote'),
-			'date'=>$this->input->post('inputinsert')
-			);
+		// // $logs = array(
+		// // 	'code'=>$this->input->post('inputassist'),
+		// // 	'activity'=>$this->input->post('inputnote'),
+		// // 	'date'=>$this->input->post('inputinsert')
+		// // 	);
 
 	$this->db->where('code', $code);
 	$this->db->update('users', $records);
-	$this->db->insert('adminlogs', $logs);
+	// $this->db->insert('adminlogs', $logs);
 	
 	if($this->db->affected_rows() > 0)
 	{
